@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataStructures
 {
-    public class MyHashTable<T>
+    class MyHashTable
     {
     }
 }

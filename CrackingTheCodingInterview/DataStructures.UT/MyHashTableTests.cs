@@ -8,5 +8,9 @@ namespace DataStructures.UT
 {
     public class MyHashTableTests
     {
+        public MyHashTableTests()
+        {
+
+        }
     }
 }

@@ -1,22 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-
-namespace GitHub
+namespace Algorithms
 {
-    class Program
-    {
-        static void Main()
-        {
-            string text = "abedabcsssf";
-            string pattern = "bcs";
-
-            var result = RabinKarp.Compute(text, pattern);
-            Console.WriteLine($"Text '{text}' match " +
-                              $"pattern '{pattern}'? - {result}");
-            Console.ReadLine();
-        }
-    }
-
     //Rabin Karp Substring Search Pattern Matching
     public class RabinKarp
     {
@@ -36,7 +25,7 @@ namespace GitHub
                 if (currentHash == patternHash &&
                     text.Substring(startIndex, pattern.Length) == pattern)
                     return true;
-                if (startIndex + pattern.Length < text.Length)
+                if (startIndex + pattern.Length < text.Length  )
                     currentHash = RollingHash(currentHash, text[startIndex], pattern.Length,
                         text[startIndex + pattern.Length]);
                 startIndex++;

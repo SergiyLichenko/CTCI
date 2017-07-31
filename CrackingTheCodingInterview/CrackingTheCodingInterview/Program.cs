@@ -9,10 +9,9 @@ namespace CrackingTheCodingInterview
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-           var arrayList = new HashSet<int>();
-            
+
         }
     }
 }

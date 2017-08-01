@@ -61,7 +61,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MyDoublyLinkedListTests.cs" />
     <Compile Include="MyHashTableTests.cs" />
+    <Compile Include="MySinglyLinkedListTests.cs" />
     <Compile Include="MyStringBuilderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

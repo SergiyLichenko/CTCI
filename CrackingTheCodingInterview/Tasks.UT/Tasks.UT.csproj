@@ -62,12 +62,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Arrays_StringsTests.cs" />
+    <Compile Include="LinkedListTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataStructures\DataStructures.csproj">
+      <Project>{39DCC693-4CE8-414B-AF22-FC501C63F580}</Project>
+      <Name>DataStructures</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Tasks\Tasks.csproj">
       <Project>{1CDBC813-2BA1-42F5-B415-21B9CBEAD519}</Project>
       <Name>Tasks</Name>

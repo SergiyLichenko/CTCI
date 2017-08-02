@@ -242,7 +242,7 @@ namespace Tasks
 
             var depth = list.Count / 2;
             var nextNode = list.Head;
-            return PalindromeHelper(list.Head,ref nextNode, depth,
+            return PalindromeHelper(list.Head, ref nextNode, depth,
                 list.Count % 2 == 0);
         }
 
@@ -252,7 +252,7 @@ namespace Tasks
             depth--;
             if (depth > 0)
             {
-                if (!PalindromeHelper(node.Next,ref nextNode, depth, isEvenLength))
+                if (!PalindromeHelper(node.Next, ref nextNode, depth, isEvenLength))
                     return false;
                 nextNode = nextNode.Next;
             }
@@ -261,6 +261,45 @@ namespace Tasks
                 nextNode = isEvenLength ? node.Next : node.Next.Next;
 
             return nextNode.Data == node.Data;
+        }
+
+        public MySinglyLinkedListNode<int> Intersaction(MySinglyLinkedList<int> first,
+            MySinglyLinkedList<int> second)
+        {
+            if (first == null || second == null)
+                throw new ArgumentNullException();
+
+            var headFirst = first.Head;
+            var headSecond = second.Head;
+
+            if (first.Count > second.Count)
+            {
+                var number = first.Count - second.Count;
+                while (number-- > 0)
+                    headFirst = headFirst.Next;
+            }
+            else if (first.Count < second.Count)
+            {
+                var number = second.Count - first.Count;
+                while (number-- > 0)
+                    headSecond = headSecond.Next;
+            }
+
+
+            return IntersactionHelper(headFirst, headSecond);
+        }
+
+        private MySinglyLinkedListNode<int> IntersactionHelper(
+            MySinglyLinkedListNode<int> first, MySinglyLinkedListNode<int> second)
+        {
+            if (first == null || second == null)
+                return null;
+
+            if (first == second)
+                return first;
+            var nextNode = IntersactionHelper(first.Next, second.Next);
+
+            return nextNode;
         }
     }
 }

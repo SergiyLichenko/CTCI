@@ -66,7 +66,7 @@ namespace Tasks.UT
             node12.Prev = node11;
 
             resultList.Head = node8;
-           
+
             //act
             var result = _linkedList.RemoveDups(list);
 
@@ -591,7 +591,7 @@ namespace Tasks.UT
         public void SumLists_Backward_Should_Throw_If_null()
         {
             //arrange
-            
+
             //act
             Action act = () => _linkedList.SumLists_Backward(null, null);
 
@@ -605,7 +605,7 @@ namespace Tasks.UT
             //arrange
             var first = new MySinglyLinkedList<int>();
             var second = new MySinglyLinkedList<int>();
-            var resultList= new MySinglyLinkedList<int>();
+            var resultList = new MySinglyLinkedList<int>();
 
             //act
             var result = _linkedList.SumLists_Backward(first, second);
@@ -634,7 +634,7 @@ namespace Tasks.UT
             resultList.AddLast(new MySinglyLinkedListNode<int>(2));
             resultList.AddLast(new MySinglyLinkedListNode<int>(1));
             resultList.AddLast(new MySinglyLinkedListNode<int>(9));
-            
+
             //act
             var result = _linkedList.SumLists_Backward(first, second);
 
@@ -762,7 +762,7 @@ namespace Tasks.UT
             //arrange
             var first = new MySinglyLinkedList<int>();
             first.AddLast(new MySinglyLinkedListNode<int>(1));
-                
+
             var second = new MySinglyLinkedList<int>();
             second.AddLast(new MySinglyLinkedListNode<int>(9));
             second.AddLast(new MySinglyLinkedListNode<int>(9));
@@ -1104,6 +1104,149 @@ namespace Tasks.UT
 
             //assert
             result.ShouldBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public void Intersaction_Should_Throw_If_Null()
+        {
+            //arrange
+
+            //act
+            Action act = () => _linkedList.Intersaction(null, null);
+
+            //assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void Intersaction_Should_Check_One_Empty()
+        {
+            //arrange
+            var first = new MySinglyLinkedList<int>();
+            first.AddLast(new MySinglyLinkedListNode<int>(1));
+            var second = new MySinglyLinkedList<int>();
+
+            //act
+            var result = _linkedList.Intersaction(first, second);
+
+            //assert
+            result.ShouldBeEquivalentTo(null);
+        }
+
+        [Fact]
+        public void Intersaction_Should_Check_Two_Empty()
+        {
+            //arrange
+            var first = new MySinglyLinkedList<int>();
+            var second = new MySinglyLinkedList<int>();
+
+            //act
+            var result = _linkedList.Intersaction(first, second);
+
+            //assert
+            result.ShouldBeEquivalentTo(null);
+        }
+
+        [Fact]
+        public void Intersaction_Should_Check_One_Length_True()
+        {
+            //arrange
+            var node = new MySinglyLinkedListNode<int>(1);
+            var first = new MySinglyLinkedList<int>(node);
+            var second = new MySinglyLinkedList<int>(node);
+
+            //act
+            var result = _linkedList.Intersaction(first, second);
+
+            //assert
+            result.ShouldBeEquivalentTo(node);
+        }
+
+        [Fact]
+        public void Intersaction_Should_Check_One_Length_False()
+        {
+            //arrange
+            var node1 = new MySinglyLinkedListNode<int>(1);
+            var node2 = new MySinglyLinkedListNode<int>(2);
+            var first = new MySinglyLinkedList<int>(node1);
+            var second = new MySinglyLinkedList<int>(node2);
+
+            //act
+            var result = _linkedList.Intersaction(first, second);
+
+            //assert
+            result.ShouldBeEquivalentTo(null);
+        }
+
+        [Fact]
+        public void Intersaction_Should_Check_Different_Length()
+        {
+            //arrange
+            var node1 = new MySinglyLinkedListNode<int>(1);
+            var node2 = new MySinglyLinkedListNode<int>(2);
+            var node3 = new MySinglyLinkedListNode<int>(3);
+            var node4 = new MySinglyLinkedListNode<int>(4);
+
+            node1.Next = node2;
+            node2.Next = node3;
+            node3.Next = node4;
+
+            var node5 = new MySinglyLinkedListNode<int>(5);
+            node5.Next = node3;
+
+            var first = new MySinglyLinkedList<int>(node1);
+            var second = new MySinglyLinkedList<int>(node5);
+
+            //act
+            var result = _linkedList.Intersaction(first, second);
+
+            //assert
+            result.ShouldBeEquivalentTo(node3);
+        }
+
+        [Fact]
+        public void Intersaction_Should_Check_SubList()
+        {
+            //arrange
+            var node1 = new MySinglyLinkedListNode<int>(1);
+            var node2 = new MySinglyLinkedListNode<int>(2);
+            var node3 = new MySinglyLinkedListNode<int>(3);
+            var node4 = new MySinglyLinkedListNode<int>(4);
+
+            node1.Next = node2;
+            node2.Next = node3;
+            node3.Next = node4;
+
+            var first = new MySinglyLinkedList<int>(node1);
+            var second = new MySinglyLinkedList<int>(node3);
+
+            //act
+            var result = _linkedList.Intersaction(first, second);
+
+            //assert
+            result.ShouldBeEquivalentTo(node3);
+        }
+
+        [Fact]
+        public void Intersaction_Should_Check_False()
+        {
+            //arrange
+            var node1 = new MySinglyLinkedListNode<int>(1);
+            var node2 = new MySinglyLinkedListNode<int>(2);
+            var node3 = new MySinglyLinkedListNode<int>(3);
+            var node4 = new MySinglyLinkedListNode<int>(4);
+
+            node1.Next = node2;
+            node3.Next = node4;
+
+            var first = new MySinglyLinkedList<int>(node1);
+            var second = new MySinglyLinkedList<int>(node3);
+
+            //act
+            var result = _linkedList.Intersaction(first, second);
+
+            //assert
+            result.ShouldBeEquivalentTo(null);
         }
     }
 }

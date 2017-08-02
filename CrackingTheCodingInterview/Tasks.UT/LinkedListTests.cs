@@ -586,5 +586,411 @@ namespace Tasks.UT
             //assert
             result.Head.ShouldBeEquivalentTo(null);
         }
+
+        [Fact]
+        public void SumLists_Backward_Should_Throw_If_null()
+        {
+            //arrange
+            
+            //act
+            Action act = () => _linkedList.SumLists_Backward(null, null);
+
+            //assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void SumLists_Backward_Should_Check_Empty()
+        {
+            //arrange
+            var first = new MySinglyLinkedList<int>();
+            var second = new MySinglyLinkedList<int>();
+            var resultList= new MySinglyLinkedList<int>();
+
+            //act
+            var result = _linkedList.SumLists_Backward(first, second);
+
+            //assert
+            result.Count.ShouldBeEquivalentTo(resultList.Count);
+            result.Head.Should().BeNull();
+        }
+
+
+        [Fact]
+        public void SumLists_Backward_Should_Check_Example()
+        {
+            //arrange
+            var first = new MySinglyLinkedList<int>();
+            first.AddLast(new MySinglyLinkedListNode<int>(7));
+            first.AddLast(new MySinglyLinkedListNode<int>(1));
+            first.AddLast(new MySinglyLinkedListNode<int>(6));
+
+            var second = new MySinglyLinkedList<int>();
+            second.AddLast(new MySinglyLinkedListNode<int>(5));
+            second.AddLast(new MySinglyLinkedListNode<int>(9));
+            second.AddLast(new MySinglyLinkedListNode<int>(2));
+
+            var resultList = new MySinglyLinkedList<int>();
+            resultList.AddLast(new MySinglyLinkedListNode<int>(2));
+            resultList.AddLast(new MySinglyLinkedListNode<int>(1));
+            resultList.AddLast(new MySinglyLinkedListNode<int>(9));
+            
+            //act
+            var result = _linkedList.SumLists_Backward(first, second);
+
+            //assert
+            result.Count.ShouldBeEquivalentTo(resultList.Count);
+            var h1 = result.Head;
+            var h2 = resultList.Head;
+
+            while (h1 != null)
+            {
+                h1.Data.ShouldBeEquivalentTo(h2.Data);
+                h1 = h1.Next;
+                h2 = h2.Next;
+            }
+        }
+
+        [Fact]
+        public void SumLists_Backward_Should_Check_Different_Length()
+        {
+            //arrange
+            var first = new MySinglyLinkedList<int>();
+            first.AddLast(new MySinglyLinkedListNode<int>(1));
+            first.AddLast(new MySinglyLinkedListNode<int>(5));
+            first.AddLast(new MySinglyLinkedListNode<int>(9));
+
+            var second = new MySinglyLinkedList<int>();
+            second.AddLast(new MySinglyLinkedListNode<int>(2));
+            second.AddLast(new MySinglyLinkedListNode<int>(3));
+            second.AddLast(new MySinglyLinkedListNode<int>(6));
+            second.AddLast(new MySinglyLinkedListNode<int>(7));
+
+            var resultList = new MySinglyLinkedList<int>();
+            resultList.AddLast(new MySinglyLinkedListNode<int>(3));
+            resultList.AddLast(new MySinglyLinkedListNode<int>(8));
+            resultList.AddLast(new MySinglyLinkedListNode<int>(5));
+            resultList.AddLast(new MySinglyLinkedListNode<int>(8));
+
+            //act
+            var result = _linkedList.SumLists_Backward(first, second);
+
+            //assert
+            result.Count.ShouldBeEquivalentTo(resultList.Count);
+            var h1 = result.Head;
+            var h2 = resultList.Head;
+
+            while (h1 != null)
+            {
+                h1.Data.ShouldBeEquivalentTo(h2.Data);
+                h1 = h1.Next;
+                h2 = h2.Next;
+            }
+        }
+
+        [Fact]
+        public void SumLists_Backward_Should_Check_Overflow()
+        {
+            //arrange
+            var first = new MySinglyLinkedList<int>();
+            first.AddLast(new MySinglyLinkedListNode<int>(9));
+            first.AddLast(new MySinglyLinkedListNode<int>(7));
+            first.AddLast(new MySinglyLinkedListNode<int>(8));
+
+            var second = new MySinglyLinkedList<int>();
+            second.AddLast(new MySinglyLinkedListNode<int>(6));
+            second.AddLast(new MySinglyLinkedListNode<int>(8));
+            second.AddLast(new MySinglyLinkedListNode<int>(5));
+
+            var resultList = new MySinglyLinkedList<int>();
+            resultList.AddLast(new MySinglyLinkedListNode<int>(5));
+            resultList.AddLast(new MySinglyLinkedListNode<int>(6));
+            resultList.AddLast(new MySinglyLinkedListNode<int>(4));
+            resultList.AddLast(new MySinglyLinkedListNode<int>(1));
+
+            //act
+            var result = _linkedList.SumLists_Backward(first, second);
+
+            //assert
+            result.Count.ShouldBeEquivalentTo(resultList.Count);
+            var h1 = result.Head;
+            var h2 = resultList.Head;
+
+            while (h1 != null)
+            {
+                h1.Data.ShouldBeEquivalentTo(h2.Data);
+                h1 = h1.Next;
+                h2 = h2.Next;
+            }
+        }
+
+        [Fact]
+        public void SumLists_Backward_Should_Check_Empty_And_Not_Length()
+        {
+            //arrange
+            var first = new MySinglyLinkedList<int>();
+
+            var second = new MySinglyLinkedList<int>();
+            second.AddLast(new MySinglyLinkedListNode<int>(6));
+            second.AddLast(new MySinglyLinkedListNode<int>(8));
+            second.AddLast(new MySinglyLinkedListNode<int>(5));
+
+            var resultList = new MySinglyLinkedList<int>();
+            resultList.AddLast(new MySinglyLinkedListNode<int>(6));
+            resultList.AddLast(new MySinglyLinkedListNode<int>(8));
+            resultList.AddLast(new MySinglyLinkedListNode<int>(5));
+
+            //act
+            var result = _linkedList.SumLists_Backward(first, second);
+
+            //assert
+            result.Count.ShouldBeEquivalentTo(resultList.Count);
+            var h1 = result.Head;
+            var h2 = resultList.Head;
+
+            while (h1 != null)
+            {
+                h1.Data.ShouldBeEquivalentTo(h2.Data);
+                h1 = h1.Next;
+                h2 = h2.Next;
+            }
+        }
+
+        [Fact]
+        public void SumLists_Backward_Should_Check_Nines()
+        {
+            //arrange
+            var first = new MySinglyLinkedList<int>();
+            first.AddLast(new MySinglyLinkedListNode<int>(1));
+                
+            var second = new MySinglyLinkedList<int>();
+            second.AddLast(new MySinglyLinkedListNode<int>(9));
+            second.AddLast(new MySinglyLinkedListNode<int>(9));
+            second.AddLast(new MySinglyLinkedListNode<int>(9));
+
+            var resultList = new MySinglyLinkedList<int>();
+            resultList.AddLast(new MySinglyLinkedListNode<int>(0));
+            resultList.AddLast(new MySinglyLinkedListNode<int>(0));
+            resultList.AddLast(new MySinglyLinkedListNode<int>(0));
+            resultList.AddLast(new MySinglyLinkedListNode<int>(1));
+
+            //act
+            var result = _linkedList.SumLists_Backward(first, second);
+
+            //assert
+            result.Count.ShouldBeEquivalentTo(resultList.Count);
+            var h1 = result.Head;
+            var h2 = resultList.Head;
+
+            while (h1 != null)
+            {
+                h1.Data.ShouldBeEquivalentTo(h2.Data);
+                h1 = h1.Next;
+                h2 = h2.Next;
+            }
+        }
+
+        [Fact]
+        public void SumLists_Forward_Should_Throw_If_null()
+        {
+            //arrange
+
+            //act
+            Action act = () => _linkedList.SumLists_Forward(null, null);
+
+            //assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void SumLists_Forward_Should_Check_Empty()
+        {
+            //arrange
+            var first = new MySinglyLinkedList<int>();
+            var second = new MySinglyLinkedList<int>();
+            var resultList = new MySinglyLinkedList<int>();
+
+            //act
+            var result = _linkedList.SumLists_Forward(first, second);
+
+            //assert
+            result.Count.ShouldBeEquivalentTo(resultList.Count);
+            result.Head.Should().BeNull();
+        }
+
+
+        [Fact]
+        public void SumLists_Forward_Should_Check_Example()
+        {
+            //arrange
+            var first = new MySinglyLinkedList<int>();
+            first.AddLast(new MySinglyLinkedListNode<int>(6));
+            first.AddLast(new MySinglyLinkedListNode<int>(1));
+            first.AddLast(new MySinglyLinkedListNode<int>(7));
+
+            var second = new MySinglyLinkedList<int>();
+            second.AddLast(new MySinglyLinkedListNode<int>(2));
+            second.AddLast(new MySinglyLinkedListNode<int>(9));
+            second.AddLast(new MySinglyLinkedListNode<int>(5));
+
+            var resultList = new MySinglyLinkedList<int>();
+            resultList.AddLast(new MySinglyLinkedListNode<int>(9));
+            resultList.AddLast(new MySinglyLinkedListNode<int>(1));
+            resultList.AddLast(new MySinglyLinkedListNode<int>(2));
+
+            //act
+            var result = _linkedList.SumLists_Forward(first, second);
+
+            //assert
+            result.Count.ShouldBeEquivalentTo(resultList.Count);
+            var h1 = result.Head;
+            var h2 = resultList.Head;
+
+            while (h1 != null)
+            {
+                h1.Data.ShouldBeEquivalentTo(h2.Data);
+                h1 = h1.Next;
+                h2 = h2.Next;
+            }
+        }
+
+        [Fact]
+        public void SumLists_Forward_Should_Check_Different_Length()
+        {
+            //arrange
+            var first = new MySinglyLinkedList<int>();
+            first.AddLast(new MySinglyLinkedListNode<int>(9));
+            first.AddLast(new MySinglyLinkedListNode<int>(5));
+            first.AddLast(new MySinglyLinkedListNode<int>(1));
+
+            var second = new MySinglyLinkedList<int>();
+            second.AddLast(new MySinglyLinkedListNode<int>(7));
+            second.AddLast(new MySinglyLinkedListNode<int>(6));
+            second.AddLast(new MySinglyLinkedListNode<int>(3));
+            second.AddLast(new MySinglyLinkedListNode<int>(2));
+
+            var resultList = new MySinglyLinkedList<int>();
+            resultList.AddLast(new MySinglyLinkedListNode<int>(8));
+            resultList.AddLast(new MySinglyLinkedListNode<int>(5));
+            resultList.AddLast(new MySinglyLinkedListNode<int>(8));
+            resultList.AddLast(new MySinglyLinkedListNode<int>(3));
+
+            //act
+            var result = _linkedList.SumLists_Forward(first, second);
+
+            //assert
+            result.Count.ShouldBeEquivalentTo(resultList.Count);
+            var h1 = result.Head;
+            var h2 = resultList.Head;
+
+            while (h1 != null)
+            {
+                h1.Data.ShouldBeEquivalentTo(h2.Data);
+                h1 = h1.Next;
+                h2 = h2.Next;
+            }
+        }
+
+        [Fact]
+        public void SumLists_Forward_Should_Check_Overflow()
+        {
+            //arrange
+            var first = new MySinglyLinkedList<int>();
+            first.AddLast(new MySinglyLinkedListNode<int>(8));
+            first.AddLast(new MySinglyLinkedListNode<int>(7));
+            first.AddLast(new MySinglyLinkedListNode<int>(9));
+
+            var second = new MySinglyLinkedList<int>();
+            second.AddLast(new MySinglyLinkedListNode<int>(5));
+            second.AddLast(new MySinglyLinkedListNode<int>(8));
+            second.AddLast(new MySinglyLinkedListNode<int>(6));
+
+            var resultList = new MySinglyLinkedList<int>();
+            resultList.AddLast(new MySinglyLinkedListNode<int>(1));
+            resultList.AddLast(new MySinglyLinkedListNode<int>(4));
+            resultList.AddLast(new MySinglyLinkedListNode<int>(6));
+            resultList.AddLast(new MySinglyLinkedListNode<int>(5));
+
+            //act
+            var result = _linkedList.SumLists_Forward(first, second);
+
+            //assert
+            result.Count.ShouldBeEquivalentTo(resultList.Count);
+            var h1 = result.Head;
+            var h2 = resultList.Head;
+
+            while (h1 != null)
+            {
+                h1.Data.ShouldBeEquivalentTo(h2.Data);
+                h1 = h1.Next;
+                h2 = h2.Next;
+            }
+        }
+
+        [Fact]
+        public void SumLists_Forward_Should_Check_Empty_And_Not_Length()
+        {
+            //arrange
+            var first = new MySinglyLinkedList<int>();
+
+            var second = new MySinglyLinkedList<int>();
+            second.AddLast(new MySinglyLinkedListNode<int>(5));
+            second.AddLast(new MySinglyLinkedListNode<int>(8));
+            second.AddLast(new MySinglyLinkedListNode<int>(6));
+
+            var resultList = new MySinglyLinkedList<int>();
+            resultList.AddLast(new MySinglyLinkedListNode<int>(5));
+            resultList.AddLast(new MySinglyLinkedListNode<int>(8));
+            resultList.AddLast(new MySinglyLinkedListNode<int>(6));
+
+            //act
+            var result = _linkedList.SumLists_Forward(first, second);
+
+            //assert
+            result.Count.ShouldBeEquivalentTo(resultList.Count);
+            var h1 = result.Head;
+            var h2 = resultList.Head;
+
+            while (h1 != null)
+            {
+                h1.Data.ShouldBeEquivalentTo(h2.Data);
+                h1 = h1.Next;
+                h2 = h2.Next;
+            }
+        }
+
+        [Fact]
+        public void SumLists_Forward_Should_Check_Nines()
+        {
+            //arrange
+            var first = new MySinglyLinkedList<int>();
+            first.AddLast(new MySinglyLinkedListNode<int>(1));
+
+            var second = new MySinglyLinkedList<int>();
+            second.AddLast(new MySinglyLinkedListNode<int>(9));
+            second.AddLast(new MySinglyLinkedListNode<int>(9));
+            second.AddLast(new MySinglyLinkedListNode<int>(9));
+
+            var resultList = new MySinglyLinkedList<int>();
+            resultList.AddLast(new MySinglyLinkedListNode<int>(1));
+            resultList.AddLast(new MySinglyLinkedListNode<int>(0));
+            resultList.AddLast(new MySinglyLinkedListNode<int>(0));
+            resultList.AddLast(new MySinglyLinkedListNode<int>(0));
+
+            //act
+            var result = _linkedList.SumLists_Forward(first, second);
+
+            //assert
+            result.Count.ShouldBeEquivalentTo(resultList.Count);
+            var h1 = result.Head;
+            var h2 = resultList.Head;
+
+            while (h1 != null)
+            {
+                h1.Data.ShouldBeEquivalentTo(h2.Data);
+                h1 = h1.Next;
+                h2 = h2.Next;
+            }
+        }
     }
 }

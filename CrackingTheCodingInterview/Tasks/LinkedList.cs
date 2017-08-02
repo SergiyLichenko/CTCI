@@ -138,12 +138,99 @@ namespace Tasks
                     lowerHead.Next = new MySinglyLinkedListNode<int>(higherHead.Data);
                     lowerHead = lowerHead.Next;
                 }
-              
+
                 higherHead = higherHead.Next;
             }
 
 
             return lowerList;
+        }
+
+        public MySinglyLinkedList<int> SumLists_Backward(MySinglyLinkedList<int> first,
+            MySinglyLinkedList<int> second)
+        {
+            if (first == null || second == null)
+                throw new ArgumentNullException();
+
+            var h1 = first.Head;
+            var h2 = second.Head;
+            var result = new MySinglyLinkedList<int>();
+
+            int carry = 0;
+            while (h1 != null && h2 != null)
+            {
+                var number = h1.Data + h2.Data + carry;
+                if (number > 9)
+                {
+                    carry = 1;
+                    number %= 10;
+                }
+                else
+                    carry = 0;
+                result.AddLast(new MySinglyLinkedListNode<int>(number));
+
+                h1 = h1.Next;
+                h2 = h2.Next;
+            }
+            MySinglyLinkedListNode<int> remainder = h1 ?? h2;
+
+            while (remainder != null)
+            {
+                var number = remainder.Data + carry;
+                if (number > 9)
+                {
+                    number %= 10;
+                    carry = 1;
+                }
+                else
+                    carry = 0;
+
+                result.AddLast(new MySinglyLinkedListNode<int>(number));
+                remainder = remainder.Next;
+            }
+            if (carry != 0)
+                result.AddLast(new MySinglyLinkedListNode<int>(carry));
+
+            return result;
+        }
+
+        public MySinglyLinkedList<int> SumLists_Forward(MySinglyLinkedList<int> first,
+            MySinglyLinkedList<int> second)
+        {
+            if (first == null || second == null)
+                throw new ArgumentNullException();
+
+            if (first.Count != second.Count)
+            {
+                var count = Math.Abs(first.Count - second.Count);
+                var smallerList = first.Count > second.Count ? second : first;
+                while(count-->0)
+                    smallerList.AddFirst(new MySinglyLinkedListNode<int>(0));
+            }
+
+            var result = new MySinglyLinkedList<int>();
+            var carry = SumLists_ForwardHelper(first.Head, second.Head, result);
+
+            if (carry)
+                result.AddFirst(new MySinglyLinkedListNode<int>(1));
+
+            return result;
+        }
+
+
+        private bool SumLists_ForwardHelper(MySinglyLinkedListNode<int> first,
+            MySinglyLinkedListNode<int> second,
+            MySinglyLinkedList<int> result)
+        {
+            if (first == null || second == null)
+                return false;
+            bool carry = false;
+            if (first.Next != null && second.Next != null)
+                carry = SumLists_ForwardHelper(first.Next,second.Next,result);
+
+            var number = first.Data + second.Data + (carry ? 1 : 0);
+            result.AddFirst(new MySinglyLinkedListNode<int>(number % 10)); ;
+            return number > 9;
         }
     }
 }

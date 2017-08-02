@@ -204,7 +204,7 @@ namespace Tasks
             {
                 var count = Math.Abs(first.Count - second.Count);
                 var smallerList = first.Count > second.Count ? second : first;
-                while(count-->0)
+                while (count-- > 0)
                     smallerList.AddFirst(new MySinglyLinkedListNode<int>(0));
             }
 
@@ -226,11 +226,41 @@ namespace Tasks
                 return false;
             bool carry = false;
             if (first.Next != null && second.Next != null)
-                carry = SumLists_ForwardHelper(first.Next,second.Next,result);
+                carry = SumLists_ForwardHelper(first.Next, second.Next, result);
 
             var number = first.Data + second.Data + (carry ? 1 : 0);
             result.AddFirst(new MySinglyLinkedListNode<int>(number % 10)); ;
             return number > 9;
+        }
+
+        public bool Palindrome(MySinglyLinkedList<int> list)
+        {
+            if (list == null)
+                throw new ArgumentNullException();
+            if (list.Count < 2)
+                return true;
+
+            var depth = list.Count / 2;
+            var nextNode = list.Head;
+            return PalindromeHelper(list.Head,ref nextNode, depth,
+                list.Count % 2 == 0);
+        }
+
+        private bool PalindromeHelper(MySinglyLinkedListNode<int> node,
+           ref MySinglyLinkedListNode<int> nextNode, int depth, bool isEvenLength)
+        {
+            depth--;
+            if (depth > 0)
+            {
+                if (!PalindromeHelper(node.Next,ref nextNode, depth, isEvenLength))
+                    return false;
+                nextNode = nextNode.Next;
+            }
+
+            if (depth == 0)
+                nextNode = isEvenLength ? node.Next : node.Next.Next;
+
+            return nextNode.Data == node.Data;
         }
     }
 }

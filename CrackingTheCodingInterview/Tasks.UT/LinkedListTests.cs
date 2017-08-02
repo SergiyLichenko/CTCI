@@ -992,5 +992,118 @@ namespace Tasks.UT
                 h2 = h2.Next;
             }
         }
+
+        [Fact]
+        public void Palindrome_Should_Check_Is_Null()
+        {
+            //arrange
+
+            //act
+            Action act = () => _linkedList.Palindrome(null);
+
+            //assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void Palindrome_Should_Check_Empty_List()
+        {
+            //arrange
+            var list = new MySinglyLinkedList<int>();
+
+            //act
+            var result = _linkedList.Palindrome(list);
+
+            //assert
+            result.ShouldBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public void Palindrome_Should_Check_Palindrome_True_Odd_Length()
+        {
+            //arrange
+            var list = new MySinglyLinkedList<int>();
+            list.AddLast(new MySinglyLinkedListNode<int>(1));
+            list.AddLast(new MySinglyLinkedListNode<int>(2));
+            list.AddLast(new MySinglyLinkedListNode<int>(3));
+            list.AddLast(new MySinglyLinkedListNode<int>(2));
+            list.AddLast(new MySinglyLinkedListNode<int>(1));
+
+            //act
+            var result = _linkedList.Palindrome(list);
+
+            //assert
+            result.ShouldBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public void Palindrome_Should_Check_Palindrome_False_Odd_Length()
+        {
+            //arrange
+            var list = new MySinglyLinkedList<int>();
+            list.AddLast(new MySinglyLinkedListNode<int>(1));
+            list.AddLast(new MySinglyLinkedListNode<int>(2));
+            list.AddLast(new MySinglyLinkedListNode<int>(3));
+            list.AddLast(new MySinglyLinkedListNode<int>(3));
+            list.AddLast(new MySinglyLinkedListNode<int>(1));
+
+            //act
+            var result = _linkedList.Palindrome(list);
+
+            //assert
+            result.ShouldBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public void Palindrome_Should_Check_Palindrome_True_Even_Length()
+        {
+            //arrange
+            var list = new MySinglyLinkedList<int>();
+            list.AddLast(new MySinglyLinkedListNode<int>(1));
+            list.AddLast(new MySinglyLinkedListNode<int>(2));
+            list.AddLast(new MySinglyLinkedListNode<int>(3));
+            list.AddLast(new MySinglyLinkedListNode<int>(3));
+            list.AddLast(new MySinglyLinkedListNode<int>(2));
+            list.AddLast(new MySinglyLinkedListNode<int>(1));
+
+            //act
+            var result = _linkedList.Palindrome(list);
+
+            //assert
+            result.ShouldBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public void Palindrome_Should_Check_Palindrome_False_Even_Length()
+        {
+            //arrange
+            var list = new MySinglyLinkedList<int>();
+            list.AddLast(new MySinglyLinkedListNode<int>(1));
+            list.AddLast(new MySinglyLinkedListNode<int>(2));
+            list.AddLast(new MySinglyLinkedListNode<int>(3));
+            list.AddLast(new MySinglyLinkedListNode<int>(3));
+            list.AddLast(new MySinglyLinkedListNode<int>(4));
+            list.AddLast(new MySinglyLinkedListNode<int>(1));
+
+            //act
+            var result = _linkedList.Palindrome(list);
+
+            //assert
+            result.ShouldBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public void Palindrome_Should_Check_Palindrome_Length_One()
+        {
+            //arrange
+            var list = new MySinglyLinkedList<int>();
+            list.AddLast(new MySinglyLinkedListNode<int>(1));
+
+            //act
+            var result = _linkedList.Palindrome(list);
+
+            //assert
+            result.ShouldBeEquivalentTo(true);
+        }
     }
 }

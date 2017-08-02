@@ -1248,5 +1248,64 @@ namespace Tasks.UT
             //assert
             result.ShouldBeEquivalentTo(null);
         }
+
+        [Fact]
+        public void LoopDetection_Should_Throw_If_Null()
+        {
+            //arrange
+
+            //act
+            Action act = () => _linkedList.LoopDetection(null);
+
+            //assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void LoopDetection_Should_Check_Example()
+        {
+            //arrange
+            var node1 = new MySinglyLinkedListNode<int>(1);
+            var node2 = new MySinglyLinkedListNode<int>(2);
+            var node3 = new MySinglyLinkedListNode<int>(3);
+            var node4 = new MySinglyLinkedListNode<int>(4);
+            var node5 = new MySinglyLinkedListNode<int>(5);
+
+            node1.Next = node2;
+            node2.Next = node3;
+            node3.Next = node4;
+            node4.Next = node5;
+            node5.Next = node3;
+
+
+            //act
+            var result = _linkedList.LoopDetection(node1);
+
+            //assert
+            result.ShouldBeEquivalentTo(node3);
+        }
+
+        [Fact]
+        public void LoopDetection_Should_Check_False()
+        {
+            //arrange
+            var node1 = new MySinglyLinkedListNode<int>(1);
+            var node2 = new MySinglyLinkedListNode<int>(2);
+            var node3 = new MySinglyLinkedListNode<int>(3);
+            var node4 = new MySinglyLinkedListNode<int>(4);
+            var node5 = new MySinglyLinkedListNode<int>(5);
+
+            node1.Next = node2;
+            node2.Next = node3;
+            node3.Next = node4;
+            node4.Next = node5;
+
+            //act
+            var result = _linkedList.LoopDetection(node1);
+
+            //assert
+            result.ShouldBeEquivalentTo(null);
+        }
+
     }
 }

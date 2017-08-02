@@ -301,5 +301,23 @@ namespace Tasks
 
             return nextNode;
         }
+
+        public MySinglyLinkedListNode<int> LoopDetection(MySinglyLinkedListNode<int> list)
+        {
+            if(list == null)
+                throw new ArgumentNullException();
+
+            var map = new HashSet<MySinglyLinkedListNode<int>>();
+
+            var head = list;
+            while (head != null)
+            {
+                if (map.Contains(head))
+                    return head;
+                map.Add(head);
+                head = head.Next;
+            }
+            return null;
+        }
     }
 }

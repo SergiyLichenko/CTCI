@@ -40,11 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MyArrayQueue.cs" />
     <Compile Include="MyDoublyLinkedList.cs" />
     <Compile Include="MyHashTable.cs" />
+    <Compile Include="MyLinkedListQueue.cs" />
+    <Compile Include="MyLinkedListStack.cs" />
     <Compile Include="MySinglyLinkedList.cs" />
     <Compile Include="MyStringBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MyArrayStack.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

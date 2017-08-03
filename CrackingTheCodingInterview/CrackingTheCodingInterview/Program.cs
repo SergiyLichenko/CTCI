@@ -8,7 +8,9 @@ namespace GitHub
     {
         static void Main()
         {
-
+            var array = new int[] {1, 2, 3, 4, 5};
+            var stack =new Queue<int>(null);
+            
         }
     }
 }

@@ -847,7 +847,7 @@ namespace Tasks.UT
         {
             //arrange
             var stack = new ThreeInOneStack<int>();
-            stack.Push(0,0);
+            stack.Push(0, 0);
             stack.Push(1, 1);
             stack.Push(2, 2);
 
@@ -897,6 +897,192 @@ namespace Tasks.UT
             stack.Capacity1.ShouldBeEquivalentTo(4);
             stack.Capacity2.ShouldBeEquivalentTo(4);
             stack.Capacity3.ShouldBeEquivalentTo(4);
+        }
+
+        [Fact]
+        public void StackMin_Should_Create_Default()
+        {
+            //arrange
+
+            //act
+            var stack = new StackMin();
+
+            //assert
+            stack.Count.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void StackMin_Should_Create_With_Collection()
+        {
+            //arrange
+            var data = new int[] { 1, 2, 3 };
+            //act
+            var stack = new StackMin(data);
+
+            //assert
+            stack.Count.ShouldBeEquivalentTo(3);
+        }
+
+        [Fact]
+        public void StackMin_Should_Create_With_Collection_Throw_If_Null()
+        {
+            //arrange
+
+            //act
+            Action act = () => new StackMin(null);
+
+            //assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void StackMin_Should_Push()
+        {
+            //arrange
+            var stack = new StackMin();
+
+            //act
+            stack.Push(1);
+            var result = stack.Peek();
+
+            //assert
+            stack.Count.ShouldBeEquivalentTo(1);
+            result.ShouldBeEquivalentTo(1);
+        }
+
+        [Fact]
+        public void StackMin_Should_Peek()
+        {
+            //arrange
+            var stack = new StackMin(new []{ 1 });
+
+            //act
+            var result = stack.Peek();
+            
+            //assert
+            stack.Count.ShouldBeEquivalentTo(1);
+            result.ShouldBeEquivalentTo(1);
+        }
+
+        [Fact]
+        public void StackMin_Should_Peek_Throw_If_Empty()
+        {
+            //arrange
+            var stack = new StackMin();
+
+            //act
+            Action act = () => stack.Peek();
+
+            //assert
+            act.ShouldThrow<InvalidOperationException>();
+        }
+
+        [Fact]
+        public void StackMin_Should_Pop()
+        {
+            //arrange
+            var stack = new StackMin(new[] { 1 });
+
+            //act
+            var result = stack.Pop();
+
+            //assert
+            stack.Count.ShouldBeEquivalentTo(0);
+            result.ShouldBeEquivalentTo(1);
+        }
+
+        [Fact]
+        public void StackMin_Should_Pop_Throw_If_Empty()
+        {
+            //arrange
+            var stack = new StackMin();
+
+            //act
+            Action act = ()=> stack.Pop();
+
+            //assert
+            act.ShouldThrow<InvalidOperationException>();
+        }
+
+        [Fact]
+        public void StackMin_Should_Check_Is_Empty_True()
+        {
+            //arrange
+            var stack = new StackMin();
+
+            //act
+            var result = stack.IsEmpty();
+
+            //assert
+            result.ShouldBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public void StackMin_Should_Check_Is_Empty_False()
+        {
+            //arrange
+            var stack = new StackMin();
+            stack.Push(1);
+
+            //act
+            var result = stack.IsEmpty();
+
+            //assert
+            result.ShouldBeEquivalentTo(false);
+        }
+
+
+        [Fact]
+        public void StackMin_Should_Min_Throw_If_Empty()
+        {
+            //arrange
+            var stack = new StackMin();
+
+            //act
+            Action act = () => stack.Min();
+
+            //assert
+            act.ShouldThrow<InvalidOperationException>();
+        }
+
+        [Fact]
+        public void StackMin_Should_Check_Min()
+        {
+            //arrange
+            var stack = new StackMin();
+            stack.Push(1);
+            stack.Push(3);
+            stack.Push(5);
+            stack.Push(-1);
+            stack.Push(5);
+
+            //act
+            var result = stack.Min();
+
+            //assert
+            result.ShouldBeEquivalentTo(-1);
+            stack.Count.ShouldBeEquivalentTo(5);
+        }
+
+        [Fact]
+        public void StackMin_Should_Check_Min_When_Pop()
+        {
+            //arrange
+            var stack = new StackMin();
+            stack.Push(1);
+            stack.Push(3);
+            stack.Push(5);
+            stack.Push(-1);
+            stack.Push(5);
+
+            stack.Pop();
+            stack.Pop();
+            //act
+            var result = stack.Min();
+
+            //assert
+            result.ShouldBeEquivalentTo(1);
+            stack.Count.ShouldBeEquivalentTo(3);
         }
     }
 }

@@ -954,11 +954,11 @@ namespace Tasks.UT
         public void StackMin_Should_Peek()
         {
             //arrange
-            var stack = new StackMin(new []{ 1 });
+            var stack = new StackMin(new[] { 1 });
 
             //act
             var result = stack.Peek();
-            
+
             //assert
             stack.Count.ShouldBeEquivalentTo(1);
             result.ShouldBeEquivalentTo(1);
@@ -998,7 +998,7 @@ namespace Tasks.UT
             var stack = new StackMin();
 
             //act
-            Action act = ()=> stack.Pop();
+            Action act = () => stack.Pop();
 
             //assert
             act.ShouldThrow<InvalidOperationException>();
@@ -1084,5 +1084,350 @@ namespace Tasks.UT
             result.ShouldBeEquivalentTo(1);
             stack.Count.ShouldBeEquivalentTo(3);
         }
+
+        [Fact]
+        public void StackOfPlates_Should_Create_Default()
+        {
+            //arrange
+            int maxInnerStackSize = 3;
+
+            //act
+            var stack = new SetOfStacks<int>(maxInnerStackSize);
+
+            //assert
+            stack.Count.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void StackOfPlates_Should_Create_Default_Throw_If_Size_Is_Negative()
+        {
+            //arrange
+            int maxInnerStackSize = -3;
+
+            //act
+            Action act = () => new SetOfStacks<int>(maxInnerStackSize);
+
+            //assert
+            act.ShouldThrow<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void StackOfPlates_Should_Create_With_Collection()
+        {
+            //arrange
+            int maxInnerStackSize = 3;
+            var array = new[] { 1, 2, 3, 4 };
+
+            //act
+            var stack = new SetOfStacks<int>(array, maxInnerStackSize);
+
+            //assert
+            stack.Count.ShouldBeEquivalentTo(array.Length);
+        }
+
+        [Fact]
+        public void StackOfPlates_Should_Create_With_Collection_Throw_If_Null()
+        {
+            //arrange
+            int maxInnerStackSize = 3;
+
+            //act
+            Action act = () => new SetOfStacks<int>(null, maxInnerStackSize);
+
+            //assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void StackOfPlates_Should_Push()
+        {
+            //arrange
+            int maxInnerStackSize = 3;
+            var stack = new SetOfStacks<int>(maxInnerStackSize);
+
+            //act
+            stack.Push(1);
+
+            //assert
+            stack.Count.ShouldBeEquivalentTo(1);
+        }
+
+        [Fact]
+        public void StackOfPlates_Should_Push_Multiple_Inner_Stacks()
+        {
+            //arrange
+            int maxInnerStackSize = 2;
+            var stack = new SetOfStacks<int>(maxInnerStackSize);
+
+            //act
+            stack.Push(1);
+            stack.Push(1);
+            stack.Push(2);
+            stack.Push(2);
+            stack.Push(3);
+
+            //assert
+            stack.Count.ShouldBeEquivalentTo(5);
+        }
+
+        [Fact]
+        public void StackOfPlates_Should_Peek()
+        {
+            //arrange
+            int maxInnerStackSize = 2;
+
+            var stack = new SetOfStacks<int>(maxInnerStackSize);
+            stack.Push(1);
+
+            //act
+            var result = stack.Peek();
+
+            //assert
+            result.ShouldBeEquivalentTo(1);
+            stack.Count.ShouldBeEquivalentTo(1);
+        }
+
+        [Fact]
+        public void StackOfPlates_Should_Peek_Throw_If_Empty()
+        {
+            //arrange
+            int maxInnerStackSize = 2;
+            var stack = new SetOfStacks<int>(maxInnerStackSize);
+
+            //act
+            Action act = () => stack.Peek();
+
+            //assert
+            act.ShouldThrow<InvalidOperationException>();
+        }
+
+        [Fact]
+        public void StackOfPlates_Should_Pop()
+        {
+            //arrange
+            int maxInnerStackSize = 2;
+            var stack = new SetOfStacks<int>(maxInnerStackSize);
+            stack.Push(1);
+
+            //act
+            var result = stack.Pop();
+
+            //assert
+            result.ShouldBeEquivalentTo(1);
+            stack.Count.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void StackOfPlates_Should_Pop_Throw_If_Empty()
+        {
+
+            //arrange
+            int maxInnerStackSize = 2;
+            var stack = new SetOfStacks<int>(maxInnerStackSize);
+
+            //act
+            Action act = () => stack.Pop();
+
+            //assert
+            act.ShouldThrow<InvalidOperationException>();
+        }
+
+        [Fact]
+        public void StackOfPlates_Should_Pop_Multiple()
+        {
+            //arrange
+            int maxInnerStackSize = 2;
+            var stack = new SetOfStacks<int>(maxInnerStackSize);
+            stack.Push(1);
+            stack.Push(2);
+            stack.Push(3);
+            stack.Push(4);
+            stack.Push(5);
+
+            //act
+
+            //assert
+            stack.Pop().ShouldBeEquivalentTo(5);
+            stack.Pop().ShouldBeEquivalentTo(4);
+            stack.Pop().ShouldBeEquivalentTo(3);
+            stack.Pop().ShouldBeEquivalentTo(2);
+            stack.Pop().ShouldBeEquivalentTo(1);
+            stack.Count.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void StackOfPlates_Should_Push_Pop_Check_Order()
+        {
+            //arrange
+            int maxInnerStackSize = 2;
+            var stack = new SetOfStacks<int>(maxInnerStackSize);
+
+            stack.Push(1);
+            stack.Push(2);
+            stack.Push(3);
+            stack.Push(4);
+            stack.Push(5);
+
+            //act
+            stack.Pop();
+            stack.Pop();
+            stack.Push(6);
+            stack.Push(7);
+
+            stack.Pop();
+            stack.Pop();
+            stack.Pop();
+            stack.Pop();
+
+            stack.Push(8);
+            stack.Push(9);
+
+            //assert
+            stack.Pop().ShouldBeEquivalentTo(9);
+            stack.Pop().ShouldBeEquivalentTo(8);
+            stack.Pop().ShouldBeEquivalentTo(1);
+            stack.Count.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void StackOfPlates_Should_Push_Pop_Check_Two_Elements()
+        {
+            //arrange
+            int maxInnerStackSize = 1;
+            var stack = new SetOfStacks<int>(maxInnerStackSize);
+
+            //act
+            stack.Push(1);
+            stack.Push(2);
+            stack.Pop();
+            stack.Pop();
+            stack.Push(3);
+            stack.Pop();
+            stack.Push(4);
+            stack.Push(5);
+
+            //assert
+            stack.Pop().ShouldBeEquivalentTo(5);
+            stack.Pop().ShouldBeEquivalentTo(4);
+            stack.Count.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void StackOfPlates_Should_Check_Is_Empty_True()
+        {
+            //arrange
+            int maxInnerStackSize = 1;
+            var stack = new SetOfStacks<int>(maxInnerStackSize);
+            stack.Push(1);
+            stack.Pop();
+
+            //act
+            var result = stack.IsEmpty();
+
+            //assert
+            result.ShouldBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public void StackOfPlates_Should_Check_Is_Empty_False()
+        {
+            //arrange
+            int maxInnerStackSize = 1;
+            var stack = new SetOfStacks<int>(maxInnerStackSize);
+            stack.Push(1);
+
+            //act
+            var result = stack.IsEmpty();
+
+            //assert
+            result.ShouldBeEquivalentTo(false);
+        }
+
+
+        [Fact]
+        public void StackOfPlates_Should_PopAt()
+        {
+            //arrange
+            int maxInnerStackSize = 1;
+            var stack = new SetOfStacks<int>(maxInnerStackSize);
+            stack.Push(1);
+
+            //act
+            var result = stack.PopAt(0);
+
+            //assert
+            result.ShouldBeEquivalentTo(1);
+        }
+
+        [Fact]
+        public void StackOfPlates_Should_PopAt_Throw_If_Not_In_Stack_Range()
+        {
+            //arrange
+            int maxInnerStackSize = 1;
+            var stack = new SetOfStacks<int>(maxInnerStackSize);
+
+            //act
+            Action actLower = () => stack.PopAt(-1);
+            Action actHigher = () => stack.PopAt(4);
+
+            //assert
+            actLower.ShouldThrow<ArgumentOutOfRangeException>();
+            actHigher.ShouldThrow<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void StackOfPlates_Should_PopAt_Check_Rolling()
+        {
+            //arrange
+            int maxInnerStackSize = 2;
+            var stack = new SetOfStacks<int>(maxInnerStackSize);
+            stack.Push(1);
+            stack.Push(2);
+            stack.Push(3);
+            stack.Push(4);
+            stack.Push(5);
+
+            //act
+            var result = stack.PopAt(1);
+            stack.Push(6);
+
+            //assert
+            result.ShouldBeEquivalentTo(4);
+            stack.Count.ShouldBeEquivalentTo(5);
+
+            stack.Pop().ShouldBeEquivalentTo(6);
+            stack.Pop().ShouldBeEquivalentTo(5);
+            stack.Pop().ShouldBeEquivalentTo(3);
+            stack.Pop().ShouldBeEquivalentTo(2);
+            stack.Pop().ShouldBeEquivalentTo(1);
+
+            stack.Count.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void StackOfPlates_Should_PopAt_Check_Last()
+        {
+            //arrange
+            int maxInnerStackSize = 2;
+            var stack = new SetOfStacks<int>(maxInnerStackSize);
+            stack.Push(1);
+            stack.Push(2);
+            stack.Push(3);
+            stack.Push(4);
+            stack.Push(5);
+
+            //act
+
+            //assert
+            stack.Count.ShouldBeEquivalentTo(5);
+
+            stack.PopAt(2).ShouldBeEquivalentTo(5);
+            stack.PopAt(1).ShouldBeEquivalentTo(4);
+            stack.PopAt(1).ShouldBeEquivalentTo(3);
+            stack.PopAt(0).ShouldBeEquivalentTo(2);
+            stack.PopAt(0).ShouldBeEquivalentTo(1);
+
+            stack.Count.ShouldBeEquivalentTo(0);
+        }            
     }
 }

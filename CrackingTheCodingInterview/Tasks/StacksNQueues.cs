@@ -8,14 +8,6 @@ using DataStructures;
 
 namespace Tasks
 {
-    public class StacksNQueues
-    {
-
-    }
-
-
-
-
     //#1 Three In One
     public class ThreeInOneStack<T>
     {
@@ -420,13 +412,13 @@ namespace Tasks
 
             _firstStack.Push(item);
 
-            while(_secondStack.Count>0)
+            while (_secondStack.Count > 0)
                 _firstStack.Push(_secondStack.Pop());
         }
 
         public T Peek()
         {
-            if(Count == 0)
+            if (Count == 0)
                 throw new InvalidOperationException();
 
             return _firstStack.Peek();
@@ -447,5 +439,75 @@ namespace Tasks
 
         private bool IsLessThan<T>(T value, T other) where T : IComparable
             => value.CompareTo(other) < 0;
+    }
+
+    //#6 Animal Shelter
+    public class Animal
+    {
+        public int Order { get; set; }
+        public Animal() { }
+    }
+    public class Dog : Animal { }
+    public class Cat : Animal { }
+
+    public class AnimalShelterQueue
+    {
+        private MyDoublyLinkedList<Cat> _cats;
+        private MyDoublyLinkedList<Dog> _dogs;
+
+        public int Count => _cats.Count + _dogs.Count;
+        private int _order;
+        public AnimalShelterQueue()
+        {
+            _cats = new MyDoublyLinkedList<Cat>();
+            _dogs = new MyDoublyLinkedList<Dog>();
+        }
+
+        public void Enqueue(Animal animal)
+        {
+            if (animal == null)
+                throw new ArgumentNullException();
+
+            animal.Order = _order++;
+            if (animal is Dog dog)
+                _dogs.AddFirst(new MyDoublyLinkedListNode<Dog>(dog));
+            if (animal is Cat cat)
+                _cats.AddFirst(new MyDoublyLinkedListNode<Cat>(cat));
+        }
+
+        public Animal DequeueAny()
+        {
+            if (Count == 0)
+                throw new InvalidOperationException();
+
+            if (_dogs.Count == 0)
+                return DequeueCat();
+            if (_cats.Count == 0)
+                return DequeueDog();
+
+            if (_cats.Tail.Data.Order > _dogs.Tail.Data.Order)
+                return DequeueDog();
+            return DequeueCat();
+        }
+
+        public Dog DequeueDog()
+        {
+            if (_dogs.Count == 0)
+                throw new InvalidOperationException();
+
+            var dog = _dogs.Tail.Data;
+            _dogs.RemoveLast();
+            return dog;
+        }
+
+        public Cat DequeueCat()
+        {
+            if (_cats.Count == 0)
+                throw new InvalidOperationException();
+
+            var cat = _cats.Tail.Data;
+            _cats.RemoveLast();
+            return cat;
+        }
     }
 }

@@ -1763,5 +1763,209 @@ namespace Tasks.UT
             stack.Count.ShouldBeEquivalentTo(0);
             result.ShouldBeEquivalentTo(true);
         }
+
+        [Fact]
+        public void AnimalShelter_Should_Create_Default()
+        {
+            //arrange
+
+            //act
+            var shelter = new AnimalShelterQueue();
+
+            //assert
+            shelter.Count.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void AnimalShelter_Should_Enqueue_Dogs()
+        {
+            //arrange
+            var shelter = new AnimalShelterQueue();
+
+            //act
+            shelter.Enqueue(new Dog());
+            shelter.Enqueue(new Dog());
+
+            //assert
+            shelter.Count.ShouldBeEquivalentTo(2);
+        }
+
+        [Fact]
+        public void AnimalShelter_Should_Enqueue_Cats()
+        {
+            //arrange
+            var shelter = new AnimalShelterQueue();
+
+            //act
+            shelter.Enqueue(new Cat());
+            shelter.Enqueue(new Cat());
+
+            //assert
+            shelter.Count.ShouldBeEquivalentTo(2);
+        }
+
+        [Fact]
+        public void AnimalShelter_Should_Throw_DequeueAny_If_Empty()
+        {
+            //arrange
+            var shelter = new AnimalShelterQueue();
+            shelter.Enqueue(new Cat());
+            shelter.DequeueAny();
+
+            //act
+            Action act = () => shelter.DequeueAny();
+
+
+            //assert
+            act.ShouldThrow<InvalidOperationException>();
+            shelter.Count.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void AnimalShelter_Should_Throw_DequeueCat_If_Empty()
+        {
+            //arrange
+            var shelter = new AnimalShelterQueue();
+            shelter.Enqueue(new Dog());
+
+            //act
+            Action act = () => shelter.DequeueCat();
+
+
+            //assert
+            act.ShouldThrow<InvalidOperationException>();
+            shelter.Count.ShouldBeEquivalentTo(1);
+        }
+
+        [Fact]
+        public void AnimalShelter_Should_Throw_DequeueDog_If_Empty()
+        {
+            //arrange
+            var shelter = new AnimalShelterQueue();
+            shelter.Enqueue(new Cat());
+
+            //act
+            Action act = () => shelter.DequeueDog();
+
+
+            //assert
+            act.ShouldThrow<InvalidOperationException>();
+            shelter.Count.ShouldBeEquivalentTo(1);
+        }
+
+        [Fact]
+        public void AnimalShelter_Should_DequeueDog()
+        {
+            //arrange
+            var shelter = new AnimalShelterQueue();
+
+            var dog1 = new Dog();
+            var dog2 = new Dog();
+            var dog3 = new Dog();
+
+            var cat1 = new Cat();
+            var cat2 = new Cat();
+            var cat3 = new Cat();
+
+            shelter.Enqueue(cat1);
+            shelter.Enqueue(dog1);
+            shelter.Enqueue(cat2);
+            shelter.Enqueue(dog2);
+            shelter.Enqueue(dog3);
+            shelter.Enqueue(cat3);
+
+            //act
+
+            //assert
+            shelter.Count.ShouldBeEquivalentTo(6);
+
+            shelter.DequeueDog().ShouldBeEquivalentTo(dog1);
+            shelter.DequeueDog().ShouldBeEquivalentTo(dog2);
+            shelter.DequeueDog().ShouldBeEquivalentTo(dog3);
+
+            shelter.Count.ShouldBeEquivalentTo(3);
+        }
+
+        [Fact]
+        public void AnimalShelter_Should_DequeueCat()
+        {
+            //arrange
+            var shelter = new AnimalShelterQueue();
+
+            var dog1 = new Dog();
+            var dog2 = new Dog();
+            var dog3 = new Dog();
+
+            var cat1 = new Cat();
+            var cat2 = new Cat();
+            var cat3 = new Cat();
+
+            shelter.Enqueue(cat1);
+            shelter.Enqueue(dog1);
+            shelter.Enqueue(cat2);
+            shelter.Enqueue(dog2);
+            shelter.Enqueue(dog3);
+            shelter.Enqueue(cat3);
+
+            //act
+
+            //assert
+            shelter.Count.ShouldBeEquivalentTo(6);
+
+            shelter.DequeueCat().ShouldBeEquivalentTo(cat1);
+            shelter.DequeueCat().ShouldBeEquivalentTo(cat2);
+            shelter.DequeueCat().ShouldBeEquivalentTo(cat3);
+
+            shelter.Count.ShouldBeEquivalentTo(3);
+        }
+
+        [Fact]
+        public void AnimalShelter_Should_DequeueAny()
+        {
+            //arrange
+            var shelter = new AnimalShelterQueue();
+
+            var dog1 = new Dog();
+            var dog2 = new Dog();
+            var dog3 = new Dog();
+
+            var cat1 = new Cat();
+            var cat2 = new Cat();
+            var cat3 = new Cat();
+
+            shelter.Enqueue(cat1);
+            shelter.Enqueue(dog1);
+            shelter.Enqueue(cat2);
+            shelter.Enqueue(dog2);
+            shelter.Enqueue(dog3);
+            shelter.Enqueue(cat3);
+
+            //act
+
+            //assert
+            shelter.Count.ShouldBeEquivalentTo(6);
+
+            shelter.DequeueAny().ShouldBeEquivalentTo(cat1);
+            shelter.DequeueAny().ShouldBeEquivalentTo(dog1);
+            shelter.DequeueAny().ShouldBeEquivalentTo(cat2);
+            shelter.DequeueAny().ShouldBeEquivalentTo(dog2);
+            shelter.DequeueAny().ShouldBeEquivalentTo(dog3);
+            shelter.DequeueAny().ShouldBeEquivalentTo(cat3);
+
+            shelter.Count.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void AnimalShelter_Should_Throw_Enqueue_If_Null()
+        {
+            //arrange
+            var shelter = new AnimalShelterQueue();
+
+            //act
+            Action act = () => shelter.Enqueue(null);
+            
+            //assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
     }
 }

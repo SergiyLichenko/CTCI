@@ -1428,6 +1428,171 @@ namespace Tasks.UT
             stack.PopAt(0).ShouldBeEquivalentTo(1);
 
             stack.Count.ShouldBeEquivalentTo(0);
-        }            
+        }
+
+        [Fact]
+        public void QueueViaStacks_Should_Create_Default()
+        {
+            //arrange
+
+            //act
+            var queue = new MyQueue<int>();
+
+            //assert
+            queue.Count.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void QueueViaStacks_Should_Create_With_Collection()
+        {
+            //arrange
+            var array = new int[] { 1, 2, 3, 4, 5 };
+
+            //act
+            var queue = new MyQueue<int>(array);
+
+            //assert
+            queue.Count.ShouldBeEquivalentTo(5);
+        }
+
+        [Fact]
+        public void QueueViaStacks_Should_Create_With_Collection_Throw_If_Null()
+        {
+            //arrange
+
+            //act
+            Action act = () => new MyQueue<int>(null);
+
+            //assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void QueueViaStacks_Should_Enqueue()
+        {
+            //arrange
+            var queue = new MyQueue<int>();
+            
+            //act
+            queue.Enqueue(1);
+            queue.Enqueue(2);
+
+            //assert
+            queue.Count.ShouldBeEquivalentTo(2);
+        }
+
+        [Fact]
+        public void QueueViaStacks_Should_Peek()
+        {
+            //arrange
+            var queue = new MyQueue<int>();
+            queue.Enqueue(1);
+            queue.Enqueue(2);
+
+            //act
+            var result = queue.Peek();
+
+            //assert
+            queue.Count.ShouldBeEquivalentTo(2);
+            result.ShouldBeEquivalentTo(1);
+        }
+
+        [Fact]
+        public void QueueViaStacks_Should_Peek_Throw_If_Empty()
+        {
+            //arrange
+            var queue = new MyQueue<int>();
+
+            //act
+            Action act = ()=>queue.Peek();
+
+            //assert
+            act.ShouldThrow<InvalidOperationException>();
+            queue.Count.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void QueueViaStacks_Should_Dequeue_Throw_If_Empty()
+        {
+            //arrange
+            var queue = new MyQueue<int>();
+
+            //act
+            Action act = () => queue.Dequeue();
+
+            //assert
+            act.ShouldThrow<InvalidOperationException>();
+            queue.Count.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void QueueViaStacks_Should_Dequeue()
+        {
+            //arrange
+            var queue = new MyQueue<int>();
+            queue.Enqueue(1);
+            queue.Enqueue(2);
+            queue.Enqueue(3);
+            
+            //act
+            var result =  queue.Dequeue();
+
+            //assert
+            queue.Count.ShouldBeEquivalentTo(2);
+            result.ShouldBeEquivalentTo(1);
+        }
+
+        [Fact]
+        public void QueueViaStacks_Should_Check_Enqueue_Dequeue_Order()
+        {
+            //arrange
+            var queue = new MyQueue<int>();
+
+            //act
+            queue.Enqueue(1);
+            queue.Enqueue(2);
+            queue.Enqueue(3);
+
+            queue.Dequeue();
+            queue.Dequeue();
+
+            queue.Enqueue(4);
+            queue.Enqueue(5);
+
+            //assert
+            queue.Count.ShouldBeEquivalentTo(3);
+            queue.Dequeue().ShouldBeEquivalentTo(3);
+            queue.Dequeue().ShouldBeEquivalentTo(4);
+            queue.Dequeue().ShouldBeEquivalentTo(5);
+        }
+
+        [Fact]
+        public void QueueViaStacks_Should_Check_Is_Empty_False()
+        {
+            //arrange
+            var queue = new MyQueue<int>();
+            queue.Enqueue(2);
+            
+            //act
+            var result = queue.IsEmpty();
+
+            //assert
+            result.ShouldBeEquivalentTo(false);
+            queue.Count.ShouldBeEquivalentTo(1);
+        }
+
+        [Fact]
+        public void QueueViaStacks_Should_Check_Is_Empty_True()
+        {
+            //arrange
+            var queue = new MyQueue<int>();
+
+            //act
+            var result = queue.IsEmpty();
+
+            //assert
+            result.ShouldBeEquivalentTo(true);
+            queue.Count.ShouldBeEquivalentTo(0);
+        }
     }
 }

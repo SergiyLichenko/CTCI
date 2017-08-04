@@ -1472,7 +1472,7 @@ namespace Tasks.UT
         {
             //arrange
             var queue = new MyQueue<int>();
-            
+
             //act
             queue.Enqueue(1);
             queue.Enqueue(2);
@@ -1504,7 +1504,7 @@ namespace Tasks.UT
             var queue = new MyQueue<int>();
 
             //act
-            Action act = ()=>queue.Peek();
+            Action act = () => queue.Peek();
 
             //assert
             act.ShouldThrow<InvalidOperationException>();
@@ -1533,9 +1533,9 @@ namespace Tasks.UT
             queue.Enqueue(1);
             queue.Enqueue(2);
             queue.Enqueue(3);
-            
+
             //act
-            var result =  queue.Dequeue();
+            var result = queue.Dequeue();
 
             //assert
             queue.Count.ShouldBeEquivalentTo(2);
@@ -1572,7 +1572,7 @@ namespace Tasks.UT
             //arrange
             var queue = new MyQueue<int>();
             queue.Enqueue(2);
-            
+
             //act
             var result = queue.IsEmpty();
 
@@ -1593,6 +1593,175 @@ namespace Tasks.UT
             //assert
             result.ShouldBeEquivalentTo(true);
             queue.Count.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void SortStack_Should_Create_Default()
+        {
+            //arrange
+
+            //act
+            var stack = new SortedStack<int>();
+
+            //assert
+            stack.Count.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void SortStack_Should_Create_With_Collection()
+        {
+            //arrange
+            var array = new int[] { 1, 2, 3, 4, 5, 6 };
+
+            //act
+            var stack = new SortedStack<int>(array);
+
+            //assert
+            stack.Count.ShouldBeEquivalentTo(6);
+        }
+
+        [Fact]
+        public void SortStack_Should_Create_With_Collection_Throw_If_Empty()
+        {
+            //arrange
+
+            //act
+            Action act = () => new SortedStack<int>(null);
+
+            //assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void SortStack_Should_Push()
+        {
+            //arrange
+            var stack = new SortedStack<int>();
+
+            //act
+            stack.Push(1);
+            stack.Push(2);
+            stack.Push(3);
+            stack.Push(4);
+
+            //assert
+            stack.Count.ShouldBeEquivalentTo(4);
+        }
+
+        [Fact]
+        public void SortStack_Should_Peek_Throw_If_Empty()
+        {
+            //arrange
+            var stack = new SortedStack<int>();
+
+            //act
+            Action act = () => stack.Peek();
+
+            //assert
+            act.ShouldThrow<InvalidOperationException>();
+        }
+
+        [Fact]
+        public void SortStack_Should_Pop_Throw_If_Empty()
+        {
+            //arrange
+            var stack = new SortedStack<int>();
+
+            //act
+            Action act = () => stack.Pop();
+
+            //assert
+            act.ShouldThrow<InvalidOperationException>();
+        }
+
+        [Fact]
+        public void SortStack_Should_Peek()
+        {
+            //arrange
+            var stack = new SortedStack<int>();
+            stack.Push(2);
+            stack.Push(-1);
+            stack.Push(4);
+            stack.Push(3);
+
+            //act
+            var result = stack.Peek();
+
+            //assert
+            result.ShouldBeEquivalentTo(-1);
+            stack.Count.ShouldBeEquivalentTo(4);
+        }
+
+        [Fact]
+        public void SortStack_Should_Pop()
+        {
+            //arrange
+            var stack = new SortedStack<int>();
+            stack.Push(2);
+            stack.Push(-1);
+            stack.Push(4);
+            stack.Push(3);
+
+            //act
+            var result = stack.Pop();
+
+            //assert
+            result.ShouldBeEquivalentTo(-1);
+            stack.Count.ShouldBeEquivalentTo(3);
+        }
+
+        [Fact]
+        public void SortStack_Should_Check_Pop_Order()
+        {
+            //arrange
+            var stack = new SortedStack<int>();
+            stack.Push(2);
+            stack.Push(-1);
+            stack.Push(4);
+            stack.Push(3);
+
+            //act
+
+            //assert
+            stack.Count.ShouldBeEquivalentTo(4);
+
+            stack.Pop().ShouldBeEquivalentTo(-1);
+            stack.Pop().ShouldBeEquivalentTo(2);
+            stack.Pop().ShouldBeEquivalentTo(3);
+            stack.Pop().ShouldBeEquivalentTo(4);
+
+            stack.Count.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void SortStack_Should_Check_Is_Empty_False()
+        {
+            //arrange
+            var stack = new SortedStack<int>();
+            stack.Push(2);
+
+            //act
+            var result = stack.IsEmpty();
+
+            //assert
+            stack.Count.ShouldBeEquivalentTo(1);
+            result.ShouldBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public void SortStack_Should_Check_Is_Empty_True()
+        {
+            //arrange
+            var stack = new SortedStack<int>();
+            stack.Push(2);
+            stack.Pop();
+
+            //act
+            var result = stack.IsEmpty();
+
+            //assert
+            stack.Count.ShouldBeEquivalentTo(0);
+            result.ShouldBeEquivalentTo(true);
         }
     }
 }

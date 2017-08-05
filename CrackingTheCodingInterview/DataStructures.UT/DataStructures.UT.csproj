@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="MyArrayListTests.cs" />
     <Compile Include="MyArrayQueueTests.cs" />
+    <Compile Include="MyBinarySearchTreeTests.cs" />
     <Compile Include="MyDoublyLinkedListTests.cs" />
     <Compile Include="MyHashTableTests.cs" />
     <Compile Include="MyLinkedListQueueTests.cs" />

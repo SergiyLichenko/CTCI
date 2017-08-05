@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="MyArrayList.cs" />
     <Compile Include="MyArrayQueue.cs" />
+    <Compile Include="MyBinaryHeap.cs" />
     <Compile Include="MyBinarySearchTree.cs" />
     <Compile Include="MyDoublyLinkedList.cs" />
     <Compile Include="MyHashTable.cs" />

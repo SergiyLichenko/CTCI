@@ -119,7 +119,6 @@ namespace DataStructures
             if (root == null)
                 yield break;
 
-
             List<T> data = new List<T>();
             if (root.Left != null)
                 data.AddRange(InOrderTraversalHelper(root.Left));

@@ -45,6 +45,7 @@
     <Compile Include="MyBinaryHeap.cs" />
     <Compile Include="MyBinarySearchTree.cs" />
     <Compile Include="MyDoublyLinkedList.cs" />
+    <Compile Include="MyGraph.cs" />
     <Compile Include="MyHashTable.cs" />
     <Compile Include="MyLinkedListQueue.cs" />
     <Compile Include="MyLinkedListStack.cs" />

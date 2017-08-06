@@ -66,6 +66,7 @@
     <Compile Include="MyBinaryHeapTests.cs" />
     <Compile Include="MyBinarySearchTreeTests.cs" />
     <Compile Include="MyDoublyLinkedListTests.cs" />
+    <Compile Include="MyGraphTests.cs" />
     <Compile Include="MyHashTableTests.cs" />
     <Compile Include="MyLinkedListQueueTests.cs" />
     <Compile Include="MyLinkedListStackTests.cs" />

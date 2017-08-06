@@ -50,6 +50,7 @@
     <Compile Include="MyLinkedListStack.cs" />
     <Compile Include="MySinglyLinkedList.cs" />
     <Compile Include="MyStringBuilder.cs" />
+    <Compile Include="MyTrie.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MyArrayStack.cs" />
   </ItemGroup>

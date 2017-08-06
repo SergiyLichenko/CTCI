@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Tasks
 {
-    public class Arrays_Strings
+    public class ArraysStrings
     {
         public bool IsUnique(string str)
         {

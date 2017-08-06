@@ -5,12 +5,12 @@ using Xunit;
 
 namespace Tasks.UT
 {
-    public class Arrays_StringsTests
+    public class ArraysStringsTests
     {
-        private Arrays_Strings arraysStrings;
-        public Arrays_StringsTests()
+        private ArraysStrings arraysStrings;
+        public ArraysStringsTests()
         {
-            arraysStrings = new Arrays_Strings();
+            arraysStrings = new ArraysStrings();
         }
 
         [Fact]

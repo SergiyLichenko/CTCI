@@ -61,10 +61,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Arrays_StringsTests.cs" />
+    <Compile Include="ArraysStringsTests.cs" />
     <Compile Include="LinkedListTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StacksNQueuesTests.cs" />
+    <Compile Include="TreesGraphsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

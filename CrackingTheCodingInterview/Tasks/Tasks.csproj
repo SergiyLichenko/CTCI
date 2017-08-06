@@ -40,10 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Arrays_Strings.cs" />
+    <Compile Include="ArraysStrings.cs" />
     <Compile Include="LinkedList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StacksNQueues.cs" />
+    <Compile Include="TreesGraphs.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataStructures\DataStructures.csproj">

@@ -36,5 +36,33 @@ namespace Tasks
             MinimalTreeHelper(values, startIndex, middle - 1, tree);
             MinimalTreeHelper(values, middle + 1, endIndex, tree);
         }
+
+        public MyDoublyLinkedList<int>[] ListOfDepth(
+            MyBinarySearchTree<int> tree)
+        {
+            if (tree == null)
+                throw new ArgumentNullException();
+
+            List<MyDoublyLinkedList<int>> lists = new List<MyDoublyLinkedList<int>>();
+            ListOfDepthHelper(tree.Root, 0, lists);
+
+            return lists.ToArray();
+        }
+
+        private void ListOfDepthHelper(
+            MyBinarySearchTreeNode<int> root, int depth,
+            List<MyDoublyLinkedList<int>> lists)
+        {
+            if (root == null)
+                return;
+
+            if (lists.Count == depth)
+                lists.Add(new MyDoublyLinkedList<int>());
+
+            lists[depth].AddLast(new MyDoublyLinkedListNode<int>(root.Data));
+
+            ListOfDepthHelper(root.Left, depth + 1, lists);
+            ListOfDepthHelper(root.Right, depth + 1, lists);
+        }
     }
 }

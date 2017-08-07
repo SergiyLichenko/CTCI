@@ -87,7 +87,7 @@ namespace Tasks.UT
 
             //act
             Action act = () => _treesGraphs.MinimalTree(null);
-            
+
             //assert
             act.ShouldThrow<ArgumentNullException>();
         }
@@ -96,9 +96,9 @@ namespace Tasks.UT
         public void MinimalTree_Should_Create_Length_One()
         {
             //arrange
-            var values = new int[] {1};
+            var values = new int[] { 1 };
             //act
-           var result =  _treesGraphs.MinimalTree(values);
+            var result = _treesGraphs.MinimalTree(values);
 
             //assert
             result.Count.ShouldBeEquivalentTo(1);
@@ -109,7 +109,7 @@ namespace Tasks.UT
         public void MinimalTree_Should_Create_Empty()
         {
             //arrange
-            var values = new int[] {  };
+            var values = new int[] { };
             //act
             var result = _treesGraphs.MinimalTree(values);
 
@@ -122,7 +122,7 @@ namespace Tasks.UT
         public void MinimalTree_Should_Even_Size()
         {
             //arrange
-            var values = new int[] {1,2,3,4,5,6,7 };
+            var values = new int[] { 1, 2, 3, 4, 5, 6, 7 };
             //act
             var result = _treesGraphs.MinimalTree(values);
 
@@ -155,6 +155,85 @@ namespace Tasks.UT
             result.Root.Right.Left.Data.ShouldBeEquivalentTo(5);
             result.Root.Right.Right.Data.ShouldBeEquivalentTo(7);
             result.Root.Right.Right.Right.Data.ShouldBeEquivalentTo(8);
+        }
+
+        [Fact]
+        public void ListOfDepth_Should_Throw_If_Null()
+        {
+            //arrange
+
+            //act
+            Action act = () => _treesGraphs.ListOfDepth(null);
+
+            //assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void ListOfDepth_Should_Empty_Tree()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+
+            //act
+            var result = _treesGraphs.ListOfDepth(tree);
+
+            //assert
+            result.Should().NotBeNull();
+            result.Length.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void ListOfDepth_Should_Depth_One()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(1);
+
+            //act
+            var result = _treesGraphs.ListOfDepth(tree);
+
+            //assert
+            result.Length.ShouldBeEquivalentTo(1);
+            result[0].Count.ShouldBeEquivalentTo(1);
+            result[0].Head.Data.ShouldBeEquivalentTo(1);
+        }
+
+        [Fact]
+        public void ListOfDepth_Should_Check_Depth()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(4);
+            tree.Insert(2);
+            tree.Insert(6);
+            tree.Insert(1);
+            tree.Insert(3);
+            tree.Insert(5);
+            tree.Insert(7);
+            tree.Insert(8);
+
+            //act
+            var result = _treesGraphs.ListOfDepth(tree);
+
+            //assert
+            result.Length.ShouldBeEquivalentTo(4);
+
+            result[0].Count.ShouldBeEquivalentTo(1);
+            result[0].Head.Data.ShouldBeEquivalentTo(4);
+
+            result[1].Count.ShouldBeEquivalentTo(2);
+            result[1].Head.Data.ShouldBeEquivalentTo(2);
+            result[1].Head.Next.Data.ShouldBeEquivalentTo(6);
+
+            result[2].Count.ShouldBeEquivalentTo(4);
+            result[2].Head.Data.ShouldBeEquivalentTo(1);
+            result[2].Head.Next.Data.ShouldBeEquivalentTo(3);
+            result[2].Head.Next.Next.Data.ShouldBeEquivalentTo(5);
+            result[2].Head.Next.Next.Next.Data.ShouldBeEquivalentTo(7);
+
+            result[3].Count.ShouldBeEquivalentTo(1);
+            result[3].Head.Data.ShouldBeEquivalentTo(8);
         }
     }
 }

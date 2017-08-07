@@ -366,5 +366,96 @@ namespace Tasks.UT
             //assert
             result.ShouldBeEquivalentTo(true);
         }
+
+        [Fact]
+        public void ValidateBST_Should_Throw_Null()
+        {
+            //arrange
+
+            //act
+            Action act = () => _treesGraphs.ValidateBST(null);
+
+            //assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void ValidateBST_Should_Check_Empty()
+        {
+            //arrange
+            var tree =new MyBinarySearchTree<int>();
+
+            //act
+            var result = _treesGraphs.ValidateBST(tree);
+
+            //assert
+            result.ShouldBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public void ValidateBST_Should_Check_Length_One()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(3);
+
+            //act
+            var result = _treesGraphs.ValidateBST(tree);
+
+            //assert
+            result.ShouldBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public void ValidateBST_Should_Multiple_Depth_True()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(10);
+            tree.Insert(6);
+            tree.Insert(15);
+            tree.Insert(4);
+            tree.Insert(8);
+            tree.Insert(13);
+            tree.Insert(17);
+            tree.Insert(3);
+            tree.Insert(5);
+            tree.Insert(7);
+            tree.Insert(14);
+            tree.Insert(2);
+
+            //act
+            var result = _treesGraphs.ValidateBST(tree);
+
+            //assert
+            result.ShouldBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public void ValidateBST_Should_Multiple_Depth_False()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(10);
+            tree.Insert(6);
+            tree.Insert(15);
+            tree.Insert(4);
+            tree.Insert(8);
+            tree.Insert(13);
+            tree.Insert(17);
+            tree.Insert(3);
+            tree.Insert(5);
+            tree.Insert(7);
+            tree.Insert(14);
+            tree.Insert(2);
+
+            tree.Root.Left.Data = 8;
+
+            //act
+            var result = _treesGraphs.ValidateBST(tree);
+
+            //assert
+            result.ShouldBeEquivalentTo(false);
+        }
     }
 }

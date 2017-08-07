@@ -84,7 +84,34 @@ namespace Tasks
             if (Math.Abs(left - right) > 1 || left == -1 || right == -1)
                 return Int32.MinValue;
 
-            return Math.Max(left+1, right+1);
+            return Math.Max(left + 1, right + 1);
+        }
+
+        public bool ValidateBST(MyBinarySearchTree<int> tree)
+        {
+            if(tree == null)
+                throw new ArgumentNullException();
+            return ValidateBSTHelper(tree.Root);
+        }
+
+        private bool ValidateBSTHelper(MyBinarySearchTreeNode<int> root)
+        {
+            if (root == null)
+                return true;
+
+            var leftResult = ValidateBSTHelper(root.Left);
+            if (!leftResult)
+                return false;
+            var rightResult = ValidateBSTHelper(root.Right);
+            if (!rightResult)
+                return false;
+
+            if (root.Left != null && root.Left.Data > root.Data)
+                return false;
+            if (root.Right != null && root.Right.Data <= root.Data)
+                return false;
+
+            return true;
         }
     }
 }

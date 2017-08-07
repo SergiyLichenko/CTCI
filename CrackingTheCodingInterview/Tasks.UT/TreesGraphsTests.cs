@@ -80,5 +80,81 @@ namespace Tasks.UT
             result.ShouldBeEquivalentTo(false);
         }
 
+        [Fact]
+        public void MinimalTree_Should_Throw_If_Empty()
+        {
+            //arrange
+
+            //act
+            Action act = () => _treesGraphs.MinimalTree(null);
+            
+            //assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void MinimalTree_Should_Create_Length_One()
+        {
+            //arrange
+            var values = new int[] {1};
+            //act
+           var result =  _treesGraphs.MinimalTree(values);
+
+            //assert
+            result.Count.ShouldBeEquivalentTo(1);
+            result.Root.Data.ShouldBeEquivalentTo(1);
+        }
+
+        [Fact]
+        public void MinimalTree_Should_Create_Empty()
+        {
+            //arrange
+            var values = new int[] {  };
+            //act
+            var result = _treesGraphs.MinimalTree(values);
+
+            //assert
+            result.Count.ShouldBeEquivalentTo(0);
+            result.Root.ShouldBeEquivalentTo(null);
+        }
+
+        [Fact]
+        public void MinimalTree_Should_Even_Size()
+        {
+            //arrange
+            var values = new int[] {1,2,3,4,5,6,7 };
+            //act
+            var result = _treesGraphs.MinimalTree(values);
+
+            //assert
+            result.Count.ShouldBeEquivalentTo(7);
+            result.Root.Data.ShouldBeEquivalentTo(4);
+            result.Root.Left.Data.ShouldBeEquivalentTo(2);
+            result.Root.Right.Data.ShouldBeEquivalentTo(6);
+            result.Root.Left.Left.Data.ShouldBeEquivalentTo(1);
+            result.Root.Left.Right.Data.ShouldBeEquivalentTo(3);
+            result.Root.Right.Left.Data.ShouldBeEquivalentTo(5);
+            result.Root.Right.Right.Data.ShouldBeEquivalentTo(7);
+        }
+
+        [Fact]
+        public void MinimalTree_Should_Odd_Size()
+        {
+            //arrange
+            var values = new int[] { 1, 2, 3, 4, 5, 6, 7, 8 };
+            //act
+            var result = _treesGraphs.MinimalTree(values);
+
+            //assert
+            result.Count.ShouldBeEquivalentTo(8);
+            result.Root.Data.ShouldBeEquivalentTo(4);
+            result.Root.Left.Data.ShouldBeEquivalentTo(2);
+            result.Root.Right.Data.ShouldBeEquivalentTo(6);
+            result.Root.Left.Left.Data.ShouldBeEquivalentTo(1);
+            result.Root.Left.Right.Data.ShouldBeEquivalentTo(3);
+            result.Root.Right.Left.Data.ShouldBeEquivalentTo(5);
+            result.Root.Right.Right.Data.ShouldBeEquivalentTo(7);
+            result.Root.Right.Right.Right.Data.ShouldBeEquivalentTo(8);
+        }
     }
 }

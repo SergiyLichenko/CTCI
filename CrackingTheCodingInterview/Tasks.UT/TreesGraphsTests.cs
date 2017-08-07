@@ -235,5 +235,136 @@ namespace Tasks.UT
             result[3].Count.ShouldBeEquivalentTo(1);
             result[3].Head.Data.ShouldBeEquivalentTo(8);
         }
+
+        [Fact]
+        public void CheckBalanced_Should_Throw_If_Null()
+        {
+            //arrange
+
+            //act
+            Action act = () => _treesGraphs.CheckBalanced(null);
+
+            //assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void CheckBalanced_Should_Check_Empty()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+
+            //act
+            var result = _treesGraphs.CheckBalanced(tree);
+
+            //assert
+            result.ShouldBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public void CheckBalanced_Should_Check_Length_One()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(5);
+
+            //act
+            var result = _treesGraphs.CheckBalanced(tree);
+
+            //assert
+            result.ShouldBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public void CheckBalanced_Should_Check_Depth_False()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(10);
+            tree.Insert(6);
+            tree.Insert(12);
+            tree.Insert(4);
+            tree.Insert(8);
+            tree.Insert(11);
+            tree.Insert(13);
+            tree.Insert(3);
+            tree.Insert(5);
+            tree.Insert(7);
+            tree.Insert(2);
+
+            //act
+            var result = _treesGraphs.CheckBalanced(tree);
+
+            //assert
+            result.ShouldBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public void CheckBalanced_Should_Check_Depth_True()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(10);
+            tree.Insert(6);
+            tree.Insert(15);
+            tree.Insert(4);
+            tree.Insert(8);
+            tree.Insert(13);
+            tree.Insert(17);
+            tree.Insert(3);
+            tree.Insert(5);
+            tree.Insert(7);
+            tree.Insert(14);
+            tree.Insert(2);
+
+            //act
+            var result = _treesGraphs.CheckBalanced(tree);
+
+            //assert
+            result.ShouldBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public void CheckBalanced_Should_Check_False()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(10);
+            tree.Insert(6);
+            tree.Insert(12);
+            tree.Insert(4);
+            tree.Insert(8);
+            tree.Insert(11);
+            tree.Insert(13);
+            tree.Insert(3);
+            tree.Insert(7);
+            tree.Insert(2);
+
+            //act
+            var result = _treesGraphs.CheckBalanced(tree);
+
+            //assert
+            result.ShouldBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public void CheckBalanced_Should_Check_True()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(5);
+            tree.Insert(2);
+            tree.Insert(7);
+            tree.Insert(1);
+            tree.Insert(4);
+            tree.Insert(6);
+            tree.Insert(3);
+
+            //act
+            var result = _treesGraphs.CheckBalanced(tree);
+
+            //assert
+            result.ShouldBeEquivalentTo(true);
+        }
     }
 }

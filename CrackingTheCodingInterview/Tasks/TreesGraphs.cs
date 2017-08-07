@@ -64,5 +64,27 @@ namespace Tasks
             ListOfDepthHelper(root.Left, depth + 1, lists);
             ListOfDepthHelper(root.Right, depth + 1, lists);
         }
+
+        public bool CheckBalanced(MyBinarySearchTree<int> tree)
+        {
+            if (tree == null)
+                throw new ArgumentNullException();
+
+            return CheckBalancedHelper(tree.Root) != Int32.MinValue;
+        }
+
+        private int CheckBalancedHelper(
+            MyBinarySearchTreeNode<int> root)
+        {
+            if (root == null)
+                return 0;
+            var left = CheckBalancedHelper(root.Left);
+            var right = CheckBalancedHelper(root.Right);
+
+            if (Math.Abs(left - right) > 1 || left == -1 || right == -1)
+                return Int32.MinValue;
+
+            return Math.Max(left+1, right+1);
+        }
     }
 }

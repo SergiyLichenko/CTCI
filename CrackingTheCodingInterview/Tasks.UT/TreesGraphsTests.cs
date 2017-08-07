@@ -383,7 +383,7 @@ namespace Tasks.UT
         public void ValidateBST_Should_Check_Empty()
         {
             //arrange
-            var tree =new MyBinarySearchTree<int>();
+            var tree = new MyBinarySearchTree<int>();
 
             //act
             var result = _treesGraphs.ValidateBST(tree);
@@ -456,6 +456,115 @@ namespace Tasks.UT
 
             //assert
             result.ShouldBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public void Successor_Should_Check_If_Null()
+        {
+            //arrange
+
+            //act
+            Action actFirst = () => _treesGraphs.Successor(null, new MyBinarySearchTreeNode<int>(1));
+            Action actSecond = () => _treesGraphs.Successor(new MyBinarySearchTree<int>(), null);
+
+            //assert
+            actFirst.ShouldThrow<ArgumentNullException>();
+            actSecond.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void Successor_Should_Check_Length_One()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(2);
+
+            //act
+            var result = _treesGraphs.Successor(tree, tree.Root);
+
+            //assert
+            result.ShouldBeEquivalentTo(null);
+        }
+
+        [Fact]
+        public void Successor_Should_Check_Right_Substree_Case()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(20);
+            tree.Insert(8);
+            tree.Insert(22);
+            tree.Insert(4);
+            tree.Insert(12);
+            tree.Insert(10);
+            tree.Insert(14);
+
+            //act
+            var result = _treesGraphs.Successor(tree, tree.Root.Left);
+
+            //assert
+            result.ShouldBeEquivalentTo(tree.Root.Left.Right.Left);
+        }
+
+        [Fact]
+        public void Successor_Should_Check_Parent_Case()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(20);
+            tree.Insert(8);
+            tree.Insert(22);
+            tree.Insert(4);
+            tree.Insert(12);
+            tree.Insert(10);
+            tree.Insert(14);
+
+            //act
+            var result = _treesGraphs.Successor(tree, tree.Root.Left.Right.Left);
+
+            //assert
+            result.ShouldBeEquivalentTo(tree.Root.Left.Right);
+        }
+
+
+        [Fact]
+        public void Successor_Should_Check_Parent_Case_Multiple()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(20);
+            tree.Insert(8);
+            tree.Insert(22);
+            tree.Insert(4);
+            tree.Insert(12);
+            tree.Insert(10);
+            tree.Insert(14);
+
+            //act
+            var result = _treesGraphs.Successor(tree, tree.Root.Left.Right.Right);
+
+            //assert
+            result.ShouldBeEquivalentTo(tree.Root);
+        }
+
+        [Fact]
+        public void Successor_Should_Check_Null_Case()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(20);
+            tree.Insert(8);
+            tree.Insert(22);
+            tree.Insert(4);
+            tree.Insert(12);
+            tree.Insert(10);
+            tree.Insert(14);
+
+            //act
+            var result = _treesGraphs.Successor(tree, tree.Root.Right);
+
+            //assert
+            result.ShouldBeEquivalentTo(null);
         }
     }
 }

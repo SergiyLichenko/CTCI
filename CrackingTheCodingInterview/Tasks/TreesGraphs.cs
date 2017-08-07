@@ -89,7 +89,7 @@ namespace Tasks
 
         public bool ValidateBST(MyBinarySearchTree<int> tree)
         {
-            if(tree == null)
+            if (tree == null)
                 throw new ArgumentNullException();
             return ValidateBSTHelper(tree.Root);
         }
@@ -112,6 +112,40 @@ namespace Tasks
                 return false;
 
             return true;
+        }
+
+        public MyBinarySearchTreeNode<int> Successor(MyBinarySearchTree<int> tree,
+            MyBinarySearchTreeNode<int> node)
+        {
+            if (tree == null || node == null)
+                throw new ArgumentNullException();
+
+            bool isNext = false;
+            return SuccessorHelper(tree.Root, node,ref isNext);
+        }
+
+        private MyBinarySearchTreeNode<int> SuccessorHelper(
+            MyBinarySearchTreeNode<int> root,
+            MyBinarySearchTreeNode<int> node,
+            ref bool isNext)
+        {
+            if (root == null)
+                return null;
+
+            var leftResult = SuccessorHelper(root.Left, node, ref isNext);
+            if (leftResult != null)
+                return leftResult;
+
+            if (isNext)
+                return root;
+
+            isNext = isNext || root.Equals(node);
+           
+            var rightResult = SuccessorHelper(root.Right, node, ref isNext);
+            if (rightResult != null)
+                return rightResult;
+
+            return null;
         }
     }
 }

@@ -167,7 +167,7 @@ namespace Tasks
             int lastCount = -1;
             while (builtNodes.Count != graph.Count)
             {
-                if(lastCount == builtNodes.Count)
+                if (lastCount == builtNodes.Count)
                     throw new ArgumentException();
                 lastCount = builtNodes.Count;
 
@@ -193,6 +193,60 @@ namespace Tasks
             }
 
             return order;
+        }
+
+        public MyBinarySearchTreeNode<int> FirstCommonAncestor(MyBinarySearchTree<int> tree,
+            MyBinarySearchTreeNode<int> firstNode, MyBinarySearchTreeNode<int> secondNode)
+        {
+            if (tree == null || firstNode == null || secondNode == null)
+                throw new ArgumentNullException();
+
+            return FirstCommonAncestorHelper(tree.Root, firstNode, secondNode);
+        }
+
+        private MyBinarySearchTreeNode<int> FirstCommonAncestorHelper(
+            MyBinarySearchTreeNode<int> root,
+            MyBinarySearchTreeNode<int> firstNode,
+            MyBinarySearchTreeNode<int> secondNode)
+        {
+            var firstLeft = FirstCommonAncestorHelperCheckContains(root.Left, firstNode);
+            var firstRight = FirstCommonAncestorHelperCheckContains(root.Right, firstNode);
+
+            var secondLeft = FirstCommonAncestorHelperCheckContains(root.Left, secondNode);
+            var secondRight = FirstCommonAncestorHelperCheckContains(root.Right, secondNode);
+
+            if ((firstLeft && secondRight) || (firstRight && secondLeft))
+                return root;
+            if (firstLeft && secondLeft)
+            {
+                var result = FirstCommonAncestorHelper(root.Left, firstNode, secondNode);
+                return result ?? root;
+            }
+            if (firstRight && secondRight)
+            {
+                var result = FirstCommonAncestorHelper(root.Right, firstNode, secondNode);
+                return result ?? root;
+            }
+
+            return null;
+        }
+
+        private bool FirstCommonAncestorHelperCheckContains(
+            MyBinarySearchTreeNode<int> root,
+            MyBinarySearchTreeNode<int> node)
+        {
+            if (root == null)
+                return false;
+
+            if (root == node)
+                return true;
+
+            if (FirstCommonAncestorHelperCheckContains(root.Left, node))
+                return true;
+            if (FirstCommonAncestorHelperCheckContains(root.Right, node))
+                return true;
+
+            return false;
         }
     }
 }

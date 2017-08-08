@@ -597,7 +597,7 @@ namespace Tasks.UT
             graph.AddEdge(1, 3);
             graph.AddEdge(3, 2);
 
-            var order = new[] { 'e', 'f', 'a', 'b', 'd', 'c'  };
+            var order = new[] { 'e', 'f', 'a', 'b', 'd', 'c' };
 
             //act
             var result = _treesGraphs.BuildOrder(graph).ToArray();
@@ -628,7 +628,7 @@ namespace Tasks.UT
             graph.AddEdge(2, 5);
             graph.AddEdge(3, 2);
 
-            var order = new[] { 'a','b','d','e','c','f' };
+            var order = new[] { 'a', 'b', 'd', 'e', 'c', 'f' };
 
             //act
             var result = _treesGraphs.BuildOrder(graph).ToArray();
@@ -652,7 +652,7 @@ namespace Tasks.UT
             graph.AddVertex(4, 'e');
             graph.AddVertex(5, 'f');
 
-            graph.AddEdge(5,0);
+            graph.AddEdge(5, 0);
             graph.AddEdge(4, 0);
             graph.AddEdge(4, 0);
             graph.AddEdge(3, 1);
@@ -717,6 +717,177 @@ namespace Tasks.UT
             //assert
             result.Length.ShouldBeEquivalentTo(1);
             result[0].ShouldBeEquivalentTo('a');
+        }
+
+        [Fact]
+        public void FirstCommonAncestor_Should_Throw_If_Null()
+        {
+            //arrange
+
+            //act
+            Action actFirst = () => _treesGraphs.FirstCommonAncestor(null,
+                new MyBinarySearchTreeNode<int>(1), new MyBinarySearchTreeNode<int>(2));
+            Action actSecond = () => _treesGraphs.FirstCommonAncestor(new MyBinarySearchTree<int>(),
+                null, new MyBinarySearchTreeNode<int>(2));
+            Action actThird = () => _treesGraphs.FirstCommonAncestor(new MyBinarySearchTree<int>(),
+                new MyBinarySearchTreeNode<int>(1), null);
+
+            //assert
+            actFirst.ShouldThrow<ArgumentNullException>();
+            actSecond.ShouldThrow<ArgumentNullException>();
+            actThird.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void FirstCommonAncestor_Should_Check_Length_One()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(3);
+
+            //act
+            var result = _treesGraphs.FirstCommonAncestor(tree,
+                tree.Root, tree.Root);
+
+            //assert
+            result.ShouldBeEquivalentTo(null);
+        }
+
+        [Fact]
+        public void FirstCommonAncestor_Should_Check_Length_Two()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(3);
+            tree.Insert(5);
+
+            //act
+            var result = _treesGraphs.FirstCommonAncestor(tree,
+                tree.Root, tree.Root.Right);
+
+            //assert
+            result.ShouldBeEquivalentTo(null);
+        }
+
+        [Fact]
+        public void FirstCommonAncestor_Should_Check_Length_Three()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(3);
+            tree.Insert(5);
+            tree.Insert(1);
+
+            //act
+            var result = _treesGraphs.FirstCommonAncestor(tree,
+                tree.Root.Left, tree.Root.Right);
+
+            //assert
+            result.ShouldBeEquivalentTo(tree.Root);
+        }
+
+        [Fact]
+        public void FirstCommonAncestor_Should_Check_Multiple_Depth()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(10);
+            tree.Insert(6);
+            tree.Insert(15);
+            tree.Insert(4);
+            tree.Insert(8);
+            tree.Insert(13);
+            tree.Insert(17);
+            tree.Insert(3);
+            tree.Insert(5);
+            tree.Insert(7);
+            tree.Insert(14);
+            tree.Insert(2);
+
+            //act
+            var result = _treesGraphs.FirstCommonAncestor(tree,
+                tree.Root.Left.Left.Left.Left, tree.Root.Right.Left.Right);
+
+            //assert
+            result.ShouldBeEquivalentTo(tree.Root);
+        }
+
+        [Fact]
+        public void FirstCommonAncestor_Should_Check_Multiple_Depth_Same_Branch()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(10);
+            tree.Insert(6);
+            tree.Insert(15);
+            tree.Insert(4);
+            tree.Insert(8);
+            tree.Insert(13);
+            tree.Insert(17);
+            tree.Insert(3);
+            tree.Insert(5);
+            tree.Insert(7);
+            tree.Insert(14);
+            tree.Insert(2);
+
+            //act
+            var result = _treesGraphs.FirstCommonAncestor(tree,
+                tree.Root.Left.Left.Left.Left, tree.Root.Left.Left.Right);
+
+            //assert
+            result.ShouldBeEquivalentTo(tree.Root.Left.Left);
+        }
+
+        [Fact]
+        public void FirstCommonAncestor_Should_Check_Multiple_Depth_One_Parent()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(10);
+            tree.Insert(6);
+            tree.Insert(15);
+            tree.Insert(4);
+            tree.Insert(8);
+            tree.Insert(13);
+            tree.Insert(17);
+            tree.Insert(3);
+            tree.Insert(5);
+            tree.Insert(7);
+            tree.Insert(14);
+            tree.Insert(2);
+
+            //act
+            var result = _treesGraphs.FirstCommonAncestor(tree,
+                tree.Root.Left.Left.Left.Left, tree.Root);
+
+            //assert
+            result.ShouldBeEquivalentTo(null);
+        }
+
+        [Fact]
+        public void FirstCommonAncestor_Should_Check_Multiple_Depth_One_Root()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(10);
+            tree.Insert(6);
+            tree.Insert(15);
+            tree.Insert(4);
+            tree.Insert(8);
+            tree.Insert(13);
+            tree.Insert(17);
+            tree.Insert(3);
+            tree.Insert(5);
+            tree.Insert(7);
+            tree.Insert(14);
+            tree.Insert(2);
+
+            //act
+            var result = _treesGraphs.FirstCommonAncestor(tree,
+                tree.Root.Left.Left.Left.Left, tree.Root.Left.Left);
+
+            //assert
+            result.ShouldBeEquivalentTo(tree.Root.Left);
         }
     }
 }

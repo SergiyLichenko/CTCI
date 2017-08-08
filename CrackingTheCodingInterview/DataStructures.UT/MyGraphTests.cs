@@ -93,6 +93,65 @@ namespace DataStructures.UT
         }
 
         [Fact]
+        public void Should_RemoveEdge_Throw_If_Out_Of_Range()
+        {
+            //arrange
+            var graph = new MyGraph<int>(5);
+
+            //act
+            Action actLowerFrom = () => graph.RemoveEdge(-1, 1);
+            Action actHigherFrom = () => graph.RemoveEdge(6, 1);
+
+            Action actLowerTo = () => graph.RemoveEdge(1, -1);
+            Action actHigherTo = () => graph.RemoveEdge(1, 6);
+
+            //assert
+            actLowerFrom.ShouldThrow<ArgumentOutOfRangeException>();
+            actHigherFrom.ShouldThrow<ArgumentOutOfRangeException>();
+            actLowerTo.ShouldThrow<ArgumentOutOfRangeException>();
+            actHigherTo.ShouldThrow<ArgumentOutOfRangeException>();
+
+            graph.Capacity.ShouldBeEquivalentTo(5);
+            graph.Count.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void Should_RemoveEdge()
+        {
+            //arrange
+            var graph = new MyGraph<int>(6);
+            graph.AddVertex(0, 0);
+            graph.AddVertex(1, 1);
+            graph.AddVertex(2, 2);
+            graph.AddVertex(3, 3);
+            graph.AddVertex(4, 4);
+            graph.AddVertex(5, 5);
+
+            graph.AddEdge(0, 5);
+            graph.AddEdge(0, 1);
+            graph.AddEdge(0, 4);
+            graph.AddEdge(1, 3);
+            graph.AddEdge(1, 4);
+            graph.AddEdge(2, 1);
+            graph.AddEdge(3, 2);
+            graph.AddEdge(3, 4);
+
+            var resBfs = new[] { 0, 5, 4 };
+
+            //act
+            graph.RemoveEdge(0,1);
+            var result = graph.BreadthFirstSearch(0).ToArray();
+
+            //assert
+            result.Length.ShouldBeEquivalentTo(resBfs.Length);
+            for (int i = 0; i < result.Length; i++)
+                result[i].ShouldBeEquivalentTo(resBfs[i]);
+
+            graph.Capacity.ShouldBeEquivalentTo(6);
+            graph.Count.ShouldBeEquivalentTo(6);
+        }
+
+        [Fact]
         public void Should_BreadthFirstSearch_Throw_If_Out_Of_Range_Index()
         {
             //arrange

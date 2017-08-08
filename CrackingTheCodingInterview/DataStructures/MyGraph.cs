@@ -21,6 +21,7 @@ namespace DataStructures
         private MyGraphNode<T>[] _nodes;
         public int Capacity => _nodes.Length;
         public int Count { get; private set; }
+        public MyGraphNode<T>[] Nodes => _nodes;
         public MyGraph(int capacity)
         {
             if (capacity < 0)
@@ -44,6 +45,15 @@ namespace DataStructures
                 throw new ArgumentOutOfRangeException();
 
             _nodes[from].Children.Add(_nodes[to]);
+        }
+
+        public void RemoveEdge(int from, int to)
+        {
+            if (from < 0 || from >= Capacity ||
+                to < 0 || to >= Capacity)
+                throw new ArgumentOutOfRangeException();
+
+            _nodes[from].Children.Remove(_nodes[to]);
         }
 
         public IEnumerable<T> BreadthFirstSearch(int startIndex)

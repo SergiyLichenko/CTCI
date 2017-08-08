@@ -121,7 +121,7 @@ namespace Tasks
                 throw new ArgumentNullException();
 
             bool isNext = false;
-            return SuccessorHelper(tree.Root, node,ref isNext);
+            return SuccessorHelper(tree.Root, node, ref isNext);
         }
 
         private MyBinarySearchTreeNode<int> SuccessorHelper(
@@ -140,12 +140,59 @@ namespace Tasks
                 return root;
 
             isNext = isNext || root.Equals(node);
-           
+
             var rightResult = SuccessorHelper(root.Right, node, ref isNext);
             if (rightResult != null)
                 return rightResult;
 
             return null;
+        }
+
+        public IEnumerable<char> BuildOrder(MyGraph<char> graph)
+        {
+            if (graph == null)
+                throw new ArgumentNullException();
+
+            int getNodeIndex(char data)
+            {
+                for (int i = 0; i < graph.Nodes.Length; i++)
+                    if (graph.Nodes[i] != null && graph.Nodes[i].Data.Equals(data))
+                        return i;
+                return -1;
+            }
+
+            var order = new List<char>();
+            var builtNodes = new HashSet<MyGraphNode<char>>();
+
+            int lastCount = -1;
+            while (builtNodes.Count != graph.Count)
+            {
+                if(lastCount == builtNodes.Count)
+                    throw new ArgumentException();
+                lastCount = builtNodes.Count;
+
+                foreach (var node in graph.Nodes)
+                {
+                    if (node == null || builtNodes.Contains(node))
+                        continue;
+
+                    int currentNodeIndex = getNodeIndex(node.Data);
+                    var items = graph.Nodes.Where(x =>
+                        x?.Children.Count(y => y.Data.Equals(node.Data)) > 0).ToList();
+
+                    if (!items.Any())
+                    {
+                        builtNodes.Add(node);
+                        order.Add(node.Data);
+
+                        var indices = node.Children.Select(x => getNodeIndex(x.Data)).ToList();
+                        indices.ForEach(x => graph.RemoveEdge(currentNodeIndex, x));
+                    }
+
+                }
+            }
+
+            return order;
         }
     }
 }

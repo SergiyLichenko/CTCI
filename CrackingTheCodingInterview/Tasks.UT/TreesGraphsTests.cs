@@ -566,5 +566,157 @@ namespace Tasks.UT
             //assert
             result.ShouldBeEquivalentTo(null);
         }
+
+        [Fact]
+        public void BuildOrder_Should_Throw_If_Null()
+        {
+            //arrange
+
+            //act
+            Action act = () => _treesGraphs.BuildOrder(null);
+
+            //assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void BuildOrder_Should_Check_Example()
+        {
+            //arrange
+            var graph = new MyGraph<char>(6);
+            graph.AddVertex(0, 'a');
+            graph.AddVertex(1, 'b');
+            graph.AddVertex(2, 'c');
+            graph.AddVertex(3, 'd');
+            graph.AddVertex(4, 'e');
+            graph.AddVertex(5, 'f');
+
+            graph.AddEdge(5, 1);
+            graph.AddEdge(5, 0);
+            graph.AddEdge(0, 3);
+            graph.AddEdge(1, 3);
+            graph.AddEdge(3, 2);
+
+            var order = new[] { 'e', 'f', 'a', 'b', 'd', 'c'  };
+
+            //act
+            var result = _treesGraphs.BuildOrder(graph).ToArray();
+
+            //assert
+            result.Length.ShouldBeEquivalentTo(order.Length);
+
+            for (int i = 0; i < result.Length; i++)
+                result[i].ShouldBeEquivalentTo(order[i]);
+        }
+
+        [Fact]
+        public void BuildOrder_Should_Check_Order()
+        {
+            //arrange
+            var graph = new MyGraph<char>(6);
+            graph.AddVertex(0, 'a');
+            graph.AddVertex(1, 'b');
+            graph.AddVertex(2, 'c');
+            graph.AddVertex(3, 'd');
+            graph.AddVertex(4, 'e');
+            graph.AddVertex(5, 'f');
+
+            graph.AddEdge(0, 5);
+            graph.AddEdge(0, 4);
+            graph.AddEdge(1, 4);
+            graph.AddEdge(1, 3);
+            graph.AddEdge(2, 5);
+            graph.AddEdge(3, 2);
+
+            var order = new[] { 'a','b','d','e','c','f' };
+
+            //act
+            var result = _treesGraphs.BuildOrder(graph).ToArray();
+
+            //assert
+            result.Length.ShouldBeEquivalentTo(order.Length);
+
+            for (int i = 0; i < result.Length; i++)
+                result[i].ShouldBeEquivalentTo(order[i]);
+        }
+
+        [Fact]
+        public void BuildOrder_Should_Check_Order_Reversed()
+        {
+            //arrange
+            var graph = new MyGraph<char>(6);
+            graph.AddVertex(0, 'a');
+            graph.AddVertex(1, 'b');
+            graph.AddVertex(2, 'c');
+            graph.AddVertex(3, 'd');
+            graph.AddVertex(4, 'e');
+            graph.AddVertex(5, 'f');
+
+            graph.AddEdge(5,0);
+            graph.AddEdge(4, 0);
+            graph.AddEdge(4, 0);
+            graph.AddEdge(3, 1);
+            graph.AddEdge(5, 2);
+            graph.AddEdge(2, 3);
+
+            var order = new[] { 'e', 'f', 'a', 'c', 'd', 'b' };
+
+            //act
+            var result = _treesGraphs.BuildOrder(graph).ToArray();
+
+            //assert
+            result.Length.ShouldBeEquivalentTo(order.Length);
+
+            for (int i = 0; i < result.Length; i++)
+                result[i].ShouldBeEquivalentTo(order[i]);
+        }
+
+        [Fact]
+        public void BuildOrder_Should_Check_For_Cycle()
+        {
+            //arrange
+            var graph = new MyGraph<char>(6);
+            graph.AddVertex(0, 'a');
+            graph.AddVertex(1, 'b');
+            graph.AddVertex(2, 'c');
+
+            graph.AddEdge(0, 1);
+            graph.AddEdge(1, 2);
+            graph.AddEdge(2, 0);
+
+            //act
+            Action act = () => _treesGraphs.BuildOrder(graph);
+
+            //assert
+            act.ShouldThrow<ArgumentException>();
+        }
+
+        [Fact]
+        public void BuildOrder_Should_Check_Empty()
+        {
+            //arrange
+            var graph = new MyGraph<char>(6);
+
+            //act
+            var result = _treesGraphs.BuildOrder(graph).ToArray();
+
+            //assert
+            result.Length.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void BuildOrder_Should_Check_Length_One()
+        {
+            //arrange
+            var graph = new MyGraph<char>(6);
+            graph.AddVertex(0, 'a');
+
+            //act
+            var result = _treesGraphs.BuildOrder(graph).ToArray();
+
+            //assert
+            result.Length.ShouldBeEquivalentTo(1);
+            result[0].ShouldBeEquivalentTo('a');
+        }
     }
 }

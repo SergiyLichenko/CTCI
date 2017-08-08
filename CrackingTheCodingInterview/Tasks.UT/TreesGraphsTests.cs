@@ -889,5 +889,161 @@ namespace Tasks.UT
             //assert
             result.ShouldBeEquivalentTo(tree.Root.Left);
         }
+
+        [Fact]
+        public void BSTSequences_Should_Throw_If_Null()
+        {
+            //arrange
+
+            //act
+            Action act = () => _treesGraphs.BSTSequences(null);
+
+            //assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void BSTSequences_Should_Check_Empty()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+
+            //act
+            var result = _treesGraphs.BSTSequences(tree);
+
+            //assert
+            result.Count.ShouldBeEquivalentTo(0);
+        }
+
+
+        [Fact]
+        public void BSTSequences_Should_Check_Length_One()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(5);
+
+            //act
+            var result = _treesGraphs.BSTSequences(tree);
+
+            //assert
+            result.Count.ShouldBeEquivalentTo(1);
+            result[0].Length.ShouldBeEquivalentTo(1);
+            result[0][0].ShouldBeEquivalentTo(5);
+        }
+
+        [Fact]
+        public void BSTSequences_Should_Check_Example()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(2);
+            tree.Insert(1);
+            tree.Insert(3);
+
+            var res = new List<int[]>()
+            {
+                new int[] {2, 1, 3},
+                new int[] {2, 3, 1}
+            };
+
+            //act
+            var result = _treesGraphs.BSTSequences(tree);
+
+            //assert
+            result.Count.ShouldBeEquivalentTo(res.Count);
+            for (int i = 0; i < result.Count; i++)
+            {
+                res[i].Length.ShouldBeEquivalentTo(result[i].Length);
+                for (int j = 0; j < result[i].Length; j++)
+                    res[i][j].ShouldBeEquivalentTo(result[i][j]);
+            }
+        }
+
+        [Fact]
+        public void BSTSequences_Should_Check_Multiple_Depth()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(2);
+            tree.Insert(0);
+            tree.Insert(-1);
+            tree.Insert(1);
+            tree.Insert(8);
+            tree.Insert(3);
+
+            var res = new List<int[]>()
+            {
+                new [] {2, 0,-1,1,8,3},
+                new [] {2, 0, -1,8,1,3},
+                new [] {2, 0,-1,8,3,1},
+                new [] {2, 0,8,-1,1,3},
+                new [] {2,0,8,-1,3,1},
+                new [] {2,0,8,3,-1,1},
+                new [] {2,8,0,-1,1,3},
+                new [] {2,8,0,-1,3,1},
+                new [] {2,8,0,3,-1,1},
+                new [] {2,8,3,0,-1,1},
+                new [] {2,0,1,-1,8,3},
+                new [] {2,0,1,8,-1,3},
+                new [] {2,0,1,8,3,-1},
+                new [] {2,0,8,1,-1,3},
+                new [] {2,0,8,1,3,-1},
+                new [] {2,0,8,3,1,-1},
+                new [] {2,8,0,1,-1,3},
+                new [] {2,8,0,1,3,-1},
+                new [] {2,8,0,3,1,-1},
+                new [] {2,8,3,0,1,-1}
+            };
+
+            //act
+            var result = _treesGraphs.BSTSequences(tree);
+
+            //assert
+            result.Count.ShouldBeEquivalentTo(res.Count);
+            for (int i = 0; i < result.Count; i++)
+            {
+                res[i].Length.ShouldBeEquivalentTo(result[i].Length);
+                for (int j = 0; j < result[i].Length; j++)
+                    res[i][j].ShouldBeEquivalentTo(result[i][j]);
+            }
+        }
+
+        [Fact]
+        public void BSTSequences_Should_Check_Complex()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(10);
+            tree.Insert(6);
+            tree.Insert(15);
+            tree.Insert(4);
+            tree.Insert(8);
+            tree.Insert(13);
+            tree.Insert(17);
+            tree.Insert(3);
+            tree.Insert(5);
+            tree.Insert(7);
+            tree.Insert(14);
+            tree.Insert(2);
+
+            //act
+            var result = _treesGraphs.BSTSequences(tree);
+
+            //assert
+            var inOrderTraversal = tree.InOrderTraversal().ToList();
+            foreach (var item in result)
+            {
+                var tempTree = new MyBinarySearchTree<int>();
+                foreach (var value in item)
+                    tempTree.Insert(value);
+
+                var tempTraversal = tempTree.InOrderTraversal().ToList();
+                tempTraversal.Count.ShouldBeEquivalentTo(inOrderTraversal.Count);
+
+                for (int i = 0; i < tempTraversal.Count; i++)
+                    tempTraversal[i].ShouldBeEquivalentTo(inOrderTraversal[i]);
+            }
+        }
     }
 }

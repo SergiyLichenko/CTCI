@@ -248,5 +248,78 @@ namespace Tasks
 
             return false;
         }
+
+        public List<int[]> BSTSequences(MyBinarySearchTree<int> tree)
+        {
+            if (tree == null)
+                throw new ArgumentNullException();
+            var result = BSTSequencesHelper(tree.Root);
+           
+            return result.Select(x => x.ToArray()).ToList();
+        }
+
+        private List<List<int>> BSTSequencesHelper(MyBinarySearchTreeNode<int> root)
+        {
+            if (root == null)
+                return new List<List<int>>();
+
+            var leftItems = BSTSequencesHelper(root.Left);
+            var rightItems = BSTSequencesHelper(root.Right);
+
+            var bigger = rightItems.Count > leftItems.Count ? rightItems : leftItems;
+            var smaller = rightItems.Count <= leftItems.Count ? rightItems : leftItems;
+
+            List<List<int>> permutations = new List<List<int>>();
+
+            foreach (var item in bigger)
+            {
+                foreach (var value in smaller)
+                {
+                    var result = new List<List<int>>();
+                    var current = new HashSet<int>();
+                    FindOrderedPermutations(current, item, value, 0, 0, result);
+                    permutations.AddRange(result);
+                }
+                if(smaller.Count==0)
+                    permutations.Add(item);
+            }
+          
+
+            foreach (var item in permutations)
+                item.Insert(0, root.Data);
+
+            if (permutations.Count == 0)
+                permutations.Add(new List<int>() { root.Data });
+
+            return permutations;
+        }
+
+        private void FindOrderedPermutations(
+            HashSet<int> current, List<int> first, List<int> second, int firstStartIndex,
+            int secondStartIndex, List<List<int>> result)
+        {
+            if (firstStartIndex == first.Count &&
+                secondStartIndex == second.Count)
+            {
+                result.Add(new List<int>(current));
+                return;
+            }
+
+            if (first.Count != firstStartIndex)
+            {
+                current.Add(first[firstStartIndex]);
+                FindOrderedPermutations(current, first, second,
+                    firstStartIndex + 1, secondStartIndex, result);
+                current.Remove(first[firstStartIndex]);
+            }
+
+            if (second.Count != secondStartIndex)
+            {
+                current.Add(second[secondStartIndex]);
+                FindOrderedPermutations(current, first, second,
+                    firstStartIndex, secondStartIndex + 1, result);
+                current.Remove(second[secondStartIndex]);
+            }
+        }
     }
 }

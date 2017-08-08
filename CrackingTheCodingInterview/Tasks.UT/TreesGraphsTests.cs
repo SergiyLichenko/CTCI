@@ -1045,5 +1045,139 @@ namespace Tasks.UT
                     tempTraversal[i].ShouldBeEquivalentTo(inOrderTraversal[i]);
             }
         }
+
+        [Fact]
+        public void CheckSubtree_Should_Throw_If_Null()
+        {
+            //arrange
+
+            //act
+            Action actFirst = () => _treesGraphs.CheckSubtree(null, new MyBinarySearchTree<int>());
+            Action actSecond = () => _treesGraphs.CheckSubtree(new MyBinarySearchTree<int>(), null);
+
+            //assert
+            actFirst.ShouldThrow<ArgumentNullException>();
+            actSecond.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void CheckSubtree_Should_Check_Two_Empty()
+        {
+            //arrange
+            var biggerTree = new MyBinarySearchTree<int>();
+            var smallerTree = new MyBinarySearchTree<int>();
+
+            //act
+            var result = _treesGraphs.CheckSubtree(biggerTree, smallerTree);
+
+            //assert
+            result.ShouldBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public void CheckSubtree_Should_Check_Smaller_Empty()
+        {
+            //arrange
+            var biggerTree = new MyBinarySearchTree<int>();
+            var smallerTree = new MyBinarySearchTree<int>();
+
+            biggerTree.Insert(4);
+            //act
+            var result = _treesGraphs.CheckSubtree(biggerTree, smallerTree);
+
+            //assert
+            result.ShouldBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public void CheckSubtree_Should_Check_Bigger_Empty()
+        {
+            //arrange
+            var biggerTree = new MyBinarySearchTree<int>();
+            var smallerTree = new MyBinarySearchTree<int>();
+
+            smallerTree.Insert(4);
+            //act
+            var result = _treesGraphs.CheckSubtree(biggerTree, smallerTree);
+
+            //assert
+            result.ShouldBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public void CheckSubtree_Should_Check_Length_One()
+        {
+            //arrange
+            var biggerTree = new MyBinarySearchTree<int>();
+            var smallerTree = new MyBinarySearchTree<int>();
+
+            biggerTree.Insert(5);
+            smallerTree.Root = biggerTree.Root;
+
+            //act
+            var result = _treesGraphs.CheckSubtree(biggerTree, smallerTree);
+
+            //assert
+            result.ShouldBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public void CheckSubtree_Should_Check_Multiple_Depth_True()
+        {
+            //arrange
+            var biggerTree = new MyBinarySearchTree<int>();
+            var smallerTree = new MyBinarySearchTree<int>();
+
+            biggerTree.Insert(10);
+            biggerTree.Insert(6);
+            biggerTree.Insert(15);
+            biggerTree.Insert(4);
+            biggerTree.Insert(8);
+            biggerTree.Insert(13);
+            biggerTree.Insert(17);
+            biggerTree.Insert(3);
+            biggerTree.Insert(5);
+            biggerTree.Insert(7);
+            biggerTree.Insert(14);
+            biggerTree.Insert(2);
+
+            smallerTree.Root = biggerTree.Root.Left.Left;
+
+            //act
+            var result = _treesGraphs.CheckSubtree(biggerTree, smallerTree);
+
+            //assert
+            result.ShouldBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public void CheckSubtree_Should_Check_Multiple_Depth_False()
+        {
+            //arrange
+            var biggerTree = new MyBinarySearchTree<int>();
+            var smallerTree = new MyBinarySearchTree<int>();
+
+            biggerTree.Insert(10);
+            biggerTree.Insert(6);
+            biggerTree.Insert(15);
+            biggerTree.Insert(4);
+            biggerTree.Insert(8);
+            biggerTree.Insert(13);
+            biggerTree.Insert(17);
+            biggerTree.Insert(3);
+            biggerTree.Insert(5);
+            biggerTree.Insert(7);
+            biggerTree.Insert(14);
+            biggerTree.Insert(2);
+
+            smallerTree.Root = biggerTree.Root.Left.Left;
+            biggerTree.Root = biggerTree.Root.Right;
+
+            //act
+            var result = _treesGraphs.CheckSubtree(biggerTree, smallerTree);
+
+            //assert
+            result.ShouldBeEquivalentTo(false);
+        }
     }
 }

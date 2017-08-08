@@ -254,7 +254,7 @@ namespace Tasks
             if (tree == null)
                 throw new ArgumentNullException();
             var result = BSTSequencesHelper(tree.Root);
-           
+
             return result.Select(x => x.ToArray()).ToList();
         }
 
@@ -280,10 +280,10 @@ namespace Tasks
                     FindOrderedPermutations(current, item, value, 0, 0, result);
                     permutations.AddRange(result);
                 }
-                if(smaller.Count==0)
+                if (smaller.Count == 0)
                     permutations.Add(item);
             }
-          
+
 
             foreach (var item in permutations)
                 item.Insert(0, root.Data);
@@ -320,6 +320,35 @@ namespace Tasks
                     firstStartIndex, secondStartIndex + 1, result);
                 current.Remove(second[secondStartIndex]);
             }
+        }
+
+        public bool CheckSubtree(MyBinarySearchTree<int> biggerTree,
+            MyBinarySearchTree<int> smallerTree)
+        {
+            if (biggerTree == null || smallerTree == null)
+                throw new ArgumentNullException();
+
+            var biggerBuilder = new MyStringBuilder();
+            var smallerBuilder = new MyStringBuilder();
+
+            GetMarkedPreOrderTraversal(biggerTree.Root, biggerBuilder);
+            GetMarkedPreOrderTraversal(smallerTree.Root, smallerBuilder);
+
+            return biggerBuilder.ToString().Contains(smallerBuilder.ToString());
+        }
+
+        private void GetMarkedPreOrderTraversal(MyBinarySearchTreeNode<int> root,
+            MyStringBuilder result)
+        {
+            if (root == null)
+            {
+                result.Append("*");
+                return;
+            }
+
+            result.Append(root.Data.ToString());
+            GetMarkedPreOrderTraversal(root.Left, result);
+            GetMarkedPreOrderTraversal(root.Right, result);
         }
     }
 }

@@ -350,5 +350,35 @@ namespace Tasks
             GetMarkedPreOrderTraversal(root.Left, result);
             GetMarkedPreOrderTraversal(root.Right, result);
         }
+
+        public MyBinarySearchTreeNode<int> RandomNode(MyBinarySearchTree<int> tree)
+        {
+            if (tree == null)
+                throw new ArgumentNullException();
+            if (tree.Count == 0)
+                return null;
+
+            var index = 0;
+            var number = new Random().Next(0, tree.Count);
+
+            return GetNthNode(tree.Root, ref index, number);
+        }
+
+        private MyBinarySearchTreeNode<int> GetNthNode(MyBinarySearchTreeNode<int> root,
+            ref int index, int endIndex)
+        {
+            if (index == endIndex)
+                return root;
+            index++;
+
+            MyBinarySearchTreeNode<int> leftRes = null;
+
+            if (root.Left != null)
+                leftRes = GetNthNode(root.Left, ref index, endIndex);
+            if (leftRes != null)
+                return leftRes;
+         
+            return root.Right != null ? GetNthNode(root.Right, ref index, endIndex) : null;
+        }
     }
 }

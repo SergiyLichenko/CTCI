@@ -1179,5 +1179,69 @@ namespace Tasks.UT
             //assert
             result.ShouldBeEquivalentTo(false);
         }
+
+        [Fact]
+        public void RandomNode_Should_Throw_If_Null()
+        {
+            //arrange
+            
+            //act
+            Action act = ()=>_treesGraphs.RandomNode(null);
+
+            //assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void RandomNode_Should_Check_Empty()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+
+            //act
+            var result = _treesGraphs.RandomNode(tree);
+
+            //assert
+            result.ShouldBeEquivalentTo(null);
+        }
+
+        [Fact]
+        public void RandomNode_Should_Check_Length_One()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(4);
+
+            //act
+            var result = _treesGraphs.RandomNode(tree);
+
+            //assert
+            result.ShouldBeEquivalentTo(tree.Root);
+        }
+
+        [Fact]
+        public void RandomNode_Should_Check_Multiple_Length()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(10);
+            tree.Insert(6);
+            tree.Insert(15);
+            tree.Insert(4);
+            tree.Insert(8);
+            tree.Insert(13);
+            tree.Insert(17);
+            tree.Insert(3);
+            tree.Insert(5);
+            tree.Insert(7);
+            tree.Insert(14);
+            tree.Insert(2);
+
+            //act
+            var result = _treesGraphs.RandomNode(tree);
+
+            //assert
+            tree.Contains(result.Data).ShouldBeEquivalentTo(true);
+        }
     }
 }

@@ -377,8 +377,75 @@ namespace Tasks
                 leftRes = GetNthNode(root.Left, ref index, endIndex);
             if (leftRes != null)
                 return leftRes;
-         
+
             return root.Right != null ? GetNthNode(root.Right, ref index, endIndex) : null;
         }
+
+        //First implementation
+        public int PathsWithSum(MyBinarySearchTree<int> tree, int target)
+        {
+            if (tree == null)
+                throw new ArgumentNullException();
+            var map = new Dictionary<MyBinarySearchTreeNode<int>, List<int>>();
+            PathsWithSumHelper(tree.Root, map, null);
+            return map.Sum(x => x.Value.Count(y => y == target));
+        }
+
+        private void PathsWithSumHelper(MyBinarySearchTreeNode<int> root,
+            Dictionary<MyBinarySearchTreeNode<int>, List<int>> map,
+            MyBinarySearchTreeNode<int> parent)
+        {
+            if (root == null)
+                return;
+
+            var currentValues = new List<int>() { root.Data };
+            if (parent != null)
+            {
+                var parentValues = map[parent];
+                currentValues.AddRange(parentValues.Select(x => x + root.Data));
+            }
+            map[root] = currentValues;
+
+            PathsWithSumHelper(root.Left, map, root);
+            PathsWithSumHelper(root.Right, map, root);
+        }
+
+        //Second implementation
+       /* public int PathsWithSum(MyBinarySearchTree<int> tree, int target)
+        {
+            if (tree == null)
+                throw new ArgumentNullException();
+            var map = new Dictionary<int, int>();
+            var result = PathsWithSumHelper(tree.Root, map, target, 0);
+
+            return result;
+        }
+
+        private int PathsWithSumHelper(MyBinarySearchTreeNode<int> root,
+            Dictionary<int, int> map,
+            int target, int runningSum)
+        {
+            if (root == null)
+                return 0;
+
+            runningSum += root.Data;
+            var sum = runningSum - target;
+
+            int count = 0;
+            if (sum == 0)
+                count++;
+            if (map.ContainsKey(sum))
+                count = map[sum];
+
+            if (!map.ContainsKey(runningSum))
+                map[runningSum] = 0;
+            map[runningSum]++;
+
+            count += PathsWithSumHelper(root.Left, map, target, runningSum);
+            count += PathsWithSumHelper(root.Right, map, target, runningSum);
+            map[runningSum]--;
+
+            return count;
+        }*/
     }
 }

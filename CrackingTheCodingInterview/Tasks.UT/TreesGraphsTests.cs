@@ -1243,5 +1243,109 @@ namespace Tasks.UT
             //assert
             tree.Contains(result.Data).ShouldBeEquivalentTo(true);
         }
+
+        [Fact]
+        public void PathsWithSum_Should_Throw_If_Null()
+        {
+            //arrange
+
+            //act
+            Action act = () => _treesGraphs.PathsWithSum(null, 1);
+
+            //assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void PathsWithSum_Should_Check_Empty()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+
+            //act
+            var result = _treesGraphs.PathsWithSum(tree, 1);
+
+            //assert
+            result.ShouldBeEquivalentTo(0);
+        }
+
+
+        [Fact]
+        public void PathsWithSum_Should_Check_Length_One_False()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(5);
+
+            //act
+            var result = _treesGraphs.PathsWithSum(tree, 1);
+
+            //assert
+            result.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void PathsWithSum_Should_Check_Length_One_True()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(5);
+
+            //act
+            var result = _treesGraphs.PathsWithSum(tree, 5);
+
+            //assert
+            result.ShouldBeEquivalentTo(1);
+        }
+
+        [Fact]
+        public void PathsWithSum_Should_Check_Multiple_Depth()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(10);
+            tree.Insert(6);
+            tree.Insert(15);
+            tree.Insert(4);
+            tree.Insert(8);
+            tree.Insert(13);
+            tree.Insert(17);
+            tree.Insert(3);
+            tree.Insert(5);
+            tree.Insert(7);
+            tree.Insert(14);
+            tree.Insert(-10);
+            
+            //act
+            var result = _treesGraphs.PathsWithSum(tree, 25);
+
+            //assert
+            result.ShouldBeEquivalentTo(2);
+        }
+
+        [Fact]
+        public void PathsWithSum_Should_Check_Different_Depth()
+        {
+            //arrange
+            var tree = new MyBinarySearchTree<int>();
+            tree.Insert(10);
+            tree.Insert(6);
+            tree.Insert(15);
+            tree.Insert(4);
+            tree.Insert(8);
+            tree.Insert(13);
+            tree.Insert(17);
+            tree.Insert(3);
+            tree.Insert(5);
+            tree.Insert(7);
+            tree.Insert(14);
+            tree.Insert(-10);
+
+            //act
+            var result = _treesGraphs.PathsWithSum(tree, 13);
+
+            //assert
+            result.ShouldBeEquivalentTo(3);
+        }
     }
 }

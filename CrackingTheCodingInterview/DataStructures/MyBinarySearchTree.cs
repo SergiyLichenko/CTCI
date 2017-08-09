@@ -29,7 +29,7 @@ namespace DataStructures
 
         public int Count { get; private set; }
 
-        public void Insert(T data)
+        public virtual void Insert(T data)
         {
             if (Root == null)
                 Root = new MyBinarySearchTreeNode<T>(data);

@@ -9,8 +9,7 @@ namespace DataStructures
     public class MyAVLTreeNode<T> where T : IComparable
     {
         public T Data { get; private set; }
-        public int LeftHeight { get; set; }
-        public int RightHeight { get; set; }
+        public int TreeHeight { get; set; }
 
         public MyAVLTreeNode<T> Left { get; set; }
         public MyAVLTreeNode<T> Right { get; set; }
@@ -19,10 +18,9 @@ namespace DataStructures
             Data = data;
         }
 
-        public MyAVLTreeNode(T data, int leftHeight, int rightHeight) : this(data)
+        public MyAVLTreeNode(T data, int treeHeight) : this(data)
         {
-            LeftHeight = leftHeight;
-            RightHeight = rightHeight;
+            TreeHeight = treeHeight;
         }
     }
     public class MyAVLTree<T> where T : IComparable
@@ -36,103 +34,123 @@ namespace DataStructures
             if (Root == null)
                 Root = new MyAVLTreeNode<T>(data);
             else
-                Root = InsertHelper(data, Root, null);
+                Root = InsertHelper(data, Root);
 
             Count++;
         }
 
-        private MyAVLTreeNode<T> InsertHelper(T data, MyAVLTreeNode<T> root,
-            MyAVLTreeNode<T> parent)
+        private MyAVLTreeNode<T> InsertHelper(T data,
+            MyAVLTreeNode<T> root)
         {
             if (root == null)
                 return null;
-
             var compared = data.CompareTo(root.Data);
-            if (compared > 0 && root.Right == null)
-                root.Right = new MyAVLTreeNode<T>(data);
-            else if (compared > 0)
-                root.Right = InsertHelper(data, root.Right, root);
 
-            if (compared <= 0 && root.Left == null)
-                root.Left = new MyAVLTreeNode<T>(data);
-            else if (compared <= 0)
-                root.Left = InsertHelper(data, root.Left, root);
-
-            UpdateNodeHeight(root);
-
-            var dif = root.LeftHeight - root.RightHeight;
-            if (dif > 1)
+            if (compared > 0)
             {
-                if (root.Left?.Right != null)
-                    root = LeftRightRotation(root);
-                return LeftLeftRotation(root);
+                if (root.Right == null)
+                    root.Right = new MyAVLTreeNode<T>(data, 1);
+                else
+                    root.Right = InsertHelper(data, root.Right);
             }
-            if (dif < -1)
+            else
             {
-                if (root.Right?.Left != null)
+                if (root.Left == null)
+                    root.Left = new MyAVLTreeNode<T>(data, 1);
+                else
+                    root.Left = InsertHelper(data, root.Left);
+            }
+
+            root.TreeHeight = Math.Max(root.Left?.TreeHeight ?? 0,
+                                  root.Right?.TreeHeight ?? 0) + 1;
+
+
+            int firstDif = (root.Left?.TreeHeight ?? 0) - (root.Right?.TreeHeight ?? 0);
+
+            if (firstDif > 1)
+            {
+                int secondDif = (root.Left?.Left?.TreeHeight ?? 0) -
+                    (root.Left?.Right?.TreeHeight ?? 0);
+
+                if (secondDif < 0)
+                    root = LeftRightRotation(root);
+                root = LeftLeftRotation(root);
+                UpdateHeight(root);
+            }
+            else if (firstDif < -1)
+            {
+                int secondDif = (root.Right?.Left?.TreeHeight ?? 0) -
+                                (root.Right?.Right?.TreeHeight ?? 0);
+                if (secondDif > 0)
                     root = RightLeftRotation(root);
-                return RightRightRotation(root);
+                root = RightRightRotation(root);
+                UpdateHeight(root);
             }
 
             return root;
         }
 
-        private void UpdateNodeHeight(MyAVLTreeNode<T> node)
+        private MyAVLTreeNode<T> RightRightRotation(MyAVLTreeNode<T> root)
         {
-            node.LeftHeight = node.Left == null ? 0 : Math.Max(node.Left.LeftHeight, node.Left.RightHeight) + 1;
-            node.RightHeight = node.Right == null ? 0 : Math.Max(node.Right.LeftHeight, node.Right.RightHeight) + 1;
+            var left = root;
+
+            root = root.Right;
+            left.Right = root.Left;
+            root.Left = left;
+
+            return root;
         }
 
-        private MyAVLTreeNode<T> LeftRightRotation(MyAVLTreeNode<T> treeNode)
+        private MyAVLTreeNode<T> RightLeftRotation(MyAVLTreeNode<T> root)
         {
-            var left = treeNode.Left;
-            treeNode.Left = left.Right;
-            treeNode.Left.Left = left;
-            left.Right = null;
+            var right = root.Right;
+            root.Right = root.Right.Left;
 
-            UpdateNodeHeight(treeNode.Left.Left);
-            UpdateNodeHeight(treeNode.Left);
-            UpdateNodeHeight(treeNode);
+            var temp = root.Right;
+            while (temp.Right != null)
+                temp = temp.Right;
 
-            return treeNode;
-        }
-
-        private MyAVLTreeNode<T> LeftLeftRotation(MyAVLTreeNode<T> treeNode)
-        {
-            var left = treeNode.Left;
-            treeNode.Left = left.Right;
-            left.Right = treeNode;
-
-            UpdateNodeHeight(treeNode);
-            UpdateNodeHeight(left);
-
-            return left;
-        }
-
-        private MyAVLTreeNode<T> RightRightRotation(MyAVLTreeNode<T> treeNode)
-        {
-            var right = treeNode.Right;
-            treeNode.Right = null;
-            right.Left = treeNode;
-
-            UpdateNodeHeight(right.Left);
-            UpdateNodeHeight(right);
-
-            return right;
-        }
-
-        private MyAVLTreeNode<T> RightLeftRotation(MyAVLTreeNode<T> treeNode)
-        {
-            var right = treeNode.Right;
-            treeNode.Right = right.Left;
-            treeNode.Right.Right = right;
+            temp.Right = right;
             right.Left = null;
 
-            UpdateNodeHeight(right);
-            UpdateNodeHeight(treeNode.Right);
-            UpdateNodeHeight(treeNode);
+            return root;
+        }
 
-            return treeNode;
+        private MyAVLTreeNode<T> LeftLeftRotation(MyAVLTreeNode<T> root)
+        {
+            var right = root;
+
+            root = root.Left;
+            right.Left = root.Right;
+            root.Right = right;
+
+            return root;
+        }
+
+        private MyAVLTreeNode<T> LeftRightRotation(MyAVLTreeNode<T> root)
+        {
+            var left = root.Left;
+            root.Left = root.Left.Right;
+
+            var temp = root.Left;
+            while (temp.Left != null)
+                temp = temp.Left;
+
+            temp.Left = left;
+            left.Right = null;
+
+            return root;
+        }
+
+        private int UpdateHeight(MyAVLTreeNode<T> root)
+        {
+            if (root == null)
+                return 0;
+            var left = UpdateHeight(root.Left);
+            var right = UpdateHeight(root.Right);
+
+            root.TreeHeight = Math.Max(left, right) + 1;
+            return root.TreeHeight;
         }
     }
 }

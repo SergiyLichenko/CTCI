@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ namespace DataStructures
 {
     public class MyAVLTreeNode<T> where T : IComparable
     {
-        public T Data { get; private set; }
+        public T Data { get; internal set; }
         public int TreeHeight { get; set; }
 
         public MyAVLTreeNode<T> Left { get; set; }
@@ -28,6 +29,93 @@ namespace DataStructures
         public MyAVLTreeNode<T> Root { get; private set; }
 
         public int Count { get; private set; }
+        public MyAVLTreeNode<T> Find(T data)
+            => FindHelper(Root, data);
+
+        private MyAVLTreeNode<T> FindHelper(MyAVLTreeNode<T> root,
+            T data)
+        {
+            if (root == null)
+                return root;
+
+            if (root.Data.Equals(data))
+                return root;
+
+            var leftResult = FindHelper(root.Left, data);
+            if (leftResult != null)
+                return leftResult;
+
+            var rightResult = FindHelper(root.Right, data);
+            return rightResult;
+        }
+
+
+        public void Remove(T data)
+        {
+            if (RemoveHelper(Root, null, data))
+                Count--;
+        }
+
+        private bool RemoveHelper(MyAVLTreeNode<T> root,
+            MyAVLTreeNode<T> parent, T data)
+        {
+            if (root == null)
+                return false;
+
+            if (root.Data.Equals(data))
+            {
+                if (root.Left == null && root.Right == null)
+                {
+                    if (parent.Left != null && parent.Left.Data.Equals(root.Data))
+                        parent.Left = null;
+                    else
+                        parent.Right = null;
+                    return true;
+                }
+                if (root.Left != null && root.Right == null)
+                {
+                    if (parent.Right != null && parent.Right.Data.Equals(root.Data))
+                        parent.Right = root.Left;
+                    else
+                        parent.Left = root.Left;
+                    return true;
+                }
+                if (root.Right != null && root.Left == null)
+                {
+                    if (parent.Right != null && parent.Right.Data.Equals(root.Data))
+                        parent.Right = root.Right;
+                    else
+                        parent.Left = root.Right;
+                    return true;
+                }
+                if (root.Right != null && root.Left != null)
+                {
+                    var swapNode = FindLargestNodeInLeftSubStree(root.Left) ??
+                                   FindSmallestNodeInRightSubTree(root.Right);
+
+                    var temp = swapNode.Data;
+                    swapNode.Data = root.Data;
+                    root.Data = temp;
+
+                    return RemoveHelper(Root, null, swapNode.Data);
+                }
+            }
+
+            if (RemoveHelper(root.Left, root, data))
+            {
+                BalanceParent(parent, root);
+                return true;
+            }
+            if (RemoveHelper(root.Right, root, data))
+            {
+                BalanceParent(parent, root);
+                return true;
+            }
+
+
+            return false;
+        }
+
 
         public void Insert(T data)
         {
@@ -61,6 +149,25 @@ namespace DataStructures
                     root.Left = InsertHelper(data, root.Left);
             }
 
+            return Balance(root);
+        }
+
+        private void BalanceParent(MyAVLTreeNode<T> parent,
+            MyAVLTreeNode<T> root)
+        {
+            if (parent != null)
+            {
+                if (parent.Left != null && parent.Left.Equals(root))
+                    parent.Left = Balance(root);
+                else
+                    parent.Right = Balance(root);
+            }
+            else
+                Root = Balance(root);
+        }
+
+        private MyAVLTreeNode<T> Balance(MyAVLTreeNode<T> root)
+        {
             root.TreeHeight = Math.Max(root.Left?.TreeHeight ?? 0,
                                   root.Right?.TreeHeight ?? 0) + 1;
 
@@ -70,7 +177,7 @@ namespace DataStructures
             if (firstDif > 1)
             {
                 int secondDif = (root.Left?.Left?.TreeHeight ?? 0) -
-                    (root.Left?.Right?.TreeHeight ?? 0);
+                                (root.Left?.Right?.TreeHeight ?? 0);
 
                 if (secondDif < 0)
                     root = LeftRightRotation(root);
@@ -151,6 +258,24 @@ namespace DataStructures
 
             root.TreeHeight = Math.Max(left, right) + 1;
             return root.TreeHeight;
+        }
+
+        private MyAVLTreeNode<T> FindLargestNodeInLeftSubStree(MyAVLTreeNode<T> root)
+        {
+            if (root == null)
+                return root;
+
+            var node = FindLargestNodeInLeftSubStree(root.Right);
+            return node ?? root;
+        }
+
+        private MyAVLTreeNode<T> FindSmallestNodeInRightSubTree(
+            MyAVLTreeNode<T> root)
+        {
+            if (root == null)
+                return root;
+            var node = FindSmallestNodeInRightSubTree(root.Left);
+            return node ?? root;
         }
     }
 }

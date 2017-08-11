@@ -72,6 +72,7 @@
     <Compile Include="MyHashTableTests.cs" />
     <Compile Include="MyLinkedListQueueTests.cs" />
     <Compile Include="MyLinkedListStackTests.cs" />
+    <Compile Include="MyRedBlackTreeTests.cs" />
     <Compile Include="MySinglyLinkedListTests.cs" />
     <Compile Include="MyArrayStackTests.cs" />
     <Compile Include="MyStringBuilderTests.cs" />

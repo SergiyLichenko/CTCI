@@ -51,6 +51,7 @@
     <Compile Include="MyHashTable.cs" />
     <Compile Include="MyLinkedListQueue.cs" />
     <Compile Include="MyLinkedListStack.cs" />
+    <Compile Include="MyRedBlackTree.cs" />
     <Compile Include="MySinglyLinkedList.cs" />
     <Compile Include="MyStringBuilder.cs" />
     <Compile Include="MyTrie.cs" />

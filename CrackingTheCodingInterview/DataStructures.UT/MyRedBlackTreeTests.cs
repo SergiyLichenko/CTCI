@@ -467,6 +467,16 @@ namespace DataStructures.UT
             tree.Root.Right.Right.Right.Left.IsNull.ShouldBeEquivalentTo(true);
             tree.Root.Right.Right.Right.Right.IsNull.ShouldBeEquivalentTo(true);
 
+            tree.Root.Left.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Right.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Right.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+
             tree.Root.IsNull.ShouldBeEquivalentTo(false);
             tree.Root.Left.IsNull.ShouldBeEquivalentTo(false);
             tree.Root.Right.IsNull.ShouldBeEquivalentTo(false);
@@ -475,6 +485,788 @@ namespace DataStructures.UT
             tree.Root.Right.Left.IsNull.ShouldBeEquivalentTo(false);
             tree.Root.Right.Right.IsNull.ShouldBeEquivalentTo(false);
             tree.Root.Right.Right.Right.IsNull.ShouldBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public void Should_Find()
+        {
+            //arrange
+            var tree = new MyRedBlackTree<int>();
+            tree.Insert(10);
+            tree.Insert(5);
+            tree.Insert(30);
+            tree.Insert(5);
+            tree.Insert(7);
+            tree.Insert(20);
+            tree.Insert(38);
+            tree.Insert(35);
+
+            //act
+            var result = tree.Find(30);
+
+            //assert
+            result.ShouldBeEquivalentTo(tree.Root.Right);
+        }
+
+        [Fact]
+        public void Should_Find_Return_Null_If_Not_Contains()
+        {
+            //arrange
+            var tree = new MyRedBlackTree<int>();
+            tree.Insert(10);
+            tree.Insert(5);
+            tree.Insert(30);
+            tree.Insert(5);
+            tree.Insert(7);
+            tree.Insert(20);
+            tree.Insert(38);
+            tree.Insert(35);
+
+            //act
+            var result = tree.Find(300);
+
+            //assert
+            result.ShouldBeEquivalentTo(null);
+        }
+
+        [Fact]
+        public void Should_Remove_Throw_If_Null()
+        {
+            //arrange
+            var tree = new MyRedBlackTree<int>();
+
+            //act
+            Action act = () => tree.Remove(null);
+
+            //assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+
+        [Fact]
+        public void Should_Remove_Check_Single_Red_Node_Case()
+        {
+            //arrange
+            var tree = new MyRedBlackTree<int>();
+            tree.Insert(10);
+            tree.Insert(5);
+            tree.Insert(30);
+            tree.Insert(-5);
+            tree.Insert(7);
+            tree.Insert(20);
+            tree.Insert(38);
+            tree.Insert(35);
+
+            var node = tree.Find(30);
+
+            //act
+            tree.Remove(node);
+
+            //assert
+            tree.Count.ShouldBeEquivalentTo(7);
+
+            tree.Root.Data.ShouldBeEquivalentTo(10);
+            tree.Root.Left.Data.ShouldBeEquivalentTo(5);
+            tree.Root.Right.Data.ShouldBeEquivalentTo(35);
+            tree.Root.Left.Left.Data.ShouldBeEquivalentTo(-5);
+            tree.Root.Left.Right.Data.ShouldBeEquivalentTo(7);
+            tree.Root.Right.Left.Data.ShouldBeEquivalentTo(20);
+            tree.Root.Right.Right.Data.ShouldBeEquivalentTo(38);
+
+            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+
+            tree.Root.Parent.ShouldBeEquivalentTo(null);
+            tree.Root.Left.Parent.ShouldBeEquivalentTo(tree.Root);
+            tree.Root.Right.Parent.ShouldBeEquivalentTo(tree.Root);
+            tree.Root.Left.Left.Parent.ShouldBeEquivalentTo(tree.Root.Left);
+            tree.Root.Left.Right.Parent.ShouldBeEquivalentTo(tree.Root.Left);
+            tree.Root.Right.Left.Parent.ShouldBeEquivalentTo(tree.Root.Right);
+            tree.Root.Right.Right.Parent.ShouldBeEquivalentTo(tree.Root.Right);
+
+            tree.Root.Left.Left.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Left.Left.Right.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Left.Right.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Left.Right.Right.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Left.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Left.Right.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Right.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Right.Right.IsNull.ShouldBeEquivalentTo(true);
+
+            tree.Root.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Left.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Right.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Left.Left.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Left.Right.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Left.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Right.IsNull.ShouldBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public void Should_Remove_Check_Black_Node_And_Single_Red_Child_Case()
+        {
+            //arrange
+            var tree = new MyRedBlackTree<int>();
+            tree.Insert(10);
+            tree.Insert(5);
+            tree.Insert(30);
+            tree.Insert(-5);
+            tree.Insert(7);
+            tree.Insert(20);
+            tree.Insert(38);
+            tree.Insert(32);
+            tree.Insert(41);
+            tree.Insert(35);
+
+            var node = tree.Find(30);
+
+            //act
+            tree.Remove(node);
+
+            //assert
+            tree.Count.ShouldBeEquivalentTo(9);
+
+            tree.Root.Data.ShouldBeEquivalentTo(32);
+            tree.Root.Left.Data.ShouldBeEquivalentTo(10);
+            tree.Root.Right.Data.ShouldBeEquivalentTo(38);
+            tree.Root.Left.Left.Data.ShouldBeEquivalentTo(5);
+            tree.Root.Left.Right.Data.ShouldBeEquivalentTo(20);
+            tree.Root.Right.Left.Data.ShouldBeEquivalentTo(35);
+            tree.Root.Right.Right.Data.ShouldBeEquivalentTo(41);
+            tree.Root.Left.Left.Left.Data.ShouldBeEquivalentTo(-5);
+            tree.Root.Left.Left.Right.Data.ShouldBeEquivalentTo(7);
+
+            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Left.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
+
+            tree.Root.Parent.ShouldBeEquivalentTo(null);
+            tree.Root.Left.Parent.ShouldBeEquivalentTo(tree.Root);
+            tree.Root.Right.Parent.ShouldBeEquivalentTo(tree.Root);
+            tree.Root.Left.Left.Parent.ShouldBeEquivalentTo(tree.Root.Left);
+            tree.Root.Left.Right.Parent.ShouldBeEquivalentTo(tree.Root.Left);
+            tree.Root.Right.Left.Parent.ShouldBeEquivalentTo(tree.Root.Right);
+            tree.Root.Right.Right.Parent.ShouldBeEquivalentTo(tree.Root.Right);
+            tree.Root.Left.Left.Left.Parent.ShouldBeEquivalentTo(tree.Root.Left.Left);
+            tree.Root.Left.Left.Right.Parent.ShouldBeEquivalentTo(tree.Root.Left.Left);
+
+            tree.Root.Left.Left.Left.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Left.Left.Left.Right.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Left.Left.Right.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Left.Left.Right.Right.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Left.Right.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Left.Right.Right.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Left.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Left.Right.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Right.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Right.Right.IsNull.ShouldBeEquivalentTo(true);
+
+            tree.Root.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Left.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Right.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Left.Left.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Left.Right.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Left.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Right.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Left.Left.Left.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Left.Left.Right.IsNull.ShouldBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public void Should_Remove_Check_Black_Node_And_Single_Red_Child_Case_Root()
+        {
+            //arrange
+            var tree = new MyRedBlackTree<int>();
+            tree.Insert(5);
+            tree.Insert(10);
+
+            var node = tree.Find(10);
+
+            //act
+            tree.Remove(node);
+
+            //assert
+            tree.Count.ShouldBeEquivalentTo(1);
+
+            tree.Root.Data.ShouldBeEquivalentTo(5);
+            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
+
+            tree.Root.Parent.ShouldBeEquivalentTo(null);
+            tree.Root.Left.Parent.ShouldBeEquivalentTo(tree.Root);
+            tree.Root.Right.Parent.ShouldBeEquivalentTo(tree.Root);
+
+            tree.Root.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.IsNull.ShouldBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public void Should_Remove_Check_Rotation_Case_Three_And_One()
+        {
+            //arrange
+            var tree = new MyRedBlackTree<int>();
+            tree.Insert(10);
+            tree.Insert(-10);
+            tree.Insert(30);
+            tree.Insert(25);
+
+            var node = tree.Find(25);
+            tree.Remove(node);
+
+            node = tree.Find(-10);
+
+            //act
+            tree.Remove(node);
+
+            //assert
+            tree.Count.ShouldBeEquivalentTo(2);
+
+            tree.Root.Data.ShouldBeEquivalentTo(10);
+            tree.Root.Right.Data.ShouldBeEquivalentTo(30);
+
+            tree.Root.Parent.ShouldBeEquivalentTo(null);
+            tree.Root.Left.Parent.ShouldBeEquivalentTo(tree.Root);
+            tree.Root.Right.Parent.ShouldBeEquivalentTo(tree.Root);
+
+            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
+
+            tree.Root.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Right.IsNull.ShouldBeEquivalentTo(true);
+
+            tree.Root.Left.Left.ShouldBeEquivalentTo(null);
+            tree.Root.Left.Right.ShouldBeEquivalentTo(null);
+        }
+
+        [Fact]
+        public void Should_Remove_Check_Rotation_Case_Four()
+        {
+            //arrange
+            var tree = new MyRedBlackTree<int>();
+            tree.Insert(10);
+            tree.Insert(-10);
+            tree.Insert(30);
+            tree.Insert(20);
+            tree.Insert(38);
+            tree.Insert(40);
+
+            var node = tree.Find(40);
+            tree.Remove(node);
+
+            node = tree.Find(20);
+
+            //act
+            tree.Remove(node);
+
+            //assert
+            tree.Count.ShouldBeEquivalentTo(4);
+
+            tree.Root.Data.ShouldBeEquivalentTo(10);
+            tree.Root.Left.Data.ShouldBeEquivalentTo(-10);
+            tree.Root.Right.Data.ShouldBeEquivalentTo(30);
+            tree.Root.Right.Right.Data.ShouldBeEquivalentTo(38);
+
+            tree.Root.Parent.ShouldBeEquivalentTo(null);
+            tree.Root.Left.Parent.ShouldBeEquivalentTo(tree.Root);
+            tree.Root.Right.Parent.ShouldBeEquivalentTo(tree.Root);
+            tree.Root.Left.Left.Parent.ShouldBeEquivalentTo(tree.Root.Left);
+            tree.Root.Left.Right.Parent.ShouldBeEquivalentTo(tree.Root.Left);
+            tree.Root.Right.Left.Parent.ShouldBeEquivalentTo(tree.Root.Right);
+            tree.Root.Right.Right.Parent.ShouldBeEquivalentTo(tree.Root.Right);
+            tree.Root.Right.Right.Left.Parent.ShouldBeEquivalentTo(tree.Root.Right.Right);
+            tree.Root.Right.Right.Right.Parent.ShouldBeEquivalentTo(tree.Root.Right.Right);
+
+            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
+
+            tree.Root.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Left.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Right.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Right.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Left.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Left.Right.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Right.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Right.Right.IsNull.ShouldBeEquivalentTo(true);
+
+            tree.Root.Right.Left.Left.ShouldBeEquivalentTo(null);
+            tree.Root.Right.Left.Right.ShouldBeEquivalentTo(null);
+        }
+
+        [Fact]
+        public void Should_Remove_Check_Rotation_Case_Six()
+        {
+            //arrange
+            var tree = new MyRedBlackTree<int>();
+            tree.Insert(10);
+            tree.Insert(-10);
+            tree.Insert(30);
+            tree.Insert(25);
+            tree.Insert(40);
+
+            var node = tree.Find(-10);
+
+            //act
+            tree.Remove(node);
+
+            //assert
+            tree.Count.ShouldBeEquivalentTo(4);
+
+            tree.Root.Data.ShouldBeEquivalentTo(30);
+            tree.Root.Left.Data.ShouldBeEquivalentTo(10);
+            tree.Root.Right.Data.ShouldBeEquivalentTo(40);
+            tree.Root.Left.Right.Data.ShouldBeEquivalentTo(25);
+
+            tree.Root.Parent.ShouldBeEquivalentTo(null);
+            tree.Root.Left.Parent.ShouldBeEquivalentTo(tree.Root);
+            tree.Root.Right.Parent.ShouldBeEquivalentTo(tree.Root);
+            tree.Root.Left.Left.Parent.ShouldBeEquivalentTo(tree.Root.Left);
+            tree.Root.Left.Right.Parent.ShouldBeEquivalentTo(tree.Root.Left);
+            tree.Root.Right.Left.Parent.ShouldBeEquivalentTo(tree.Root.Right);
+            tree.Root.Right.Right.Parent.ShouldBeEquivalentTo(tree.Root.Right);
+            tree.Root.Left.Right.Left.Parent.ShouldBeEquivalentTo(tree.Root.Left.Right);
+            tree.Root.Left.Right.Right.Parent.ShouldBeEquivalentTo(tree.Root.Left.Right);
+
+            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
+
+            tree.Root.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Left.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Right.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Left.Right.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Left.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Left.Right.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Left.Right.Right.IsNull.ShouldBeEquivalentTo(true);
+
+            tree.Root.Right.Right.Left.ShouldBeEquivalentTo(null);
+            tree.Root.Right.Right.Right.ShouldBeEquivalentTo(null);
+        }
+
+        [Fact]
+        public void Should_Remove_Check_Multiple_Rotations_Cases_Two_Five_Six()
+        {
+            //arrange
+            var tree = new MyRedBlackTree<int>();
+            tree.Insert(10);
+            tree.Insert(-10);
+            tree.Insert(40);
+            tree.Insert(20);
+            tree.Insert(60);
+            tree.Insert(15);
+            tree.Insert(50);
+            tree.Insert(80);
+
+            var node = tree.Find(-10);
+
+            //act
+            tree.Remove(node);
+
+            //assert
+            tree.Count.ShouldBeEquivalentTo(7);
+
+            tree.Root.Data.ShouldBeEquivalentTo(40);
+            tree.Root.Left.Data.ShouldBeEquivalentTo(15);
+            tree.Root.Right.Data.ShouldBeEquivalentTo(60);
+            tree.Root.Left.Left.Data.ShouldBeEquivalentTo(10);
+            tree.Root.Left.Right.Data.ShouldBeEquivalentTo(20);
+            tree.Root.Right.Left.Data.ShouldBeEquivalentTo(50);
+            tree.Root.Right.Right.Data.ShouldBeEquivalentTo(80);
+
+            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Left.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+
+            tree.Root.Parent.ShouldBeEquivalentTo(null);
+            tree.Root.Left.Parent.ShouldBeEquivalentTo(tree.Root);
+            tree.Root.Right.Parent.ShouldBeEquivalentTo(tree.Root);
+            tree.Root.Left.Left.Parent.ShouldBeEquivalentTo(tree.Root.Left);
+            tree.Root.Left.Right.Parent.ShouldBeEquivalentTo(tree.Root.Left);
+            tree.Root.Right.Left.Parent.ShouldBeEquivalentTo(tree.Root.Right);
+            tree.Root.Right.Right.Parent.ShouldBeEquivalentTo(tree.Root.Right);
+            tree.Root.Left.Left.Left.Parent.ShouldBeEquivalentTo(tree.Root.Left.Left);
+            tree.Root.Left.Left.Right.Parent.ShouldBeEquivalentTo(tree.Root.Left.Left);
+
+            tree.Root.Left.Right.Left.Parent.ShouldBeEquivalentTo(tree.Root.Left.Right);
+            tree.Root.Left.Right.Right.Parent.ShouldBeEquivalentTo(tree.Root.Left.Right);
+            tree.Root.Right.Left.Left.Parent.ShouldBeEquivalentTo(tree.Root.Right.Left);
+            tree.Root.Right.Left.Right.Parent.ShouldBeEquivalentTo(tree.Root.Right.Left);
+            tree.Root.Right.Right.Left.Parent.ShouldBeEquivalentTo(tree.Root.Right.Right);
+            tree.Root.Right.Right.Right.Parent.ShouldBeEquivalentTo(tree.Root.Right.Right);
+
+            tree.Root.Left.Left.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Left.Left.Right.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Left.Right.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Left.Right.Right.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Left.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Left.Right.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Right.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Right.Right.IsNull.ShouldBeEquivalentTo(true);
+
+            tree.Root.Left.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+        }
+
+        [Fact]
+        public void Should_Remove_Check_Multiple_Rotations_Cases_Three_Five_Six()
+        {
+            //arrange
+            var tree = new MyRedBlackTree<int>();
+            tree.Insert(10);
+            tree.Insert(-30);
+            tree.Insert(50);
+            tree.Insert(-40);
+            tree.Insert(-20);
+            tree.Insert(30);
+            tree.Insert(70);
+            tree.Insert(-70);
+            tree.Insert(15);
+            tree.Insert(40);
+            tree.Insert(45);
+
+
+            var node = tree.Find(-70);
+            tree.Remove(node);
+
+            node = tree.Find(-40);
+            
+            //act
+            tree.Remove(node);
+
+            //assert
+            tree.Count.ShouldBeEquivalentTo(9);
+
+            tree.Root.Data.ShouldBeEquivalentTo(30);
+            tree.Root.Left.Data.ShouldBeEquivalentTo(10);
+            tree.Root.Right.Data.ShouldBeEquivalentTo(50);
+            tree.Root.Left.Left.Data.ShouldBeEquivalentTo(-30);
+            tree.Root.Left.Right.Data.ShouldBeEquivalentTo(15);
+            tree.Root.Right.Left.Data.ShouldBeEquivalentTo(40);
+            tree.Root.Right.Right.Data.ShouldBeEquivalentTo(70);
+            tree.Root.Left.Left.Right.Data.ShouldBeEquivalentTo(-20);
+            tree.Root.Right.Left.Right.Data.ShouldBeEquivalentTo(45);
+
+            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Right.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
+
+            tree.Root.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Left.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Right.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Left.Left.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Left.Right.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Left.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Right.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Left.Left.Right.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Left.Right.IsNull.ShouldBeEquivalentTo(false);
+
+            tree.Root.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Left.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Right.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Left.Left.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Left.Right.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Left.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Right.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Left.Left.Right.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Left.Right.IsDoubleBlack.ShouldBeEquivalentTo(false);
+
+            tree.Root.Parent.ShouldBeEquivalentTo(null);
+            tree.Root.Left.Parent.ShouldBeEquivalentTo(tree.Root);
+            tree.Root.Right.Parent.ShouldBeEquivalentTo(tree.Root);
+            tree.Root.Left.Left.Parent.ShouldBeEquivalentTo(tree.Root.Left);
+            tree.Root.Left.Right.Parent.ShouldBeEquivalentTo(tree.Root.Left);
+            tree.Root.Right.Left.Parent.ShouldBeEquivalentTo(tree.Root.Right);
+            tree.Root.Right.Right.Parent.ShouldBeEquivalentTo(tree.Root.Right);
+            tree.Root.Left.Left.Left.Parent.ShouldBeEquivalentTo(tree.Root.Left.Left);
+            tree.Root.Left.Left.Right.Parent.ShouldBeEquivalentTo(tree.Root.Left.Left);
+            tree.Root.Left.Left.Right.Left.Parent.ShouldBeEquivalentTo(tree.Root.Left.Left.Right);
+            tree.Root.Left.Left.Right.Right.Parent.ShouldBeEquivalentTo(tree.Root.Left.Left.Right);
+            tree.Root.Left.Right.Left.Parent.ShouldBeEquivalentTo(tree.Root.Left.Right);
+            tree.Root.Left.Right.Right.Parent.ShouldBeEquivalentTo(tree.Root.Left.Right);
+            tree.Root.Right.Left.Left.Parent.ShouldBeEquivalentTo(tree.Root.Right.Left);
+            tree.Root.Right.Left.Right.Parent.ShouldBeEquivalentTo(tree.Root.Right.Left);
+            tree.Root.Right.Right.Left.Parent.ShouldBeEquivalentTo(tree.Root.Right.Right);
+            tree.Root.Right.Right.Right.Parent.ShouldBeEquivalentTo(tree.Root.Right.Right);
+
+            tree.Root.Left.Left.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Left.Left.Right.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Left.Left.Right.Right.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Left.Right.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Left.Right.Right.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Left.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Left.Right.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Left.Right.Right.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Right.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Right.Right.IsNull.ShouldBeEquivalentTo(true);
+
+            tree.Root.Left.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Left.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Left.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Left.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Left.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+        }
+
+        [Fact]
+        public void Should_Remove_Check_Multiple_Rotations_Cases_Two_Four()
+        {
+            //arrange
+            var tree = new MyRedBlackTree<int>();
+            tree.Insert(10);
+            tree.Insert(-10);
+            tree.Insert(40);
+            tree.Insert(-20);
+            tree.Insert(-5);
+            tree.Insert(20);
+            tree.Insert(60);
+            tree.Insert(-30);
+            tree.Insert(50);
+            tree.Insert(80);
+            tree.Insert(90);
+
+            var node = tree.Find(10);
+
+            //act
+            tree.Remove(node);
+
+            //assert
+            tree.Count.ShouldBeEquivalentTo(10);
+
+            tree.Root.Data.ShouldBeEquivalentTo(20);
+            tree.Root.Left.Data.ShouldBeEquivalentTo(-10);
+            tree.Root.Right.Data.ShouldBeEquivalentTo(60);
+            tree.Root.Left.Left.Data.ShouldBeEquivalentTo(-20);
+            tree.Root.Left.Right.Data.ShouldBeEquivalentTo(-5);
+            tree.Root.Right.Left.Data.ShouldBeEquivalentTo(40);
+            tree.Root.Right.Right.Data.ShouldBeEquivalentTo(80);
+            tree.Root.Left.Left.Left.Data.ShouldBeEquivalentTo(-30);
+            tree.Root.Right.Left.Right.Data.ShouldBeEquivalentTo(50);
+            tree.Root.Right.Right.Right.Data.ShouldBeEquivalentTo(90);
+
+            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Right.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Right.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
+
+            tree.Root.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Left.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Right.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Left.Left.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Left.Right.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Left.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Right.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Left.Left.Left.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Left.Right.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Right.Right.IsNull.ShouldBeEquivalentTo(false);
+
+            tree.Root.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Left.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Right.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Left.Left.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Left.Right.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Left.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Right.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Left.Left.Left.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Left.Right.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Right.Right.IsDoubleBlack.ShouldBeEquivalentTo(false);
+
+            tree.Root.Parent.ShouldBeEquivalentTo(null);
+            tree.Root.Left.Parent.ShouldBeEquivalentTo(tree.Root);
+            tree.Root.Right.Parent.ShouldBeEquivalentTo(tree.Root);
+            tree.Root.Left.Left.Parent.ShouldBeEquivalentTo(tree.Root.Left);
+            tree.Root.Left.Right.Parent.ShouldBeEquivalentTo(tree.Root.Left);
+            tree.Root.Right.Left.Parent.ShouldBeEquivalentTo(tree.Root.Right);
+            tree.Root.Right.Right.Parent.ShouldBeEquivalentTo(tree.Root.Right);
+            tree.Root.Left.Left.Left.Parent.ShouldBeEquivalentTo(tree.Root.Left.Left);
+            tree.Root.Right.Left.Right.Parent.ShouldBeEquivalentTo(tree.Root.Right.Left);
+            tree.Root.Right.Right.Right.Parent.ShouldBeEquivalentTo(tree.Root.Right.Right);
+
+            tree.Root.Left.Left.Left.Left.Parent.ShouldBeEquivalentTo(tree.Root.Left.Left.Left);
+            tree.Root.Left.Left.Left.Right.Parent.ShouldBeEquivalentTo(tree.Root.Left.Left.Left);
+            tree.Root.Left.Right.Left.Parent.ShouldBeEquivalentTo(tree.Root.Left.Right);
+            tree.Root.Left.Right.Right.Parent.ShouldBeEquivalentTo(tree.Root.Left.Right);
+            tree.Root.Right.Left.Left.Parent.ShouldBeEquivalentTo(tree.Root.Right.Left);
+            tree.Root.Right.Left.Right.Left.Parent.ShouldBeEquivalentTo(tree.Root.Right.Left.Right);
+            tree.Root.Right.Left.Right.Right.Parent.ShouldBeEquivalentTo(tree.Root.Right.Left.Right);
+            tree.Root.Right.Right.Left.Parent.ShouldBeEquivalentTo(tree.Root.Right.Right);
+            tree.Root.Right.Right.Right.Left.Parent.ShouldBeEquivalentTo(tree.Root.Right.Right.Right);
+            tree.Root.Right.Right.Right.Right.Parent.ShouldBeEquivalentTo(tree.Root.Right.Right.Right);
+
+            tree.Root.Left.Left.Left.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Left.Left.Left.Right.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Left.Right.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Left.Right.Right.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Left.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Left.Right.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Left.Right.Right.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Right.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Right.Right.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Right.Right.Right.IsNull.ShouldBeEquivalentTo(true);
+
+            tree.Root.Left.Left.Left.Left.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Left.Left.Left.Right.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Left.Right.Left.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Left.Right.Right.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Left.Left.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Left.Right.Left.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Left.Right.Right.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Right.Left.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Right.Right.Left.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Right.Right.Right.IsDoubleBlack.ShouldBeEquivalentTo(false);
+
+            tree.Root.Left.Left.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Left.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Left.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Left.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Right.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Right.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+        }
+
+        [Fact]
+        public void Should_Remove_Check_Black_Node_With_Red_Left_Child()
+        {
+            //arrange
+            var tree = new MyRedBlackTree<int>();
+            tree.Insert(10);
+            tree.Insert(-10);
+            tree.Insert(40);
+            tree.Insert(-20);
+            tree.Insert(-5);
+            tree.Insert(20);
+            tree.Insert(60);
+            tree.Insert(-30);
+
+            var node = tree.Find(-20);
+
+            //act
+            tree.Remove(node);
+
+            //assert
+            tree.Count.ShouldBeEquivalentTo(7);
+
+            tree.Root.Data.ShouldBeEquivalentTo(10);
+            tree.Root.Left.Data.ShouldBeEquivalentTo(-10);
+            tree.Root.Right.Data.ShouldBeEquivalentTo(40);
+            tree.Root.Left.Left.Data.ShouldBeEquivalentTo(-30);
+            tree.Root.Left.Right.Data.ShouldBeEquivalentTo(-5);
+            tree.Root.Right.Left.Data.ShouldBeEquivalentTo(20);
+            tree.Root.Right.Right.Data.ShouldBeEquivalentTo(60);
+
+            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
+
+            tree.Root.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Left.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Right.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Left.Left.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Left.Right.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Left.IsNull.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Right.IsNull.ShouldBeEquivalentTo(false);
+
+            tree.Root.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Left.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Right.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Left.Left.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Left.Right.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Left.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Right.IsDoubleBlack.ShouldBeEquivalentTo(false);
+
+            tree.Root.Parent.ShouldBeEquivalentTo(null);
+            tree.Root.Left.Parent.ShouldBeEquivalentTo(tree.Root);
+            tree.Root.Right.Parent.ShouldBeEquivalentTo(tree.Root);
+            tree.Root.Left.Left.Parent.ShouldBeEquivalentTo(tree.Root.Left);
+            tree.Root.Left.Right.Parent.ShouldBeEquivalentTo(tree.Root.Left);
+            tree.Root.Right.Left.Parent.ShouldBeEquivalentTo(tree.Root.Right);
+            tree.Root.Right.Right.Parent.ShouldBeEquivalentTo(tree.Root.Right);
+
+            tree.Root.Left.Left.Left.Parent.ShouldBeEquivalentTo(tree.Root.Left.Left);
+            tree.Root.Left.Left.Right.Parent.ShouldBeEquivalentTo(tree.Root.Left.Left);
+            tree.Root.Left.Right.Left.Parent.ShouldBeEquivalentTo(tree.Root.Left.Right);
+            tree.Root.Left.Right.Right.Parent.ShouldBeEquivalentTo(tree.Root.Left.Right);
+            tree.Root.Right.Left.Left.Parent.ShouldBeEquivalentTo(tree.Root.Right.Left);
+            tree.Root.Right.Left.Right.Parent.ShouldBeEquivalentTo(tree.Root.Right.Left);
+            tree.Root.Right.Right.Left.Parent.ShouldBeEquivalentTo(tree.Root.Right.Right);
+            tree.Root.Right.Right.Right.Parent.ShouldBeEquivalentTo(tree.Root.Right.Right);
+
+            tree.Root.Left.Left.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Left.Left.Right.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Left.Right.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Left.Right.Right.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Left.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Left.Right.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Right.Left.IsNull.ShouldBeEquivalentTo(true);
+            tree.Root.Right.Right.Right.IsNull.ShouldBeEquivalentTo(true);
+
+            tree.Root.Left.Left.Left.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Left.Left.Right.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Left.Right.Left.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Left.Right.Right.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Left.Left.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Left.Right.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Right.Left.IsDoubleBlack.ShouldBeEquivalentTo(false);
+            tree.Root.Right.Right.Right.IsDoubleBlack.ShouldBeEquivalentTo(false);
+
+            tree.Root.Left.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
         }
     }
 }

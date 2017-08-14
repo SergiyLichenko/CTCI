@@ -66,12 +66,61 @@ namespace DataStructures
         {
             Parent = parent;
         }
+
+        public MyRedBlackTreeNode<T> Clone()
+        {
+            return (MyRedBlackTreeNode<T>)MemberwiseClone();
+        }
     }
 
     public class MyRedBlackTree<T> where T : IComparable
     {
         public int Count { get; private set; }
         public MyRedBlackTreeNode<T> Root { get; private set; }
+
+        public bool IsValid()
+        {
+            if (Count == 0)
+                return true;
+            if (Root.Color == NodeColor.Red)
+                return false;
+
+            var countBlacks = new List<int>();
+            bool isValid = IsValidHelper(Root, null, countBlacks, 0);
+            if (!isValid)
+                return false;
+
+            return countBlacks.All(x => x == countBlacks.First());
+        }
+
+        private bool IsValidHelper(MyRedBlackTreeNode<T> root,
+            MyRedBlackTreeNode<T> parent,
+            List<int> countBlacks, int currentCount)
+        {
+            if (root == null || root.Parent != parent)
+                return false;
+            if (parent != null && parent.Left != root && parent?.Right != root)
+                return false;
+            if (parent?.Color == NodeColor.Red &&
+                root.Color == NodeColor.Red)
+                return false;
+
+            if (root.IsNull)
+            {
+                countBlacks.Add(currentCount);
+
+                return true;
+            }
+
+            if (root.Color == NodeColor.Black)
+                currentCount++;
+            if (!IsValidHelper(root.Left, root, countBlacks, currentCount))
+                return false;
+            if (!IsValidHelper(root.Right, root, countBlacks, currentCount))
+                return false;
+
+            return true;
+        }
 
         public void Insert(T data)
         {
@@ -156,7 +205,7 @@ namespace DataStructures
                 return null;
 
             var compared = data.CompareTo(root.Data);
-            if (compared == 0)
+            if (compared == 0 && !root.IsNull)
                 return root;
             if (compared < 0)
                 return FindHelper(data, root.Left);
@@ -188,6 +237,7 @@ namespace DataStructures
                 RemoveBlackWithSingleRedChild(node, isSingleLeft);
             else
                 RemoveDoubleBlack(node);
+
         }
 
         private void RemoveSingleRed(MyRedBlackTreeNode<T> node)
@@ -208,6 +258,7 @@ namespace DataStructures
             if (Root == node)
             {
                 Root = isSingleLeft ? node.Left : node.Right;
+                Root.Color = NodeColor.Black;
                 Root.Parent = null;
             }
             else
@@ -236,15 +287,28 @@ namespace DataStructures
 
         private void RemoveDoubleBlack(MyRedBlackTreeNode<T> node)
         {
-            node.Parent.Left = node.Right;
+            Count--;
+            if (node == Root)
+            {
+                Root = null;
+                return;
+            }
+
+            var isRight = node.Parent.Right == node;
+            if (isRight)
+                node.Parent.Right = node.Right;
+            else
+                node.Parent.Left = node.Right;
+
             node.Right.Parent = node.Parent;
             node.Right.IsDoubleBlack = true;
 
             CaseOneRotationDelete(node.Right);
             node.Right = null;
             node.Parent = null;
-            Count--;
         }
+
+
 
 
         #region Remove Rotation Cases
@@ -279,31 +343,30 @@ namespace DataStructures
 
         private void CaseThreeRotationDelete(MyRedBlackTreeNode<T> node)
         {
-            if (node.IsDoubleBlack && node.Parent?.Color == NodeColor.Black
-                && node.Parent?.Left == node && node.Parent?.Right?.Color == NodeColor.Black &&
-                node.Parent?.Right?.Left?.Color == NodeColor.Black &&
-                node.Parent?.Right?.Right?.Color == NodeColor.Black)
+            var sibling = GetSibling(node);
+            if (node.IsDoubleBlack && sibling != null &&
+                node.Parent?.Color == NodeColor.Black && sibling.Color == NodeColor.Black &&
+                sibling.Left?.Color == NodeColor.Black && sibling.Right?.Color == NodeColor.Black)
             {
                 node.IsDoubleBlack = false;
                 node.Parent.IsDoubleBlack = true;
-                node.Parent.Right.Color = NodeColor.Red;
+                sibling.Color = NodeColor.Red;
 
                 CaseOneRotationDelete(node.Parent);
             }
-            else
-                CaseFourRotationDelete(node);
+            CaseFourRotationDelete(node);
         }
 
         private void CaseFourRotationDelete(MyRedBlackTreeNode<T> node)
         {
-            if (node.IsDoubleBlack && node.Parent?.Color == NodeColor.Red &&
-                node.Parent?.Right?.Color == NodeColor.Black &&
-                node.Parent?.Right?.Left?.Color == NodeColor.Black &&
-                node.Parent?.Right?.Right?.Color == NodeColor.Black)
+            var sibling = GetSibling(node);
+            if (node.IsDoubleBlack && sibling != null &&
+                node.Parent.Color == NodeColor.Red && sibling.Color == NodeColor.Black &&
+                sibling.Left.Color == NodeColor.Black && sibling.Right.Color == NodeColor.Black)
             {
                 node.IsDoubleBlack = false;
                 node.Parent.Color = NodeColor.Black;
-                node.Parent.Right.Color = NodeColor.Red;
+                sibling.Color = NodeColor.Red;
             }
             else
                 CaseFiveRotationDelete(node);
@@ -315,13 +378,17 @@ namespace DataStructures
             if (node.IsDoubleBlack && sibling != null &&
                 sibling.Color == NodeColor.Black)
             {
-                if (sibling.Left?.Color == NodeColor.Red && sibling.Right?.Color == NodeColor.Black)
+                if (sibling.Parent?.Right == sibling &&
+                    sibling.Left?.Color == NodeColor.Red && 
+                    sibling.Right?.Color == NodeColor.Black)
                 {
                     RightLeftRotation(sibling.Left);
                     sibling.Color = NodeColor.Red;
                     sibling.Parent.Color = NodeColor.Black;
                 }
-                else if (sibling.Right?.Color == NodeColor.Red && sibling.Left?.Color == NodeColor.Black)
+                else if (sibling.Parent?.Left == sibling &&
+                    sibling.Right?.Color == NodeColor.Red && 
+                    sibling.Left?.Color == NodeColor.Black)
                 {
                     LeftRightRotation(sibling.Right);
                     sibling.Color = NodeColor.Red;
@@ -338,13 +405,15 @@ namespace DataStructures
                 sibling.Color == NodeColor.Black)
             {
                 bool isRotated = false;
-                if (sibling?.Right.Color == NodeColor.Red)
+                if (sibling?.Right?.Color == NodeColor.Red && sibling.Left != null &&
+                    sibling.Parent.Right == sibling)
                 {
                     RightRightRotation(sibling.Right);
                     isRotated = true;
                     sibling.Right.Color = NodeColor.Black;
                 }
-                else if (sibling?.Left?.Color == NodeColor.Red)
+                else if (sibling?.Left?.Color == NodeColor.Red && sibling.Right != null &&
+                    sibling.Parent.Left == sibling)
                 {
                     LeftLeftRotation(sibling.Left);
                     isRotated = true;
@@ -358,6 +427,7 @@ namespace DataStructures
                     node.IsDoubleBlack = false;
                 }
             }
+
         }
 
         #endregion
@@ -465,6 +535,8 @@ namespace DataStructures
             parentParent.Right.Parent = parentParent;
             root.Parent.Left = parentParent;
             parentParent.Parent = root.Parent;
+            if (parentParent == Root)
+                Root = root.Parent;
         }
 
         private void LeftRightRotation(MyRedBlackTreeNode<T> root)
@@ -501,6 +573,8 @@ namespace DataStructures
             parentParent.Left.Parent = parentParent;
             root.Parent.Right = parentParent;
             parentParent.Parent = root.Parent;
+            if (parentParent == Root)
+                Root = root.Parent;
         }
 
         #endregion

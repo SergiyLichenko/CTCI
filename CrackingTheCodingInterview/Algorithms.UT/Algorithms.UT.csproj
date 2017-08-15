@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="JohnsonTests.cs" />
     <Compile Include="RabinKarpTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -71,6 +72,10 @@
     <ProjectReference Include="..\Algorithms\Algorithms.csproj">
       <Project>{0F1EE953-A024-498C-BE0F-84A1FE4552F4}</Project>
       <Name>Algorithms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataStructures\DataStructures.csproj">
+      <Project>{39DCC693-4CE8-414B-AF22-FC501C63F580}</Project>
+      <Name>DataStructures</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

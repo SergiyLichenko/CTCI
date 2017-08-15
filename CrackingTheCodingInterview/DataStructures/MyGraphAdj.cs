@@ -22,12 +22,14 @@ namespace DataStructures
 
         public int Capacity => _adjacencyMatrix.GetLength(0);
         public int Count { get; private set; }
-        public MyGraphAdj(int capacity)
+        public bool IsWeighted { get; private set; }
+        public MyGraphAdj(int capacity, bool isWeighted = false)
         {
             if (capacity < 0)
                 throw new ArgumentOutOfRangeException();
             _adjacencyMatrix = new int[capacity, capacity];
             _nodes = new MyGraphAdjNode<T>[capacity];
+            IsWeighted = isWeighted;
         }
 
         public void AddVertex(int index, T data)
@@ -41,9 +43,38 @@ namespace DataStructures
         public void AddEdge(int from, int to)
         {
             if (from < 0 || from >= Capacity ||
-                to < 0 || to >= Capacity)
+                to < 0 || to >= Capacity || from == to)
                 throw new ArgumentOutOfRangeException();
+            if (_nodes[from] == null || _nodes[to] == null)
+                throw new InvalidOperationException();
+
             _adjacencyMatrix[from, to] = 1;
+        }
+
+        public void AddEdge(int from, int to, int weight)
+        {
+            if (from < 0 || from >= Capacity ||
+                to < 0 || to >= Capacity || from == to)
+                throw new ArgumentOutOfRangeException();
+            if (_nodes[from] == null || _nodes[to] == null || !IsWeighted)
+                throw new InvalidOperationException();
+            if (_adjacencyMatrix[from, to] != 0)
+                throw new ArgumentException();
+
+            _adjacencyMatrix[from, to] = weight;
+        }
+
+        public void UpdateWeight(int from, int to, int weight)
+        {
+            if (from < 0 || from >= Capacity ||
+                to < 0 || to >= Capacity || from == to)
+                throw new ArgumentOutOfRangeException();
+            if (_nodes[from] == null || _nodes[to] == null || !IsWeighted)
+                throw new InvalidOperationException();
+            if (_adjacencyMatrix[from, to] == 0)
+                throw new ArgumentException();
+
+            _adjacencyMatrix[from, to] = weight;
         }
 
         public IEnumerable<T> BreadthFirstSearch(int startIndex)
@@ -178,5 +209,21 @@ namespace DataStructures
 
             _adjacencyMatrix[from, to] = 0;
         }
+
+        public IEnumerable<int[]> GetAllEdges()
+        {
+            List<int[]> result = new List<int[]>();
+
+            for (int i = 0; i < _adjacencyMatrix.GetLength(0); i++)
+                for (int j = 0; j < _adjacencyMatrix.GetLength(1); j++)
+                    if (_adjacencyMatrix[i, j] != 0)
+                        result.Add(IsWeighted ? new[] {i, j, _adjacencyMatrix[i, j]} : new[] {i, j});
+
+
+            return result;
+        }
+
+        public IEnumerable<T> GetAllVerteces()
+            => _nodes.Where(x => x != null).Select(x => x.Data);
     }
 }

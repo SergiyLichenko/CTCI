@@ -559,5 +559,356 @@ namespace DataStructures.UT
             graph.Capacity.ShouldBeEquivalentTo(6);
             graph.Count.ShouldBeEquivalentTo(6);
         }
+
+        [Fact]
+        public void Should_GetAllEdges()
+        {
+            //arrange
+            var graph = new MyGraphAdj<int>(6);
+            graph.AddVertex(0, 0);
+            graph.AddVertex(1, 1);
+            graph.AddVertex(2, 2);
+            graph.AddVertex(3, 3);
+            graph.AddVertex(4, 4);
+            graph.AddVertex(5, 5);
+
+            graph.AddEdge(0, 5);
+            graph.AddEdge(0, 1);
+            graph.AddEdge(0, 4);
+            graph.AddEdge(1, 3);
+            graph.AddEdge(1, 4);
+            graph.AddEdge(2, 1);
+            graph.AddEdge(3, 2);
+            graph.AddEdge(3, 4);
+
+            var edges = new List<int[]>
+            {
+                new int[] {0, 1},
+                new int[] {0, 4},
+                new int[] {0, 5},
+                new int[] {1, 3},
+                new int[] {1, 4},
+                new int[] {2, 1},
+                new int[] {3, 2},
+                new int[] {3, 4}
+            };
+
+            //act
+            var result = graph.GetAllEdges().ToList();
+
+            //assert
+            result.Count.ShouldBeEquivalentTo(edges.Count);
+
+            for (int i = 0; i < edges.Count; i++)
+            {
+                edges[i].Length.ShouldBeEquivalentTo(result[i].Length);
+                edges[i][0].ShouldBeEquivalentTo(result[i][0]);
+                edges[i][1].ShouldBeEquivalentTo(result[i][1]);
+            }
+        }
+
+        [Fact]
+        public void Should_GetAllEdges_Weighted()
+        {
+            //arrange
+            var graph = new MyGraphAdj<int>(6, true);
+            graph.AddVertex(0, 0);
+            graph.AddVertex(1, 1);
+            graph.AddVertex(2, 2);
+            graph.AddVertex(3, 3);
+            graph.AddVertex(4, 4);
+            graph.AddVertex(5, 5);
+
+            graph.AddEdge(0, 5, 5);
+            graph.AddEdge(0, 1, 1);
+            graph.AddEdge(0, 4, 2);
+            graph.AddEdge(1, 3, 3);
+            graph.AddEdge(1, 4, 4);
+            graph.AddEdge(2, 1, 5);
+            graph.AddEdge(3, 2, 6);
+            graph.AddEdge(3, 4, 7);
+
+            var edges = new List<int[]>
+            {
+                new int[] {0, 1, 1},
+                new int[] {0, 4, 2},
+                new int[] {0, 5, 5},
+                new int[] {1, 3, 3},
+                new int[] {1, 4, 4},
+                new int[] {2, 1, 5},
+                new int[] {3, 2, 6},
+                new int[] {3, 4, 7}
+            };
+
+            //act
+            var result = graph.GetAllEdges().ToList();
+
+            //assert
+            result.Count.ShouldBeEquivalentTo(edges.Count);
+
+            for (int i = 0; i < edges.Count; i++)
+            {
+                edges[i].Length.ShouldBeEquivalentTo(result[i].Length);
+                edges[i][0].ShouldBeEquivalentTo(result[i][0]);
+                edges[i][1].ShouldBeEquivalentTo(result[i][1]);
+                edges[i][2].ShouldBeEquivalentTo(result[i][2]);
+            }
+        }
+
+        [Fact]
+        public void Should_GetAllEdges_Empty()
+        {
+            //arrange
+            var graph = new MyGraphAdj<int>(6);
+            graph.AddVertex(0, 0);
+            graph.AddVertex(1, 1);
+            graph.AddVertex(2, 2);
+            graph.AddVertex(3, 3);
+            graph.AddVertex(4, 4);
+            graph.AddVertex(5, 5);
+
+            //act
+            var result = graph.GetAllEdges().ToList();
+
+            //assert
+            result.Count.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void Should_GetAllNodes()
+        {
+            //arrange
+            var graph = new MyGraphAdj<int>(6);
+            graph.AddVertex(0, 0);
+            graph.AddVertex(1, 1);
+            graph.AddVertex(2, 2);
+            graph.AddVertex(3, 3);
+            graph.AddVertex(4, 4);
+            graph.AddVertex(5, 5);
+
+            graph.AddEdge(0, 5);
+            graph.AddEdge(0, 1);
+            graph.AddEdge(0, 4);
+            graph.AddEdge(1, 3);
+            graph.AddEdge(1, 4);
+            graph.AddEdge(2, 1);
+            graph.AddEdge(3, 2);
+            graph.AddEdge(3, 4);
+
+            var nodes = new List<int> { 0, 1, 2, 3, 4, 5 };
+
+            //act
+            var result = graph.GetAllVerteces().ToList();
+
+            //assert
+            result.Count.ShouldBeEquivalentTo(nodes.Count);
+
+            for (int i = 0; i < result.Count; i++)
+                result[i].ShouldBeEquivalentTo(nodes[i]);
+        }
+
+        [Fact]
+        public void Should_GetAllNodes_Empty()
+        {
+            //arrange
+            var graph = new MyGraphAdj<int>(6);
+
+            //act
+            var result = graph.GetAllVerteces().ToList();
+
+            //assert
+            result.Count.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void Should_Throw_Add_Edge_If_No_Verteces()
+        {
+            //arrange
+            var graph = new MyGraphAdj<int>(6);
+
+            //act
+            Action act = () => graph.AddEdge(0, 1);
+
+            //assert
+            act.ShouldThrow<InvalidOperationException>();
+        }
+        [Fact]
+        public void Should_Throw_Add_Edge_With_Weight_If_No_Verteces()
+        {
+            //arrange
+            var graph = new MyGraphAdj<int>(6);
+
+            //act
+            Action act = () => graph.AddEdge(0, 1, 2);
+
+            //assert
+            act.ShouldThrow<InvalidOperationException>();
+        }
+
+        [Fact]
+        public void Should_Throw_Add_Edge_With_Weight_If_It_Already_Exists()
+        {
+            //arrange
+            var graph = new MyGraphAdj<int>(6, true);
+            graph.AddVertex(0, 0);
+            graph.AddVertex(1, 1);
+            graph.AddEdge(0, 1, 1);
+
+            //act
+            Action act = () => graph.AddEdge(0, 1, 2);
+
+            //assert
+            act.ShouldThrow<ArgumentException>();
+        }
+
+        [Fact]
+        public void Should_Throw_Update_Edge_If_Index_Out_Of_Range()
+        {
+            //arrange
+            var graph = new MyGraphAdj<int>(6, true);
+            graph.AddVertex(0, 0);
+            graph.AddVertex(1, 1);
+            graph.AddEdge(0, 1, 1);
+
+            //act
+            Action actLowerFrom = () => graph.UpdateWeight(-1, 1, 2);
+            Action actLowerTo = () => graph.AddEdge(0, -1, 2);
+            Action actHigherFrom = () => graph.AddEdge(10, 1, 2);
+            Action actHigherTo = () => graph.AddEdge(0, 10, 2);
+
+            //assert
+            actLowerFrom.ShouldThrow<ArgumentOutOfRangeException>();
+            actLowerTo.ShouldThrow<ArgumentOutOfRangeException>();
+            actHigherFrom.ShouldThrow<ArgumentOutOfRangeException>();
+            actHigherTo.ShouldThrow<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void Should_Throw_Update_Edge_If_Verteces_Does_Not_Exists()
+        {
+            //arrange
+            var graph = new MyGraphAdj<int>(6);
+
+            //act
+            Action act = () => graph.UpdateWeight(0, 1, 2);
+
+            //assert
+            act.ShouldThrow<InvalidOperationException>();
+        }
+
+        [Fact]
+        public void Should_Throw_Update_Edge_If_It_Was_Not_Added()
+        {
+            //arrange
+            var graph = new MyGraphAdj<int>(6, true);
+            graph.AddVertex(0, 0);
+            graph.AddVertex(1, 1);
+
+            //act
+            Action act = () => graph.UpdateWeight(0, 1, 2);
+
+            //assert
+            act.ShouldThrow<ArgumentException>();
+        }
+
+        [Fact]
+        public void Should_Update_Edge_Weight()
+        {
+            //arrange
+            var graph = new MyGraphAdj<int>(6, true);
+            graph.AddVertex(0, 0);
+            graph.AddVertex(1, 1);
+            graph.AddEdge(0, 1, 5);
+
+            //act
+            graph.UpdateWeight(0, 1, 7);
+            var result = graph.GetAllEdges().ToList();
+
+            //assert
+            result.Count.ShouldBeEquivalentTo(1);
+            result[0][0].ShouldBeEquivalentTo(0);
+            result[0][1].ShouldBeEquivalentTo(1);
+            result[0][2].ShouldBeEquivalentTo(7);
+        }
+
+        [Fact]
+        public void Should_Throw_Update_Edge_If_Node_From_Equals_Node_To()
+        {
+            //arrange
+            var graph = new MyGraphAdj<int>(6, true);
+            graph.AddVertex(0, 0);
+            graph.AddVertex(1, 1);
+            graph.AddEdge(0, 1, 5);
+
+            //act
+            Action act = () => graph.UpdateWeight(0, 0, 7);
+
+            //assert
+            act.ShouldThrow<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void Should_Throw_Add_Edge_If_Node_From_Equals_Node_To()
+        {
+            //arrange
+            var graph = new MyGraphAdj<int>(6);
+            graph.AddVertex(0, 0);
+            graph.AddVertex(1, 1);
+        
+
+            //act
+            Action act = () => graph.AddEdge(0, 0);
+
+            //assert
+            act.ShouldThrow<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void Should_Throw_Add_Edge_With_Weight_If_Node_From_Equals_Node_To()
+        {
+            //arrange
+            var graph = new MyGraphAdj<int>(6);
+            graph.AddVertex(0, 0);
+            graph.AddVertex(1, 1);
+
+
+            //act
+            Action act = () => graph.AddEdge(0, 0, 5);
+
+            //assert
+            act.ShouldThrow<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void Should_Throw_Add_Edge_With_Weight_If_Not_Weighted_Graph()
+        {
+            //arrange
+            var graph = new MyGraphAdj<int>(6);
+            graph.AddVertex(0, 0);
+            graph.AddVertex(1, 1);
+
+
+            //act
+            Action act = () => graph.AddEdge(0, 1, 5);
+
+            //assert
+            act.ShouldThrow<InvalidOperationException>();
+        }
+
+        [Fact]
+        public void Should_Throw_Update_Edge_With_Weight_If_Not_Weighted_Graph()
+        {
+            //arrange
+            var graph = new MyGraphAdj<int>(6);
+            graph.AddVertex(0, 0);
+            graph.AddVertex(1, 1);
+
+
+            //act
+            Action act = () => graph.UpdateWeight(0, 1, 5);
+
+            //assert
+            act.ShouldThrow<InvalidOperationException>();
+        }
     }
 }

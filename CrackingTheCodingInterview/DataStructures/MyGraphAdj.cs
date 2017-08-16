@@ -28,6 +28,12 @@ namespace DataStructures
             if (capacity < 0)
                 throw new ArgumentOutOfRangeException();
             _adjacencyMatrix = new int[capacity, capacity];
+
+            if (isWeighted)
+                for (int i = 0; i < capacity; i++)
+                    for (int j = 0; j < capacity; j++)
+                        _adjacencyMatrix[i, j] = Int32.MinValue;
+
             _nodes = new MyGraphAdjNode<T>[capacity];
             IsWeighted = isWeighted;
         }
@@ -58,7 +64,7 @@ namespace DataStructures
                 throw new ArgumentOutOfRangeException();
             if (_nodes[from] == null || _nodes[to] == null || !IsWeighted)
                 throw new InvalidOperationException();
-            if (_adjacencyMatrix[from, to] != 0)
+            if (_adjacencyMatrix[from, to] != Int32.MinValue)
                 throw new ArgumentException();
 
             _adjacencyMatrix[from, to] = weight;
@@ -71,7 +77,7 @@ namespace DataStructures
                 throw new ArgumentOutOfRangeException();
             if (_nodes[from] == null || _nodes[to] == null || !IsWeighted)
                 throw new InvalidOperationException();
-            if (_adjacencyMatrix[from, to] == 0)
+            if (_adjacencyMatrix[from, to] == Int32.MinValue)
                 throw new ArgumentException();
 
             _adjacencyMatrix[from, to] = weight;
@@ -79,6 +85,8 @@ namespace DataStructures
 
         public IEnumerable<T> BreadthFirstSearch(int startIndex)
         {
+            if (IsWeighted)
+                throw new InvalidOperationException();
             if (startIndex < 0 || startIndex >= Capacity)
                 throw new ArgumentOutOfRangeException();
             if (_nodes[startIndex] == null)
@@ -107,6 +115,8 @@ namespace DataStructures
 
         public IEnumerable<T> DepthFirstSearch(int startIndex)
         {
+            if (IsWeighted)
+                throw new InvalidOperationException();
             if (startIndex < 0 || startIndex >= Capacity)
                 throw new ArgumentOutOfRangeException();
             if (_nodes[startIndex] == null)
@@ -135,6 +145,8 @@ namespace DataStructures
 
         public IEnumerable<T>[] BidirectionalSearch(int from, int to)
         {
+            if (IsWeighted)
+                throw new InvalidOperationException();
             if (from < 0 || from >= Capacity ||
                 to < 0 || to >= Capacity)
                 throw new ArgumentOutOfRangeException();
@@ -193,8 +205,8 @@ namespace DataStructures
             {
                 for (int i = 0; i < Capacity; i++)
                 {
-                    _adjacencyMatrix[index, i] = 0;
-                    _adjacencyMatrix[i, index] = 0;
+                    _adjacencyMatrix[index, i] = IsWeighted ? Int32.MinValue : 0;
+                    _adjacencyMatrix[i, index] = IsWeighted ? Int32.MinValue : 0;
                 }
                 _nodes[index] = null;
                 Count--;
@@ -207,7 +219,7 @@ namespace DataStructures
                 to < 0 || to >= Capacity)
                 throw new ArgumentOutOfRangeException();
 
-            _adjacencyMatrix[from, to] = 0;
+            _adjacencyMatrix[from, to] = IsWeighted ? Int32.MinValue : 0;
         }
 
         public IEnumerable<int[]> GetAllEdges()
@@ -215,15 +227,20 @@ namespace DataStructures
             List<int[]> result = new List<int[]>();
 
             for (int i = 0; i < _adjacencyMatrix.GetLength(0); i++)
+            {
                 for (int j = 0; j < _adjacencyMatrix.GetLength(1); j++)
-                    if (_adjacencyMatrix[i, j] != 0)
-                        result.Add(IsWeighted ? new[] {i, j, _adjacencyMatrix[i, j]} : new[] {i, j});
-
+                {
+                    if (IsWeighted && _adjacencyMatrix[i, j] != Int32.MinValue)
+                        result.Add(new[] { i, j, _adjacencyMatrix[i, j] });
+                    else if(!IsWeighted && _adjacencyMatrix[i, j] != 0)
+                        result.Add(new[] { i, j });
+                }
+            }
 
             return result;
         }
 
-        public IEnumerable<T> GetAllVerteces()
-            => _nodes.Where(x => x != null).Select(x => x.Data);
+        public IEnumerable<KeyValuePair<T, int>> GetAllVertexes()
+            => _nodes.Where(x => x != null).Select((x, index) => new KeyValuePair<T, int>(x.Data, index));
     }
 }

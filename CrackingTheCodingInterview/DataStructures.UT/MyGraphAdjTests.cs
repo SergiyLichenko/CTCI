@@ -695,16 +695,27 @@ namespace DataStructures.UT
             graph.AddEdge(3, 2);
             graph.AddEdge(3, 4);
 
-            var nodes = new List<int> { 0, 1, 2, 3, 4, 5 };
+            var nodes = new List<int[]>
+            {
+                new [] {0, 0},
+                new [] {1, 1},
+                new [] {2, 2},
+                new [] {3, 3},
+                new [] {4, 4},
+                new [] {5, 5},
+            };
 
             //act
-            var result = graph.GetAllVerteces().ToList();
+            var result = graph.GetAllVertexes().ToList();
 
             //assert
             result.Count.ShouldBeEquivalentTo(nodes.Count);
 
             for (int i = 0; i < result.Count; i++)
-                result[i].ShouldBeEquivalentTo(nodes[i]);
+            {
+                result[i].Key.ShouldBeEquivalentTo(nodes[i][0]);
+                result[i].Value.ShouldBeEquivalentTo(nodes[i][1]);
+            }
         }
 
         [Fact]
@@ -714,14 +725,14 @@ namespace DataStructures.UT
             var graph = new MyGraphAdj<int>(6);
 
             //act
-            var result = graph.GetAllVerteces().ToList();
+            var result = graph.GetAllVertexes().ToList();
 
             //assert
             result.Count.ShouldBeEquivalentTo(0);
         }
 
         [Fact]
-        public void Should_Throw_Add_Edge_If_No_Verteces()
+        public void Should_Throw_Add_Edge_If_No_vertexes()
         {
             //arrange
             var graph = new MyGraphAdj<int>(6);
@@ -733,7 +744,7 @@ namespace DataStructures.UT
             act.ShouldThrow<InvalidOperationException>();
         }
         [Fact]
-        public void Should_Throw_Add_Edge_With_Weight_If_No_Verteces()
+        public void Should_Throw_Add_Edge_With_Weight_If_No_vertexes()
         {
             //arrange
             var graph = new MyGraphAdj<int>(6);
@@ -784,7 +795,7 @@ namespace DataStructures.UT
         }
 
         [Fact]
-        public void Should_Throw_Update_Edge_If_Verteces_Does_Not_Exists()
+        public void Should_Throw_Update_Edge_If_vertexes_Does_Not_Exists()
         {
             //arrange
             var graph = new MyGraphAdj<int>(6);

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataStructures
 {
-    public class MyGraphNode<T>
+    public class MyGraphNode<T> where T:IComparable
     {
         public List<MyGraphNode<T>> Children { get; private set; }
         public T Data { get; private set; }
@@ -16,7 +16,44 @@ namespace DataStructures
             Children = new List<MyGraphNode<T>>();
         }
     }
-    public class MyGraph<T>
+
+    public class MyGraphKeyNode<TKey, TValue> : MyGraphNode<TValue>, IComparable
+        where TValue:IComparable
+    {
+        public TKey Key { get; private set; }
+        public MyGraphKeyNode(TValue data):base(data)
+        {
+            
+        }
+
+        public MyGraphKeyNode(TKey key, TValue value) : this(value)
+        {
+            Key = key;
+        }
+
+        public int CompareTo(object obj)
+        {
+            if (obj == null)
+                throw new ArgumentNullException();
+            if (!(obj is MyGraphKeyNode<TKey, TValue>))
+                throw new ArgumentException();
+            var node = (MyGraphKeyNode<TKey, TValue>) obj;
+
+            return Data.CompareTo(node.Data);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                throw new ArgumentNullException();
+            if (!(obj is MyGraphKeyNode<TKey, TValue>))
+                throw new ArgumentException();
+            var node = (MyGraphKeyNode<TKey, TValue>)obj;
+
+            return Key.Equals(node.Key);
+        }
+    }
+    public class MyGraph<T> where T: IComparable
     {
         private MyGraphNode<T>[] _nodes;
         public int Capacity => _nodes.Length;

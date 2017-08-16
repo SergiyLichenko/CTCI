@@ -34,10 +34,10 @@ namespace Algorithms.UT
         public void Should_Throw_If_Not_Weighted()
         {
             //arrange
-            var graph = new MyGraphAdj<int>(5);
-            graph.AddVertex(0, 0);
-            graph.AddVertex(1, 1);
-            graph.AddVertex(0, 1);
+            var graph = new MyGraphAdj<char>(5);
+            graph.AddVertex(0, '0');
+            graph.AddVertex(1, '1');
+            graph.AddVertex(0, '1');
 
             //act
             Action act = () => _jonson.Compute(graph);
@@ -50,11 +50,11 @@ namespace Algorithms.UT
         public void Should_Check_Example()
         {
             //arrange
-            var graph = new MyGraphAdj<int>(5, true);
-            graph.AddVertex(0, 0);
-            graph.AddVertex(1, 1);
-            graph.AddVertex(2, 2);
-            graph.AddVertex(3, 3);
+            var graph = new MyGraphAdj<char>(5, true);
+            graph.AddVertex(0, 'A');
+            graph.AddVertex(1, 'B');
+            graph.AddVertex(2, 'C');
+            graph.AddVertex(3, 'D');
 
             graph.AddEdge(0, 1, -5);
             graph.AddEdge(0, 2, 2);

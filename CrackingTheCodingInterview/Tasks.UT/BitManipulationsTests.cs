@@ -75,5 +75,60 @@ namespace Tasks.UT
             //assert
             result.ShouldBeEquivalentTo(0b10001001100);
         }
+
+        [Fact]
+        public void BinaryToString_Should_Check_Boundaries()
+        {
+            //arrange
+
+            //act
+            Action actLower = ()=> _bitManipulations.BinaryToString(0);
+            Action actHigher = () => _bitManipulations.BinaryToString(1);
+
+            //assert
+            actLower.ShouldThrow<ArgumentOutOfRangeException>();
+            actHigher.ShouldThrow<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void BinaryToString_Should_Check_First_Division()
+        {
+            //arrange
+            double n = 0.5;
+            string res = "0.1";
+
+            //act
+            var result = _bitManipulations.BinaryToString(n);
+
+            //assert
+            result.ShouldBeEquivalentTo(res);
+        }
+
+        [Fact]
+        public void BinaryToString_Should_Check_Multiple_Division()
+        {
+            //arrange
+            double n = 0.1875;
+            string res = "0.0011";
+
+            //act
+            var result = _bitManipulations.BinaryToString(n);
+
+            //assert
+            result.ShouldBeEquivalentTo(res);
+        }
+
+        [Fact]
+        public void BinaryToString_Should_Check_Error()
+        {
+            //arrange
+            double n = 0.72;
+
+            //act
+            var result = _bitManipulations.BinaryToString(n);
+
+            //assert
+            result.ShouldBeEquivalentTo("ERROR");
+        }
     }
 }

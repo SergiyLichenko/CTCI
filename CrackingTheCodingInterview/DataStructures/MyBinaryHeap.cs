@@ -13,7 +13,7 @@ namespace DataStructures
         MaxHeap
     }
 
-    public class MyBinaryHeapNode<T>
+    public class MyBinaryHeapNode<T> where T: IComparable
     {
         public MyBinaryHeapNode<T> Left { get; set; }
         public MyBinaryHeapNode<T> Right { get; set; }
@@ -23,6 +23,43 @@ namespace DataStructures
         public MyBinaryHeapNode(T data)
         {
             Data = data;
+        }
+    }
+
+    public class MyBinaryHeapKeyNode<TKey, TValue> : MyBinaryHeapNode<TValue>, IComparable
+        where TValue : IComparable
+    {
+        public TKey Key { get; private set; }
+        public MyBinaryHeapKeyNode(TValue data) : base(data)
+        {
+
+        }
+
+        public MyBinaryHeapKeyNode(TKey key, TValue value) : this(value)
+        {
+            Key = key;
+        }
+
+        public int CompareTo(object obj)
+        {
+            if (obj == null)
+                throw new ArgumentNullException();
+            if (!(obj is MyBinaryHeapKeyNode<TKey, TValue>))
+                throw new ArgumentException();
+            var node = (MyBinaryHeapKeyNode<TKey, TValue>)obj;
+
+            return Data.CompareTo(node.Data);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                throw new ArgumentNullException();
+            if (!(obj is MyBinaryHeapKeyNode<TKey, TValue>))
+                throw new ArgumentException();
+            var node = (MyBinaryHeapKeyNode<TKey, TValue>)obj;
+
+            return Key.Equals(node.Key);
         }
     }
 
@@ -118,13 +155,13 @@ namespace DataStructures
 
             while (MinHeapCondition() || MaxHeapCondition())
             {
-                int? compared() => _nodes[currentIndex].Left?.Data
+                int? Compared() => _nodes[currentIndex].Left?.Data
                     .CompareTo(_nodes[currentIndex].Right.Data);
                 var temp = _nodes[currentIndex].Data;
 
                 if (_nodes[currentIndex].Right == null ||
-                    ((compared() <= 0 && HeapType == MyBinaryHeapType.MinHeap) ||
-                     (compared() >= 0 && HeapType == MyBinaryHeapType.MaxHeap)))
+                    ((Compared() <= 0 && HeapType == MyBinaryHeapType.MinHeap) ||
+                     (Compared() >= 0 && HeapType == MyBinaryHeapType.MaxHeap)))
                 {
                     _nodes[currentIndex].Data = _nodes[currentIndex].Left.Data;
                     _nodes[currentIndex].Left.Data = temp;

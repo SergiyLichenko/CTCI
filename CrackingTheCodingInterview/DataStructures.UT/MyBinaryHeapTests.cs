@@ -511,5 +511,75 @@ namespace DataStructures.UT
             heap.Count.ShouldBeEquivalentTo(6);
             heap.HeapType.ShouldBeEquivalentTo(MyBinaryHeapType.MinHeap);
         }
+
+        [Fact]
+        public void Should_Compare_To_By_Data_Equal()
+        {
+            //arrange
+            var first = new MyBinaryHeapKeyNode<int, char>(1, '1');
+            var second = new MyBinaryHeapKeyNode<int, char>(2, '1');
+
+            //act
+            var result = first.CompareTo(second);
+
+            //assert
+            result.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void Should_Compare_To_By_Data_Greater()
+        {
+            //arrange
+            var first = new MyBinaryHeapKeyNode<int, char>(1, '2');
+            var second = new MyBinaryHeapKeyNode<int, char>(1, '1');
+
+            //act
+            var result = first.CompareTo(second);
+
+            //assert
+            result.ShouldBeEquivalentTo(1);
+        }
+
+        [Fact]
+        public void Should_Compare_To_By_Data_Smaller()
+        {
+            //arrange
+            var first = new MyBinaryHeapKeyNode<int, char>(1, '1');
+            var second = new MyBinaryHeapKeyNode<int, char>(1, '2');
+
+            //act
+            var result = first.CompareTo(second);
+
+            //assert
+            result.ShouldBeEquivalentTo(-1);
+        }
+
+        [Fact]
+        public void Should_Check_Equals_By_Key_True()
+        {
+            //arrange
+            var first = new MyBinaryHeapKeyNode<int, char>(1, '1');
+            var second = new MyBinaryHeapKeyNode<int, char>(1, '2');
+
+            //act
+            var result = first.Equals(second);
+
+            //assert
+            result.ShouldBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public void Should_Check_Equals_By_Key_False()
+        {
+            //arrange
+            var first = new MyBinaryHeapKeyNode<int, char>(2, '1');
+            var second = new MyBinaryHeapKeyNode<int, char>(1, '1');
+
+            //act
+            var result = first.Equals(second);
+
+            //assert
+            result.ShouldBeEquivalentTo(false);
+        }
     }
 }

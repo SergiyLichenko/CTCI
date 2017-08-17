@@ -19,10 +19,12 @@ namespace DataStructures
     {
         private int[,] _adjacencyMatrix;
         private MyGraphAdjNode<T>[] _nodes;
+        private int NoEdgeSign => IsWeighted ? Int32.MinValue : 0;
 
         public int Capacity => _adjacencyMatrix.GetLength(0);
         public int Count { get; private set; }
         public bool IsWeighted { get; private set; }
+        
         public MyGraphAdj(int capacity, bool isWeighted = false)
         {
             if (capacity < 0)
@@ -46,47 +48,45 @@ namespace DataStructures
             Count++;
         }
 
-        public void AddEdge(int from, int to)
+        public void AddEdge(int indexFrom, int indexTo)
         {
-            if (from < 0 || from >= Capacity ||
-                to < 0 || to >= Capacity || from == to)
+            if (indexFrom < 0 || indexFrom >= Capacity ||
+                indexTo < 0 || indexTo >= Capacity || indexFrom == indexTo)
                 throw new ArgumentOutOfRangeException();
-            if (_nodes[from] == null || _nodes[to] == null)
+            if (_nodes[indexFrom] == null || _nodes[indexTo] == null)
                 throw new InvalidOperationException();
 
-            _adjacencyMatrix[from, to] = 1;
+            _adjacencyMatrix[indexFrom, indexTo] = 1;
         }
 
-        public void AddEdge(int from, int to, int weight)
+        public void AddEdge(int indexFrom, int indexTo, int weight)
         {
-            if (from < 0 || from >= Capacity ||
-                to < 0 || to >= Capacity || from == to)
+            if (indexFrom < 0 || indexFrom >= Capacity ||
+                indexTo < 0 || indexTo >= Capacity || indexFrom == indexTo)
                 throw new ArgumentOutOfRangeException();
-            if (_nodes[from] == null || _nodes[to] == null || !IsWeighted)
+            if (_nodes[indexFrom] == null || _nodes[indexTo] == null || !IsWeighted)
                 throw new InvalidOperationException();
-            if (_adjacencyMatrix[from, to] != Int32.MinValue)
+            if (_adjacencyMatrix[indexFrom, indexTo] != NoEdgeSign)
                 throw new ArgumentException();
 
-            _adjacencyMatrix[from, to] = weight;
+            _adjacencyMatrix[indexFrom, indexTo] = weight;
         }
 
-        public void UpdateWeight(int from, int to, int weight)
+        public void UpdateWeight(int indexFrom, int indexTo, int weight)
         {
-            if (from < 0 || from >= Capacity ||
-                to < 0 || to >= Capacity || from == to)
+            if (indexFrom < 0 || indexFrom >= Capacity ||
+                indexTo < 0 || indexTo >= Capacity || indexFrom == indexTo)
                 throw new ArgumentOutOfRangeException();
-            if (_nodes[from] == null || _nodes[to] == null || !IsWeighted)
+            if (_nodes[indexFrom] == null || _nodes[indexTo] == null || !IsWeighted)
                 throw new InvalidOperationException();
-            if (_adjacencyMatrix[from, to] == Int32.MinValue)
+            if (_adjacencyMatrix[indexFrom, indexTo] == NoEdgeSign)
                 throw new ArgumentException();
 
-            _adjacencyMatrix[from, to] = weight;
+            _adjacencyMatrix[indexFrom, indexTo] = weight;
         }
 
         public IEnumerable<T> BreadthFirstSearch(int startIndex)
         {
-            if (IsWeighted)
-                throw new InvalidOperationException();
             if (startIndex < 0 || startIndex >= Capacity)
                 throw new ArgumentOutOfRangeException();
             if (_nodes[startIndex] == null)
@@ -108,15 +108,13 @@ namespace DataStructures
 
                 visited.Add(_nodes[item]);
                 for (int i = 0; i < Capacity; i++)
-                    if (_adjacencyMatrix[item, i] != 0)
+                    if (_adjacencyMatrix[item, i] != NoEdgeSign)
                         queue.Enqueue(i);
             }
         }
 
         public IEnumerable<T> DepthFirstSearch(int startIndex)
         {
-            if (IsWeighted)
-                throw new InvalidOperationException();
             if (startIndex < 0 || startIndex >= Capacity)
                 throw new ArgumentOutOfRangeException();
             if (_nodes[startIndex] == null)
@@ -138,15 +136,13 @@ namespace DataStructures
 
                 visited.Add(_nodes[item]);
                 for (int i = 0; i < Capacity; i++)
-                    if (_adjacencyMatrix[item, i] != 0)
+                    if (_adjacencyMatrix[item, i] != NoEdgeSign)
                         stack.Push(i);
             }
         }
 
         public IEnumerable<T>[] BidirectionalSearch(int from, int to)
         {
-            if (IsWeighted)
-                throw new InvalidOperationException();
             if (from < 0 || from >= Capacity ||
                 to < 0 || to >= Capacity)
                 throw new ArgumentOutOfRangeException();
@@ -173,7 +169,7 @@ namespace DataStructures
                     visitedFrom.Add(_nodes[fromItem]);
                     for (int i = 0; i < _adjacencyMatrix.GetLength(1); i++)
                     {
-                        if (_adjacencyMatrix[fromItem, i] != 0)
+                        if (_adjacencyMatrix[fromItem, i] != NoEdgeSign)
                             visitedFromQueue.Enqueue(i);
                     }
                 }
@@ -182,7 +178,7 @@ namespace DataStructures
                     visitedTo.Add(_nodes[toItem]);
                     for (int i = 0; i < _adjacencyMatrix.GetLength(1); i++)
                     {
-                        if (_adjacencyMatrix[toItem, i] != 0)
+                        if (_adjacencyMatrix[toItem, i] != NoEdgeSign)
                             visitedToQueue.Enqueue(i);
                     }
                 }
@@ -205,8 +201,8 @@ namespace DataStructures
             {
                 for (int i = 0; i < Capacity; i++)
                 {
-                    _adjacencyMatrix[index, i] = IsWeighted ? Int32.MinValue : 0;
-                    _adjacencyMatrix[i, index] = IsWeighted ? Int32.MinValue : 0;
+                    _adjacencyMatrix[index, i] = NoEdgeSign;
+                    _adjacencyMatrix[i, index] = NoEdgeSign;
                 }
                 _nodes[index] = null;
                 Count--;
@@ -219,7 +215,7 @@ namespace DataStructures
                 to < 0 || to >= Capacity)
                 throw new ArgumentOutOfRangeException();
 
-            _adjacencyMatrix[from, to] = IsWeighted ? Int32.MinValue : 0;
+            _adjacencyMatrix[from, to] = NoEdgeSign;
         }
 
         public IEnumerable<int[]> GetAllEdges()
@@ -230,10 +226,8 @@ namespace DataStructures
             {
                 for (int j = 0; j < _adjacencyMatrix.GetLength(1); j++)
                 {
-                    if (IsWeighted && _adjacencyMatrix[i, j] != Int32.MinValue)
-                        result.Add(new[] { i, j, _adjacencyMatrix[i, j] });
-                    else if(!IsWeighted && _adjacencyMatrix[i, j] != 0)
-                        result.Add(new[] { i, j });
+                    if (_adjacencyMatrix[i, j] != NoEdgeSign)
+                        result.Add(IsWeighted ? new[] { i, j, _adjacencyMatrix[i, j] } : new[] { i, j });
                 }
             }
 

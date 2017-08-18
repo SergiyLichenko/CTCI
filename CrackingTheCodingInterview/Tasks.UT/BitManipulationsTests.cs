@@ -246,7 +246,7 @@ namespace Tasks.UT
             int n = 0b1111;
 
             //act
-            Action act  = ()=> _bitManipulations.NextNumber(n);
+            Action act = () => _bitManipulations.NextNumber(n);
 
             //assert
             act.ShouldThrow<ArgumentException>();
@@ -289,6 +289,48 @@ namespace Tasks.UT
 
             //assert
             act.ShouldThrow<ArgumentException>();
+        }
+
+        [Fact]
+        public void Convertion_Should_Check_Example()
+        {
+            //arrange
+            uint a = 29;
+            uint b = 15;
+
+            //act
+            int result = _bitManipulations.Convertion(a,  b);
+
+            //assert
+            result.ShouldBeEquivalentTo(2);
+        }
+
+        [Fact]
+        public void Convertion_Should_Check_Max_Difference()
+        {
+            //arrange
+            uint a = 0;
+            uint b = uint.MaxValue;
+
+            //act
+            int result = _bitManipulations.Convertion(a, b);
+
+            //assert
+            result.ShouldBeEquivalentTo(32);
+        }
+
+        [Fact]
+        public void Convertion_Should_Check_Zero_Difference()
+        {
+            //arrange
+            uint a = 1515223;
+            uint b = 1515223;
+
+            //act
+            int result = _bitManipulations.Convertion(a, b);
+
+            //assert
+            result.ShouldBeEquivalentTo(0);
         }
     }
 }

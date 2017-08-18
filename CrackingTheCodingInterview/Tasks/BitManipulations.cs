@@ -107,8 +107,8 @@ namespace Tasks
                 }
             }
 
-            throw new ArgumentException($"Number does not have" +
-                                        $" previous with the same count of 1s");
+            throw new ArgumentException($"Number does not have " +
+                                        $"previous with the same count of 1s");
         }
 
         private int GetNext(int n)
@@ -125,8 +125,8 @@ namespace Tasks
                     return ShiftMaxRight(n, i);
                 }
             }
-            throw new ArgumentException($"Number does not have" +
-                                        $" next with the same count of 1s");
+            throw new ArgumentException($"Number does not have " +
+                                        $"next with the same count of 1s");
         }
 
         private int ShiftMaxLeft(int n, int leftIndex)
@@ -178,6 +178,21 @@ namespace Tasks
                 n = n | (1 << index);
 
             return n;
+        }
+
+        public int Convertion(uint a, uint b)
+        {
+            uint num = a ^ b;
+            int count = 0;
+
+            while (num != 0)
+            {
+                if ((num & 1) == 1)
+                    count++;
+                num = num >> 1;
+            }
+
+            return count;
         }
     }
 }

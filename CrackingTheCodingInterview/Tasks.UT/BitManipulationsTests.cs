@@ -55,7 +55,7 @@ namespace Tasks.UT
 
             //act
             var result = _bitManipulations.Insertion(n, m, i, j);
-           
+
             //assert
             result.ShouldBeEquivalentTo(0b10001001100);
         }
@@ -82,7 +82,7 @@ namespace Tasks.UT
             //arrange
 
             //act
-            Action actLower = ()=> _bitManipulations.BinaryToString(0);
+            Action actLower = () => _bitManipulations.BinaryToString(0);
             Action actHigher = () => _bitManipulations.BinaryToString(1);
 
             //assert
@@ -195,6 +195,100 @@ namespace Tasks.UT
 
             //assert
             result.ShouldBeEquivalentTo(5);
+        }
+
+        [Fact]
+        public void NextNumber_Should_Check_Next_And_Previous_Simple()
+        {
+            //arrange
+            int n = 0b1010;
+
+            //act
+            var result = _bitManipulations.NextNumber(n);
+
+            //assert
+            result[0].ShouldBeEquivalentTo(9);
+            result[1].ShouldBeEquivalentTo(12);
+        }
+
+        [Fact]
+        public void NextNumber_Should_Check_Previous_With_Shift()
+        {
+            //arrange
+            int n = 0b100011111;
+
+            //act
+            var result = _bitManipulations.NextNumber(n);
+
+            //assert
+            result[0].ShouldBeEquivalentTo(0b011111100);
+            result[1].ShouldBeEquivalentTo(0b100101111);
+        }
+
+        [Fact]
+        public void NextNumber_Should_Check_Next_With_Shift()
+        {
+            //arrange
+            int n = 0b101110000;
+
+            //act
+            var result = _bitManipulations.NextNumber(n);
+
+            //assert
+            result[0].ShouldBeEquivalentTo(0b101101000);
+            result[1].ShouldBeEquivalentTo(0b110000011);
+        }
+
+        [Fact]
+        public void NextNumber_Should_Throw_If_Cant_Get_Previous()
+        {
+            //arrange
+            int n = 0b1111;
+
+            //act
+            Action act  = ()=> _bitManipulations.NextNumber(n);
+
+            //assert
+            act.ShouldThrow<ArgumentException>();
+        }
+
+        [Fact]
+        public void NextNumber_Should_Throw_If_Cant_Get_Next()
+        {
+            //arrange
+            int n = 0b111_1111_1111_1111_1111_1111_1111_1111;
+
+            //act
+            Action act = () => _bitManipulations.NextNumber(n);
+
+            //assert
+            act.ShouldThrow<ArgumentException>();
+        }
+
+        [Fact]
+        public void NextNumber_Should_Throw_If_Cant_Get_Next_With_Zeros()
+        {
+            //arrange
+            uint n = 0b1111_1111_1111_1111_1111_0000_0000_0000;
+
+            //act
+            Action act = () => _bitManipulations.NextNumber((int)n);
+
+            //assert
+            act.ShouldThrow<ArgumentException>();
+        }
+
+        [Fact]
+        public void NextNumber_Should_Check_Zero()
+        {
+            //arrange
+            int n = 0;
+
+            //act
+            Action act = () => _bitManipulations.NextNumber(n);
+
+            //assert
+            act.ShouldThrow<ArgumentException>();
         }
     }
 }

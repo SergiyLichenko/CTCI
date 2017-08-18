@@ -130,5 +130,71 @@ namespace Tasks.UT
             //assert
             result.ShouldBeEquivalentTo("ERROR");
         }
+
+        [Fact]
+        public void FlipBitToWin_Should_Check_Example()
+        {
+            //arrange
+            int n = 0b11011101111;
+
+            //act
+            var result = _bitManipulations.FlipBitToWin(n);
+
+            //assert
+            result.ShouldBeEquivalentTo(8);
+        }
+
+        [Fact]
+        public void FlipBitToWin_Should_Check_Zero()
+        {
+            //arrange
+            int n = 0;
+
+            //act
+            var result = _bitManipulations.FlipBitToWin(n);
+
+            //assert
+            result.ShouldBeEquivalentTo(1);
+        }
+
+        [Fact]
+        public void FlipBitToWin_Should_Check_All_Ones()
+        {
+            //arrange
+            int n = -1;
+
+            //act
+            var result = _bitManipulations.FlipBitToWin(n);
+
+            //assert
+            result.ShouldBeEquivalentTo(32);
+        }
+
+        [Fact]
+        public void FlipBitToWin_Should_Check_Double_Zeros()
+        {
+            //arrange
+            int n = 0b11111001111001;
+
+            //act
+            var result = _bitManipulations.FlipBitToWin(n);
+
+            //assert
+            result.ShouldBeEquivalentTo(6);
+        }
+
+
+        [Fact]
+        public void FlipBitToWin_Should_Check_Double_Zeros_Multiple()
+        {
+            //arrange
+            int n = 0b110100100101001111001;
+
+            //act
+            var result = _bitManipulations.FlipBitToWin(n);
+
+            //assert
+            result.ShouldBeEquivalentTo(5);
+        }
     }
 }

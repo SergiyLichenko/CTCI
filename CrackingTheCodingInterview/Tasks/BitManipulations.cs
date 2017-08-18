@@ -34,7 +34,7 @@ namespace Tasks
             int index = 0;
             while (n != 0)
             {
-                if (index == 32)
+                if (index == sizeof(int)*8)
                 {
                     builder.Clear();
                     builder.Append("ERROR");
@@ -54,6 +54,34 @@ namespace Tasks
 
 
             return builder.ToString();
+        }
+
+        public int FlipBitToWin(int number)
+        {
+            int withFlip = 0;
+            int noFlip = 0;
+            int maxLegnth = 0;
+
+            for (int i = 0; i < sizeof(int)*8; i++)
+            {
+                if (((1 << i) & number) != 0)
+                {
+                    withFlip++;
+                    noFlip++;
+                }
+                else
+                {
+                    maxLegnth = Math.Max(maxLegnth, withFlip);
+                    maxLegnth = Math.Max(maxLegnth, noFlip);
+
+                    withFlip = noFlip + 1;
+                    noFlip = 0;
+                }
+            }
+            maxLegnth = withFlip > maxLegnth ? withFlip : maxLegnth;
+            maxLegnth = noFlip > maxLegnth ? noFlip : maxLegnth;
+
+            return maxLegnth;
         }
     }
 }

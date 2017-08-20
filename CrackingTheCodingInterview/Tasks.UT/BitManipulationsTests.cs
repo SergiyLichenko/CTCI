@@ -388,5 +388,158 @@ namespace Tasks.UT
             //assert
             result.ShouldBeEquivalentTo(res);
         }
+
+        [Fact]
+        public void DrawLine_Should_Check_X_RowBoundaries()
+        {
+            //arrange
+            byte[] screen = { 234, 212, 234, 2, 143, 52, 24, 145, 23, 44, 185, 202 };
+            int width = 16;
+            int y = 4;
+
+            //act
+            Action equalAct = ()=> _bitManipulations.DrawLine(screen, width, 5, 5, y);
+            Action x1BiggerAct = () => _bitManipulations.DrawLine(screen, width, 6, 5, y);
+            Action x1LowerAct = () => _bitManipulations.DrawLine(screen, width, -1, 5, y);
+            Action x1HigherAct = () => _bitManipulations.DrawLine(screen, width, width, 5, y);
+            Action x2LowerAct = () => _bitManipulations.DrawLine(screen, width, 1, -1, y);
+            Action x2HigherAct = () => _bitManipulations.DrawLine(screen, width, 5, width, y);
+
+
+            //assert
+            equalAct.ShouldThrow<ArgumentOutOfRangeException>();
+            x1BiggerAct.ShouldThrow<ArgumentOutOfRangeException>();
+            x1LowerAct.ShouldThrow<ArgumentOutOfRangeException>();
+            x1HigherAct.ShouldThrow<ArgumentOutOfRangeException>();
+            x2LowerAct.ShouldThrow<ArgumentOutOfRangeException>();
+            x2HigherAct.ShouldThrow<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void DrawLine_Should_Check_Y_Boundaries()
+        {
+            //arrange
+            byte[] screen = { 234, 212, 234, 2, 143, 52, 24, 145, 23, 44, 185, 202 };
+            int x1 = 1;
+            int x2 = 4;
+            int width = 16;
+
+            //act
+            Action yLowerAct = () => _bitManipulations.DrawLine(screen, width, x1, x2, -1);
+            Action yHigherAct = () => _bitManipulations.DrawLine(screen, width, x1, x2, 7);
+
+
+            //assert
+            yLowerAct.ShouldThrow<ArgumentOutOfRangeException>();
+            yHigherAct.ShouldThrow<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void DrawLine_Should_Check_Width()
+        {
+            //arrange
+            byte[] screen = { 234, 212, 234, 2, 143, 52, 24, 145, 23, 44, 185, 202 };
+            int x1 = 1;
+            int x2 = 4;
+            int y = 4;
+
+            //act
+            Action widthLowerAct = () => _bitManipulations.DrawLine(screen, -1, x1, x2, y);
+            Action widthHigherAct = () => _bitManipulations.DrawLine(screen, 97, x1, x2, y);
+            Action notDividableAct = () => _bitManipulations.DrawLine(screen, 9, x1, x2, y);
+
+            //assert
+            widthLowerAct.ShouldThrow<ArgumentOutOfRangeException>();
+            widthHigherAct.ShouldThrow<ArgumentOutOfRangeException>();
+            notDividableAct.ShouldThrow<ArgumentException>();
+        }
+
+        [Fact]
+        public void DrawLine_Should_Throw_If_Screen_Null()
+        {
+            //arrange
+            int width = 16;
+            int x1 = 1;
+            int x2 = 4;
+            int y = 4;
+
+            //act
+            Action act = () => _bitManipulations.DrawLine(null, -1, x1, x2, y);
+
+            //assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void DrawLine_Should_Check_Example()
+        {
+            //arrange
+            byte[] screen = {234, 212, 234, 2, 143, 52, 24, 145, 23, 44, 185, 202};
+            int width = 16;
+            int x1 = 3;
+            int x2 = 11;
+            int y = 3;
+            string res = "\n\n\n   110001001    \n\n";
+
+            //act
+            string result = _bitManipulations.DrawLine(screen, width, x1,x2,y);
+
+            //assert
+            result.ShouldBeEquivalentTo(res);
+        }
+
+        [Fact]
+        public void DrawLine_Should_Check_Same_Byte()
+        {
+            //arrange
+            byte[] screen = { 234, 212, 234, 2, 143, 52, 24, 145, 23, 44, 185, 202 };
+            int width = 16;
+            int x1 = 0;
+            int x2 = 3;
+            int y = 1;
+            string res = "\n1110            \n\n\n\n";
+
+            //act
+            string result = _bitManipulations.DrawLine(screen, width, x1, x2, y);
+
+            //assert
+            result.ShouldBeEquivalentTo(res);
+        }
+
+        [Fact]
+        public void DrawLine_Should_Check_Full_Byte()
+        {
+            //arrange
+            byte[] screen = { 234, 212, 234, 2, 143, 52, 24, 145, 23, 44, 185, 202 };
+            int width = 16;
+            int x1 = 8;
+            int x2 = 15;
+            int y = 5;
+            string res = "\n\n\n\n\n        11001010";
+
+            //act
+            string result = _bitManipulations.DrawLine(screen, width, x1, x2, y);
+
+            //assert
+            result.ShouldBeEquivalentTo(res);
+        }
+
+        [Fact]
+        public void DrawLine_Should_Check_Full_Line()
+        {
+            //arrange
+            byte[] screen = { 234, 212, 234, 2, 143, 52, 24, 145, 23, 44, 185, 202 };
+            int width = 16;
+            int x1 = 0;
+            int x2 = 15;
+            int y = 4;
+            string res = "\n\n\n\n0001011100101100\n";
+
+            //act
+            string result = _bitManipulations.DrawLine(screen, width, x1, x2, y);
+
+            //assert
+            result.ShouldBeEquivalentTo(res);
+        }
     }
 }

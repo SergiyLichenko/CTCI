@@ -205,5 +205,44 @@ namespace Tasks
 
             return (evenNumber >> 1) | (oddNumber << 1);
         }
+
+        public string DrawLine(byte[] screen, int width,
+            int x1Index, int x2Index, int yIndex)
+        {
+            if (screen == null)
+                throw new ArgumentNullException();
+            if (width < 0 || width > screen.Length * 8)
+                throw new ArgumentOutOfRangeException();
+            if ((screen.Length * 8) % width != 0)
+                throw new ArgumentException();
+            if (x1Index >= x2Index || x1Index < 0 || x1Index >= width - 1 || x2Index < 1 || x2Index >= width)
+                throw new ArgumentOutOfRangeException();
+            if (yIndex < 0 || yIndex >= screen.Length * 8 / width)
+                throw new ArgumentOutOfRangeException();
+
+
+            var builder = new StringBuilder();
+            var currentRow = screen.Skip(width / 8 * yIndex).Take(width / 8).ToArray();
+            builder.Append(new string('\n', yIndex));
+            builder.Append(new string(' ', x1Index));
+
+            for (int i = x1Index; i <= x2Index; i++)
+            {
+
+                var currentByte = currentRow[i / 8];
+                int mask = 1 << (7 - (i % 8));
+
+                if ((currentByte & mask) != 0)
+                    builder.Append("1");
+                else
+                    builder.Append("0");
+            }
+
+
+            builder.Append(new string(' ', width - 1 - x2Index));
+            builder.Append(new string('\n', screen.Length * 8 / width - yIndex - 1));
+
+            return builder.ToString();
+        }
     }
 }

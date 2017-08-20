@@ -332,5 +332,61 @@ namespace Tasks.UT
             //assert
             result.ShouldBeEquivalentTo(0);
         }
+
+        [Fact]
+        public void PairwiseSwap_Should_Check_Example()
+        {
+            //arrange
+            uint a = 0b01100111;
+            uint res = 0b10011011;
+
+            //act
+            uint result = _bitManipulations.PairwiseSwap(a);
+
+            //assert
+            result.ShouldBeEquivalentTo(res);
+        }
+
+        [Fact]
+        public void PairwiseSwap_Should_Check_Zero()
+        {
+            //arrange
+            uint a = 0;
+            uint res = 0;
+
+            //act
+            uint result = _bitManipulations.PairwiseSwap(a);
+
+            //assert
+            result.ShouldBeEquivalentTo(res);
+        }
+
+        [Fact]
+        public void PairwiseSwap_Should_Check_AllOnes()
+        {
+            //arrange
+            uint a = uint.MaxValue;
+            uint res = uint.MaxValue;
+
+            //act
+            uint result = _bitManipulations.PairwiseSwap(a);
+
+            //assert
+            result.ShouldBeEquivalentTo(res);
+        }
+
+        [Fact]
+        public void PairwiseSwap_Should_Check_Max_Length()
+        {
+            //arrange
+            uint a = 0b1001_0110_0110_0011_1001_0111_0111_0100;
+            uint res = 0b0110_1001_1001_0011_0110_1011_1011_1000;
+
+            //act
+            uint result = _bitManipulations.PairwiseSwap(a);
+
+            //assert
+            result.ShouldBeEquivalentTo(res);
+        }
     }
 }

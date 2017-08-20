@@ -94,7 +94,7 @@ namespace Tasks
 
         private int GetPrevious(int n)
         {
-            for (int i = 0; i < sizeof(int) * 8-1; i++)
+            for (int i = 0; i < sizeof(int) * 8 - 1; i++)
             {
                 if (GetIthBit(n, i) == 0)
                 {
@@ -193,6 +193,17 @@ namespace Tasks
             }
 
             return count;
+        }
+
+        public uint PairwiseSwap(uint a)
+        {
+            uint maskEven = 0xaaaaaaaa;
+            uint maskOdd = 0x55555555;
+
+            uint evenNumber = a & maskEven;
+            uint oddNumber = a & maskOdd;
+
+            return (evenNumber >> 1) | (oddNumber << 1);
         }
     }
 }

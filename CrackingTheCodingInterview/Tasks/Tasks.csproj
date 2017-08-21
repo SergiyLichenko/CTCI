@@ -63,6 +63,11 @@
     <Compile Include="ObjectOrientedDesign\DeckOfCards\Hand.cs" />
     <Compile Include="ObjectOrientedDesign\DeckOfCards\Rank.cs" />
     <Compile Include="ObjectOrientedDesign\DeckOfCards\Suit.cs" />
+    <Compile Include="ObjectOrientedDesign\Jukebox\Artist.cs" />
+    <Compile Include="ObjectOrientedDesign\Jukebox\CD.cs" />
+    <Compile Include="ObjectOrientedDesign\Jukebox\Coin.cs" />
+    <Compile Include="ObjectOrientedDesign\Jukebox\Jukebox.cs" />
+    <Compile Include="ObjectOrientedDesign\Jukebox\Song.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StacksNQueues\AnimalShelter\Animal.cs" />
     <Compile Include="StacksNQueues\AnimalShelter\Cat.cs" />

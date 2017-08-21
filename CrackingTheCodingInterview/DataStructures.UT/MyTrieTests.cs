@@ -16,7 +16,7 @@ namespace DataStructures.UT
             //arrange
 
             //act
-            var trie = new MyTrie();
+            var trie = new MyTrie.MyTrie();
 
             //assert
             trie.Root.Should().NotBeNull();
@@ -28,7 +28,7 @@ namespace DataStructures.UT
         public void Should_Insert_Throw_If_Null()
         {
             //arrange
-            var trie = new MyTrie();
+            var trie = new MyTrie.MyTrie();
 
             //act
             Action act = () => trie.Insert(null);
@@ -41,7 +41,7 @@ namespace DataStructures.UT
         public void Should_Insert()
         {
             //arrange
-            var trie = new MyTrie();
+            var trie = new MyTrie.MyTrie();
 
             //act
             trie.Insert("abc");
@@ -63,7 +63,7 @@ namespace DataStructures.UT
         public void Should_Insert_Multiple()
         {
             //arrange
-            var trie = new MyTrie();
+            var trie = new MyTrie.MyTrie();
 
             //act
             trie.Insert("abc");
@@ -120,7 +120,7 @@ namespace DataStructures.UT
         public void Should_Check_Contains_Word()
         {
             //arrange
-            var trie = new MyTrie();
+            var trie = new MyTrie.MyTrie();
             trie.Insert("abc");
             trie.Insert("abgl");
             trie.Insert("cdf");
@@ -141,7 +141,7 @@ namespace DataStructures.UT
         public void Should_Check_Contains_Word_Throw_If_Null()
         {
             //arrange
-            var trie = new MyTrie();
+            var trie = new MyTrie.MyTrie();
             trie.Insert("abc");
             trie.Insert("abgl");
             trie.Insert("cdf");
@@ -159,7 +159,7 @@ namespace DataStructures.UT
         public void Should_Check_Contains_Prefix_Throw_If_Null()
         {
             //arrange
-            var trie = new MyTrie();
+            var trie = new MyTrie.MyTrie();
             trie.Insert("abc");
             trie.Insert("abgl");
             trie.Insert("cdf");
@@ -177,7 +177,7 @@ namespace DataStructures.UT
         public void Should_Check_Contains_Prefix_Empty()
         {
             //arrange
-            var trie = new MyTrie();
+            var trie = new MyTrie.MyTrie();
             trie.Insert("abc");
             trie.Insert("abgl");
             trie.Insert("cdf");
@@ -195,7 +195,7 @@ namespace DataStructures.UT
         public void Should_Check_Contains_Prefix()
         {
             //arrange
-            var trie = new MyTrie();
+            var trie = new MyTrie.MyTrie();
             trie.Insert("abc");
             trie.Insert("abgl");
             trie.Insert("cdf");
@@ -215,7 +215,7 @@ namespace DataStructures.UT
         public void Should_DeleteWord_Flag_Changes()
         {
             //arrange
-            var trie = new MyTrie();
+            var trie = new MyTrie.MyTrie();
             trie.Insert("abc");
             trie.Insert("abgl");
             trie.Insert("cdf");
@@ -273,7 +273,7 @@ namespace DataStructures.UT
         public void Should_DeleteWord_NodesDelete()
         {
             //arrange
-            var trie = new MyTrie();
+            var trie = new MyTrie.MyTrie();
             trie.Insert("abc");
             trie.Insert("abgl");
             trie.Insert("cdf");
@@ -325,7 +325,7 @@ namespace DataStructures.UT
         public void Should_DeleteWord_Multiple()
         {
             //arrange
-            var trie = new MyTrie();
+            var trie = new MyTrie.MyTrie();
             trie.Insert("abc");
             trie.Insert("abgl");
             trie.Insert("cdf");
@@ -366,7 +366,7 @@ namespace DataStructures.UT
         public void Should_DeleteWord_NotExisted()
         {
             //arrange
-            var trie = new MyTrie();
+            var trie = new MyTrie.MyTrie();
             trie.Insert("abc");
             trie.Insert("abgl");
             trie.Insert("cdf");
@@ -424,7 +424,7 @@ namespace DataStructures.UT
         public void Should_DeleteWord_Throw_If_Null()
         {
             //arrange
-            var trie = new MyTrie();
+            var trie = new MyTrie.MyTrie();
             trie.Insert("abc");
             trie.Insert("abgl");
             trie.Insert("cdf");

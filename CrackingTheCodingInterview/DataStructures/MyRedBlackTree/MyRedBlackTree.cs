@@ -1,78 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DataStructures
+namespace DataStructures.MyRedBlackTree
 {
-    public enum NodeColor
-    {
-        Red,
-        Black
-    }
-    public class MyRedBlackTreeNode<T> where T : IComparable
-    {
-        public T Data { get; private set; }
-        public MyRedBlackTreeNode<T> Left { get; set; }
-        public MyRedBlackTreeNode<T> Right { get; set; }
-        public MyRedBlackTreeNode<T> Parent { get; set; }
-
-        public bool IsNull { get; set; }
-        public NodeColor Color { get; set; }
-
-        public bool IsDoubleBlack { get; set; }
-
-        public MyRedBlackTreeNode(T data)
-        {
-            Data = data;
-            Color = NodeColor.Red;
-            Left = new MyRedBlackTreeNode<T>(true, this);
-            Right = new MyRedBlackTreeNode<T>(true, this);
-        }
-
-        public MyRedBlackTreeNode(bool isNull, MyRedBlackTreeNode<T> parent)
-        {
-            IsNull = isNull;
-            Parent = parent;
-            Color = NodeColor.Black;
-        }
-
-        public MyRedBlackTreeNode(T data, NodeColor color) : this(data)
-        {
-            Color = color;
-        }
-        public MyRedBlackTreeNode(T data, NodeColor color,
-            MyRedBlackTreeNode<T> parent) : this(data)
-        {
-            Color = color;
-            Parent = parent;
-        }
-
-        public MyRedBlackTreeNode(T data,
-            NodeColor color,
-            MyRedBlackTreeNode<T> left,
-            MyRedBlackTreeNode<T> right) : this(data, color)
-        {
-            Left = left;
-            Right = right;
-        }
-
-        public MyRedBlackTreeNode(T data,
-            NodeColor color,
-            MyRedBlackTreeNode<T> left,
-            MyRedBlackTreeNode<T> right,
-            MyRedBlackTreeNode<T> parent) : this(data, color, left, right)
-        {
-            Parent = parent;
-        }
-
-        public MyRedBlackTreeNode<T> Clone()
-        {
-            return (MyRedBlackTreeNode<T>)MemberwiseClone();
-        }
-    }
-
     public class MyRedBlackTree<T> where T : IComparable
     {
         public int Count { get; private set; }
@@ -82,7 +13,7 @@ namespace DataStructures
         {
             if (Count == 0)
                 return true;
-            if (Root.Color == NodeColor.Red)
+            if (Root.Color == RedBlackTreeNodeColor.Red)
                 return false;
 
             var countBlacks = new List<int>();
@@ -101,8 +32,8 @@ namespace DataStructures
                 return false;
             if (parent != null && parent.Left != root && parent?.Right != root)
                 return false;
-            if (parent?.Color == NodeColor.Red &&
-                root.Color == NodeColor.Red)
+            if (parent?.Color == RedBlackTreeNodeColor.Red &&
+                root.Color == RedBlackTreeNodeColor.Red)
                 return false;
 
             if (root.IsNull)
@@ -112,7 +43,7 @@ namespace DataStructures
                 return true;
             }
 
-            if (root.Color == NodeColor.Black)
+            if (root.Color == RedBlackTreeNodeColor.Black)
                 currentCount++;
             if (!IsValidHelper(root.Left, root, countBlacks, currentCount))
                 return false;
@@ -125,7 +56,7 @@ namespace DataStructures
         public void Insert(T data)
         {
             if (Root == null)
-                Root = new MyRedBlackTreeNode<T>(data, NodeColor.Black);
+                Root = new MyRedBlackTreeNode<T>(data, RedBlackTreeNodeColor.Black);
             else
                 InsertHelper(Root, data);
             Count++;
@@ -136,12 +67,12 @@ namespace DataStructures
             MyRedBlackTreeNode<T> node = null;
             if (root.IsNull)
             {
-                node = new MyRedBlackTreeNode<T>(data, NodeColor.Red, root.Parent);
+                node = new MyRedBlackTreeNode<T>(data, RedBlackTreeNodeColor.Red, root.Parent);
                 if (root.Parent.Left == root)
                     root.Parent.Left = node;
                 else
                     root.Parent.Right = node;
-                root.Color = NodeColor.Red;
+                root.Color = RedBlackTreeNodeColor.Red;
             }
             var compared = data.CompareTo(root.Data);
 
@@ -151,7 +82,7 @@ namespace DataStructures
                 InsertHelper(root.Right, data);
 
 
-            if (root.Parent == null || root.Parent.Color == NodeColor.Black)
+            if (root.Parent == null || root.Parent.Color == RedBlackTreeNodeColor.Black)
             {
                 if (node != null)
                     root.Parent = null;
@@ -161,13 +92,13 @@ namespace DataStructures
             var otherSibling = root.Parent.Parent.Left == root.Parent ?
                 root.Parent.Parent.Right : root.Parent.Parent.Left;
 
-            if (otherSibling.Color == NodeColor.Red)
+            if (otherSibling.Color == RedBlackTreeNodeColor.Red)
             {
-                otherSibling.Color = NodeColor.Black;
-                otherSibling.Parent.Color = otherSibling.Parent == Root ? NodeColor.Black : NodeColor.Red;
-                root.Parent.Color = NodeColor.Black;
+                otherSibling.Color = RedBlackTreeNodeColor.Black;
+                otherSibling.Parent.Color = otherSibling.Parent == Root ? RedBlackTreeNodeColor.Black : RedBlackTreeNodeColor.Red;
+                root.Parent.Color = RedBlackTreeNodeColor.Black;
             }
-            else if (root.Color == NodeColor.Red)
+            else if (root.Color == RedBlackTreeNodeColor.Red)
             {
                 root = node ?? root;
                 if (root.Parent.Right == root && root.Parent.Parent.Left == root.Parent)
@@ -184,15 +115,15 @@ namespace DataStructures
                 if (root.Parent.Left == root && root.Parent.Parent.Left == root.Parent)
                 {
                     LeftLeftRotation(root);
-                    root.Parent.Right.Color = NodeColor.Red;
-                    root.Parent.Color = NodeColor.Black;
+                    root.Parent.Right.Color = RedBlackTreeNodeColor.Red;
+                    root.Parent.Color = RedBlackTreeNodeColor.Black;
                 }
 
                 if (root.Parent.Right == root && root.Parent.Parent.Right == root.Parent)
                 {
                     RightRightRotation(root);
-                    root.Parent.Color = NodeColor.Black;
-                    root.Parent.Left.Color = NodeColor.Red;
+                    root.Parent.Color = RedBlackTreeNodeColor.Black;
+                    root.Parent.Left.Color = RedBlackTreeNodeColor.Red;
                 }
             }
         }
@@ -221,8 +152,8 @@ namespace DataStructures
             if (node == null)
                 throw new ArgumentNullException();
 
-            bool isSingleLeft = node.Left.Color == NodeColor.Red && node.Right.IsNull;
-            bool isSingleRight = node.Right.Color == NodeColor.Red && node.Left.IsNull;
+            bool isSingleLeft = node.Left.Color == RedBlackTreeNodeColor.Red && node.Right.IsNull;
+            bool isSingleRight = node.Right.Color == RedBlackTreeNodeColor.Red && node.Left.IsNull;
 
             if (!node.Left.IsNull && !node.Right.IsNull)
             {
@@ -230,9 +161,9 @@ namespace DataStructures
                 SwapWithSuccessor(node, successor);
                 Remove(node);
             }
-            else if (node.Color == NodeColor.Red)
+            else if (node.Color == RedBlackTreeNodeColor.Red)
                 RemoveSingleRed(node);
-            else if (node.Color == NodeColor.Black &&
+            else if (node.Color == RedBlackTreeNodeColor.Black &&
                      (isSingleLeft || isSingleRight))
                 RemoveBlackWithSingleRedChild(node, isSingleLeft);
             else
@@ -258,7 +189,7 @@ namespace DataStructures
             if (Root == node)
             {
                 Root = isSingleLeft ? node.Left : node.Right;
-                Root.Color = NodeColor.Black;
+                Root.Color = RedBlackTreeNodeColor.Black;
                 Root.Parent = null;
             }
             else
@@ -271,12 +202,12 @@ namespace DataStructures
                 if (isSingleLeft)
                 {
                     node.Left.Parent = node.Parent;
-                    node.Left.Color = NodeColor.Black;
+                    node.Left.Color = RedBlackTreeNodeColor.Black;
                 }
                 else
                 {
                     node.Right.Parent = node.Parent;
-                    node.Right.Color = NodeColor.Black;
+                    node.Right.Color = RedBlackTreeNodeColor.Black;
                 }
 
                 node.Parent = null;
@@ -317,7 +248,7 @@ namespace DataStructures
         {
             if (node == Root && node.IsDoubleBlack)
             {
-                node.Color = NodeColor.Black;
+                node.Color = RedBlackTreeNodeColor.Black;
                 node.IsDoubleBlack = false;
             }
             else
@@ -328,15 +259,15 @@ namespace DataStructures
         {
             var sibling = GetSibling(node);
             if (node.IsDoubleBlack && sibling != null &&
-                node.Parent.Color == NodeColor.Black && sibling.Color == NodeColor.Red &&
-                sibling.Left?.Color == NodeColor.Black && sibling.Right?.Color == NodeColor.Black)
+                node.Parent.Color == RedBlackTreeNodeColor.Black && sibling.Color == RedBlackTreeNodeColor.Red &&
+                sibling.Left?.Color == RedBlackTreeNodeColor.Black && sibling.Right?.Color == RedBlackTreeNodeColor.Black)
             {
                 if (node.Parent.Left == node)
                     RightRightRotation(sibling.Right);
                 else
                     LeftLeftRotation(sibling.Left);
-                sibling.Color = NodeColor.Black;
-                node.Parent.Color = NodeColor.Red;
+                sibling.Color = RedBlackTreeNodeColor.Black;
+                node.Parent.Color = RedBlackTreeNodeColor.Red;
             }
             CaseThreeRotationDelete(node);
         }
@@ -345,12 +276,12 @@ namespace DataStructures
         {
             var sibling = GetSibling(node);
             if (node.IsDoubleBlack && sibling != null &&
-                node.Parent?.Color == NodeColor.Black && sibling.Color == NodeColor.Black &&
-                sibling.Left?.Color == NodeColor.Black && sibling.Right?.Color == NodeColor.Black)
+                node.Parent?.Color == RedBlackTreeNodeColor.Black && sibling.Color == RedBlackTreeNodeColor.Black &&
+                sibling.Left?.Color == RedBlackTreeNodeColor.Black && sibling.Right?.Color == RedBlackTreeNodeColor.Black)
             {
                 node.IsDoubleBlack = false;
                 node.Parent.IsDoubleBlack = true;
-                sibling.Color = NodeColor.Red;
+                sibling.Color = RedBlackTreeNodeColor.Red;
 
                 CaseOneRotationDelete(node.Parent);
             }
@@ -361,12 +292,12 @@ namespace DataStructures
         {
             var sibling = GetSibling(node);
             if (node.IsDoubleBlack && sibling != null &&
-                node.Parent.Color == NodeColor.Red && sibling.Color == NodeColor.Black &&
-                sibling.Left.Color == NodeColor.Black && sibling.Right.Color == NodeColor.Black)
+                node.Parent.Color == RedBlackTreeNodeColor.Red && sibling.Color == RedBlackTreeNodeColor.Black &&
+                sibling.Left.Color == RedBlackTreeNodeColor.Black && sibling.Right.Color == RedBlackTreeNodeColor.Black)
             {
                 node.IsDoubleBlack = false;
-                node.Parent.Color = NodeColor.Black;
-                sibling.Color = NodeColor.Red;
+                node.Parent.Color = RedBlackTreeNodeColor.Black;
+                sibling.Color = RedBlackTreeNodeColor.Red;
             }
             else
                 CaseFiveRotationDelete(node);
@@ -376,23 +307,23 @@ namespace DataStructures
         {
             var sibling = GetSibling(node);
             if (node.IsDoubleBlack && sibling != null &&
-                sibling.Color == NodeColor.Black)
+                sibling.Color == RedBlackTreeNodeColor.Black)
             {
                 if (sibling.Parent?.Right == sibling &&
-                    sibling.Left?.Color == NodeColor.Red && 
-                    sibling.Right?.Color == NodeColor.Black)
+                    sibling.Left?.Color == RedBlackTreeNodeColor.Red && 
+                    sibling.Right?.Color == RedBlackTreeNodeColor.Black)
                 {
                     RightLeftRotation(sibling.Left);
-                    sibling.Color = NodeColor.Red;
-                    sibling.Parent.Color = NodeColor.Black;
+                    sibling.Color = RedBlackTreeNodeColor.Red;
+                    sibling.Parent.Color = RedBlackTreeNodeColor.Black;
                 }
                 else if (sibling.Parent?.Left == sibling &&
-                    sibling.Right?.Color == NodeColor.Red && 
-                    sibling.Left?.Color == NodeColor.Black)
+                    sibling.Right?.Color == RedBlackTreeNodeColor.Red && 
+                    sibling.Left?.Color == RedBlackTreeNodeColor.Black)
                 {
                     LeftRightRotation(sibling.Right);
-                    sibling.Color = NodeColor.Red;
-                    sibling.Parent.Color = NodeColor.Black;
+                    sibling.Color = RedBlackTreeNodeColor.Red;
+                    sibling.Parent.Color = RedBlackTreeNodeColor.Black;
                 }
             }
             CaseSixRotationDelete(node);
@@ -402,28 +333,28 @@ namespace DataStructures
         {
             var sibling = GetSibling(node);
             if (node.IsDoubleBlack && sibling != null &&
-                sibling.Color == NodeColor.Black)
+                sibling.Color == RedBlackTreeNodeColor.Black)
             {
                 bool isRotated = false;
-                if (sibling?.Right?.Color == NodeColor.Red && sibling.Left != null &&
+                if (sibling?.Right?.Color == RedBlackTreeNodeColor.Red && sibling.Left != null &&
                     sibling.Parent.Right == sibling)
                 {
                     RightRightRotation(sibling.Right);
                     isRotated = true;
-                    sibling.Right.Color = NodeColor.Black;
+                    sibling.Right.Color = RedBlackTreeNodeColor.Black;
                 }
-                else if (sibling?.Left?.Color == NodeColor.Red && sibling.Right != null &&
+                else if (sibling?.Left?.Color == RedBlackTreeNodeColor.Red && sibling.Right != null &&
                     sibling.Parent.Left == sibling)
                 {
                     LeftLeftRotation(sibling.Left);
                     isRotated = true;
-                    sibling.Left.Color = NodeColor.Black;
+                    sibling.Left.Color = RedBlackTreeNodeColor.Black;
                 }
 
                 if (isRotated)
                 {
                     sibling.Color = node.Parent.Color;
-                    node.Parent.Color = NodeColor.Black;
+                    node.Parent.Color = RedBlackTreeNodeColor.Black;
                     node.IsDoubleBlack = false;
                 }
             }
@@ -434,7 +365,6 @@ namespace DataStructures
 
 
         #endregion
-
 
         #region Helpers
 

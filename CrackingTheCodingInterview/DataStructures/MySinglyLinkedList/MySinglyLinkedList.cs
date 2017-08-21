@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DataStructures
+namespace DataStructures.MySinglyLinkedList
 {
     public class MySinglyLinkedList<T>
     {
@@ -200,17 +196,6 @@ namespace DataStructures
                 array[startArrayIndex++] = h.Data;
                 h = h.Next;
             }
-        }
-    }
-
-    public class MySinglyLinkedListNode<T>
-    {
-        public T Data { get; set; }
-
-        public MySinglyLinkedListNode<T> Next { get; set; }
-        public MySinglyLinkedListNode(T data)
-        {
-            Data = data;
         }
     }
 }

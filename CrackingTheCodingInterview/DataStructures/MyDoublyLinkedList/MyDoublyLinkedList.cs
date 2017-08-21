@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DataStructures
+namespace DataStructures.MyDoublyLinkedList
 {
     public class MyDoublyLinkedList<T>
     {
@@ -229,16 +229,5 @@ namespace DataStructures
 
         public bool Contains(T value)
          => Find(value) != null;
-    }
-
-    public class MyDoublyLinkedListNode<T>
-    {
-        public T Data { get; set; }
-        public MyDoublyLinkedListNode<T> Next { get; set; }
-        public MyDoublyLinkedListNode<T> Prev { get; set; }
-        public MyDoublyLinkedListNode(T data)
-        {
-            Data = data;
-        }
     }
 }

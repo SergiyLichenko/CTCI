@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Tasks.StacksNQueues;
+using Tasks.StacksNQueues.AnimalShelter;
 using Xunit;
 
 namespace Tasks.UT

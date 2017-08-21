@@ -1,29 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DataStructures
+namespace DataStructures.MyAVLTree
 {
-    public class MyAVLTreeNode<T> where T : IComparable
-    {
-        public T Data { get; internal set; }
-        public int TreeHeight { get; set; }
-
-        public MyAVLTreeNode<T> Left { get; set; }
-        public MyAVLTreeNode<T> Right { get; set; }
-        public MyAVLTreeNode(T data)
-        {
-            Data = data;
-        }
-
-        public MyAVLTreeNode(T data, int treeHeight) : this(data)
-        {
-            TreeHeight = treeHeight;
-        }
-    }
     public class MyAVLTree<T> where T : IComparable
     {
         public MyAVLTreeNode<T> Root { get; private set; }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataStructures.MyRedBlackTree;
 using FluentAssertions;
 using Xunit;
 
@@ -36,9 +37,9 @@ namespace DataStructures.UT
             result.Count.ShouldBeEquivalentTo(1);
 
             result.Root.Data.ShouldBeEquivalentTo(1);
-            result.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            result.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            result.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            result.Root.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            result.Root.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            result.Root.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
             result.Root.Left.IsNull.ShouldBeEquivalentTo(true);
             result.Root.Right.IsNull.ShouldBeEquivalentTo(true);
             result.Root.Left.Parent.ShouldBeEquivalentTo(result.Root);
@@ -70,10 +71,10 @@ namespace DataStructures.UT
             tree.Root.Right.Parent.ShouldBeEquivalentTo(tree.Root);
             tree.Root.Right.Left.Parent.ShouldBeEquivalentTo(tree.Root.Right);
 
-            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
 
             tree.Root.Left.Left.IsNull.ShouldBeEquivalentTo(true);
             tree.Root.Left.Right.IsNull.ShouldBeEquivalentTo(true);
@@ -126,16 +127,16 @@ namespace DataStructures.UT
             tree.Root.Left.Right.Right.Parent.ShouldBeEquivalentTo(tree.Root.Left.Right);
             tree.Root.Left.Right.Left.Right.Parent.ShouldBeEquivalentTo(tree.Root.Left.Right.Left);
 
-            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
         }
 
         [Fact]
@@ -169,12 +170,12 @@ namespace DataStructures.UT
             tree.Root.Right.Left.Parent.ShouldBeEquivalentTo(tree.Root.Right);
             tree.Root.Right.Right.Parent.ShouldBeEquivalentTo(tree.Root.Right);
 
-            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
         }
 
         [Fact]
@@ -208,12 +209,12 @@ namespace DataStructures.UT
             tree.Root.Right.Left.Parent.ShouldBeEquivalentTo(tree.Root.Right);
             tree.Root.Right.Right.Parent.ShouldBeEquivalentTo(tree.Root.Right);
 
-            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
         }
 
         [Fact]
@@ -259,16 +260,16 @@ namespace DataStructures.UT
             tree.Root.Right.Right.Left.Parent.ShouldBeEquivalentTo(tree.Root.Right.Right);
             tree.Root.Right.Right.Right.Parent.ShouldBeEquivalentTo(tree.Root.Right.Right);
 
-            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Right.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Right.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Right.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Right.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
         }
 
         [Fact]
@@ -302,12 +303,12 @@ namespace DataStructures.UT
             tree.Root.Right.Left.Parent.ShouldBeEquivalentTo(tree.Root.Right);
             tree.Root.Right.Right.Parent.ShouldBeEquivalentTo(tree.Root.Right);
 
-            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
         }
 
         [Fact]
@@ -341,12 +342,12 @@ namespace DataStructures.UT
             tree.Root.Right.Left.Parent.ShouldBeEquivalentTo(tree.Root.Right);
             tree.Root.Right.Right.Parent.ShouldBeEquivalentTo(tree.Root.Right);
 
-            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
         }
 
         [Fact]
@@ -392,16 +393,16 @@ namespace DataStructures.UT
             tree.Root.Left.Left.Right.Parent.ShouldBeEquivalentTo(tree.Root.Left.Left);
             tree.Root.Right.Left.Left.Parent.ShouldBeEquivalentTo(tree.Root.Right.Left);
 
-            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Left.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Right.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Left.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Right.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
         }
 
         [Fact]
@@ -448,14 +449,14 @@ namespace DataStructures.UT
             tree.Root.Right.Right.Left.Parent.ShouldBeEquivalentTo(tree.Root.Right.Right);
             tree.Root.Right.Right.Right.Parent.ShouldBeEquivalentTo(tree.Root.Right.Right);
 
-            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
 
             tree.Root.Left.Left.Left.IsNull.ShouldBeEquivalentTo(true);
             tree.Root.Left.Left.Right.IsNull.ShouldBeEquivalentTo(true);
@@ -467,15 +468,15 @@ namespace DataStructures.UT
             tree.Root.Right.Right.Right.Left.IsNull.ShouldBeEquivalentTo(true);
             tree.Root.Right.Right.Right.Right.IsNull.ShouldBeEquivalentTo(true);
 
-            tree.Root.Left.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
 
             tree.Root.IsNull.ShouldBeEquivalentTo(false);
             tree.Root.Left.IsNull.ShouldBeEquivalentTo(false);
@@ -588,13 +589,13 @@ namespace DataStructures.UT
             tree.Root.Right.Left.Data.ShouldBeEquivalentTo(20);
             tree.Root.Right.Right.Data.ShouldBeEquivalentTo(38);
 
-            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
 
             tree.Root.Parent.ShouldBeEquivalentTo(null);
             tree.Root.Left.Parent.ShouldBeEquivalentTo(tree.Root);
@@ -656,15 +657,15 @@ namespace DataStructures.UT
             tree.Root.Left.Left.Left.Data.ShouldBeEquivalentTo(-5);
             tree.Root.Left.Left.Right.Data.ShouldBeEquivalentTo(7);
 
-            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Left.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Left.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
 
             tree.Root.Parent.ShouldBeEquivalentTo(null);
             tree.Root.Left.Parent.ShouldBeEquivalentTo(tree.Root);
@@ -715,7 +716,7 @@ namespace DataStructures.UT
             tree.Count.ShouldBeEquivalentTo(1);
 
             tree.Root.Data.ShouldBeEquivalentTo(5);
-            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
 
             tree.Root.Parent.ShouldBeEquivalentTo(null);
             tree.Root.Left.Parent.ShouldBeEquivalentTo(tree.Root);
@@ -743,7 +744,7 @@ namespace DataStructures.UT
             tree.Count.ShouldBeEquivalentTo(1);
 
             tree.Root.Data.ShouldBeEquivalentTo(10);
-            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
 
             tree.Root.Parent.ShouldBeEquivalentTo(null);
             tree.Root.Left.Parent.ShouldBeEquivalentTo(tree.Root);
@@ -799,8 +800,8 @@ namespace DataStructures.UT
             tree.Root.Left.Parent.ShouldBeEquivalentTo(tree.Root);
             tree.Root.Right.Parent.ShouldBeEquivalentTo(tree.Root);
 
-            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
 
             tree.Root.IsNull.ShouldBeEquivalentTo(false);
             tree.Root.Left.IsNull.ShouldBeEquivalentTo(true);
@@ -850,10 +851,10 @@ namespace DataStructures.UT
             tree.Root.Right.Right.Left.Parent.ShouldBeEquivalentTo(tree.Root.Right.Right);
             tree.Root.Right.Right.Right.Parent.ShouldBeEquivalentTo(tree.Root.Right.Right);
 
-            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
 
             tree.Root.IsNull.ShouldBeEquivalentTo(false);
             tree.Root.Left.IsNull.ShouldBeEquivalentTo(false);
@@ -903,10 +904,10 @@ namespace DataStructures.UT
             tree.Root.Left.Right.Left.Parent.ShouldBeEquivalentTo(tree.Root.Left.Right);
             tree.Root.Left.Right.Right.Parent.ShouldBeEquivalentTo(tree.Root.Left.Right);
 
-            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
 
             tree.Root.IsNull.ShouldBeEquivalentTo(false);
             tree.Root.Left.IsNull.ShouldBeEquivalentTo(false);
@@ -951,15 +952,15 @@ namespace DataStructures.UT
             tree.Root.Right.Left.Data.ShouldBeEquivalentTo(50);
             tree.Root.Right.Right.Data.ShouldBeEquivalentTo(80);
 
-            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Left.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Left.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
 
             tree.Root.Parent.ShouldBeEquivalentTo(null);
             tree.Root.Left.Parent.ShouldBeEquivalentTo(tree.Root);
@@ -987,12 +988,12 @@ namespace DataStructures.UT
             tree.Root.Right.Right.Left.IsNull.ShouldBeEquivalentTo(true);
             tree.Root.Right.Right.Right.IsNull.ShouldBeEquivalentTo(true);
 
-            tree.Root.Left.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
         }
 
         [Fact]
@@ -1034,15 +1035,15 @@ namespace DataStructures.UT
             tree.Root.Left.Left.Right.Data.ShouldBeEquivalentTo(-20);
             tree.Root.Right.Left.Right.Data.ShouldBeEquivalentTo(45);
 
-            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Right.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Right.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
 
             tree.Root.IsNull.ShouldBeEquivalentTo(false);
             tree.Root.Left.IsNull.ShouldBeEquivalentTo(false);
@@ -1093,16 +1094,16 @@ namespace DataStructures.UT
             tree.Root.Right.Right.Left.IsNull.ShouldBeEquivalentTo(true);
             tree.Root.Right.Right.Right.IsNull.ShouldBeEquivalentTo(true);
 
-            tree.Root.Left.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Left.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Left.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Left.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Left.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
         }
 
         [Fact]
@@ -1141,16 +1142,16 @@ namespace DataStructures.UT
             tree.Root.Right.Left.Right.Data.ShouldBeEquivalentTo(50);
             tree.Root.Right.Right.Right.Data.ShouldBeEquivalentTo(90);
 
-            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Right.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Right.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Right.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Right.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
 
             tree.Root.IsNull.ShouldBeEquivalentTo(false);
             tree.Root.Left.IsNull.ShouldBeEquivalentTo(false);
@@ -1218,16 +1219,16 @@ namespace DataStructures.UT
             tree.Root.Right.Right.Right.Left.IsDoubleBlack.ShouldBeEquivalentTo(false);
             tree.Root.Right.Right.Right.Right.IsDoubleBlack.ShouldBeEquivalentTo(false);
 
-            tree.Root.Left.Left.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Left.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Left.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Left.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
         }
 
         [Fact]
@@ -1260,13 +1261,13 @@ namespace DataStructures.UT
             tree.Root.Right.Left.Data.ShouldBeEquivalentTo(20);
             tree.Root.Right.Right.Data.ShouldBeEquivalentTo(60);
 
-            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
 
             tree.Root.IsNull.ShouldBeEquivalentTo(false);
             tree.Root.Left.IsNull.ShouldBeEquivalentTo(false);
@@ -1319,14 +1320,14 @@ namespace DataStructures.UT
             tree.Root.Right.Right.Left.IsDoubleBlack.ShouldBeEquivalentTo(false);
             tree.Root.Right.Right.Right.IsDoubleBlack.ShouldBeEquivalentTo(false);
 
-            tree.Root.Left.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
         }
 
         [Fact]
@@ -1356,10 +1357,10 @@ namespace DataStructures.UT
             tree.Root.Right.Data.ShouldBeEquivalentTo(30);
             tree.Root.Left.Left.Data.ShouldBeEquivalentTo(-20);
 
-            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
 
             tree.Root.IsNull.ShouldBeEquivalentTo(false);
             tree.Root.Left.IsNull.ShouldBeEquivalentTo(false);
@@ -1394,11 +1395,11 @@ namespace DataStructures.UT
             tree.Root.Right.Left.IsDoubleBlack.ShouldBeEquivalentTo(false);
             tree.Root.Right.Right.IsDoubleBlack.ShouldBeEquivalentTo(false);
 
-            tree.Root.Left.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
         }
 
         [Fact]
@@ -1425,10 +1426,10 @@ namespace DataStructures.UT
             tree.Root.Right.Data.ShouldBeEquivalentTo(10);
             tree.Root.Right.Left.Data.ShouldBeEquivalentTo(0);
 
-            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
 
             tree.Root.IsNull.ShouldBeEquivalentTo(false);
             tree.Root.Left.IsNull.ShouldBeEquivalentTo(false);
@@ -1463,11 +1464,11 @@ namespace DataStructures.UT
             tree.Root.Right.Left.Left.IsDoubleBlack.ShouldBeEquivalentTo(false);
             tree.Root.Right.Left.Right.IsDoubleBlack.ShouldBeEquivalentTo(false);
 
-            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
         }
 
         [Fact]
@@ -1493,8 +1494,8 @@ namespace DataStructures.UT
             tree.Root.Data.ShouldBeEquivalentTo(10);
             tree.Root.Left.Data.ShouldBeEquivalentTo(-10);
 
-            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
 
             tree.Root.IsNull.ShouldBeEquivalentTo(false);
             tree.Root.Left.IsNull.ShouldBeEquivalentTo(false);
@@ -1517,9 +1518,9 @@ namespace DataStructures.UT
             tree.Root.Left.Left.IsDoubleBlack.ShouldBeEquivalentTo(false);
             tree.Root.Left.Right.IsDoubleBlack.ShouldBeEquivalentTo(false);
 
-            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
         }
 
         [Fact]
@@ -1559,15 +1560,15 @@ namespace DataStructures.UT
             tree.Root.Left.Right.Left.Data.ShouldBeEquivalentTo(-27);
             tree.Root.Right.Right.Left.Data.ShouldBeEquivalentTo(30);
 
-            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Right.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Right.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
 
             tree.Root.IsNull.ShouldBeEquivalentTo(false);
             tree.Root.Left.IsNull.ShouldBeEquivalentTo(false);
@@ -1632,16 +1633,16 @@ namespace DataStructures.UT
             tree.Root.Right.Right.Left.Left.IsDoubleBlack.ShouldBeEquivalentTo(false);
             tree.Root.Right.Right.Left.Right.IsDoubleBlack.ShouldBeEquivalentTo(false);
 
-            tree.Root.Left.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
         }
 
         [Fact]
@@ -1674,13 +1675,13 @@ namespace DataStructures.UT
             tree.Root.Right.Left.Data.ShouldBeEquivalentTo(0);
             tree.Root.Right.Right.Data.ShouldBeEquivalentTo(10);
 
-            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
 
             tree.Root.IsNull.ShouldBeEquivalentTo(false);
             tree.Root.Left.IsNull.ShouldBeEquivalentTo(false);
@@ -1733,14 +1734,14 @@ namespace DataStructures.UT
             tree.Root.Right.Right.Left.IsDoubleBlack.ShouldBeEquivalentTo(false);
             tree.Root.Right.Right.Right.IsDoubleBlack.ShouldBeEquivalentTo(false);
 
-            tree.Root.Left.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
         }
 
         [Fact]
@@ -1779,16 +1780,16 @@ namespace DataStructures.UT
             tree.Root.Left.Right.Left.Data.ShouldBeEquivalentTo(-15);
             tree.Root.Right.Right.Right.Data.ShouldBeEquivalentTo(70);
 
-            tree.Root.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Left.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Red);
-            tree.Root.Right.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Red);
+            tree.Root.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Left.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
+            tree.Root.Right.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Red);
 
             tree.Root.IsNull.ShouldBeEquivalentTo(false);
             tree.Root.Left.IsNull.ShouldBeEquivalentTo(false);
@@ -1859,17 +1860,17 @@ namespace DataStructures.UT
             tree.Root.Right.Right.Right.Left.IsDoubleBlack.ShouldBeEquivalentTo(false);
             tree.Root.Right.Right.Right.Right.IsDoubleBlack.ShouldBeEquivalentTo(false);
 
-            tree.Root.Left.Left.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Left.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Left.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Left.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Right.Left.Color.ShouldBeEquivalentTo(NodeColor.Black);
-            tree.Root.Right.Right.Right.Right.Color.ShouldBeEquivalentTo(NodeColor.Black);
+            tree.Root.Left.Left.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Left.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Left.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Left.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Right.Left.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
+            tree.Root.Right.Right.Right.Right.Color.ShouldBeEquivalentTo(RedBlackTreeNodeColor.Black);
         }
 
         [Fact]
@@ -1961,7 +1962,7 @@ namespace DataStructures.UT
             //arrange
             var tree = new MyRedBlackTree<int>();
             tree.Insert(10);
-            tree.Root.Color = NodeColor.Red;
+            tree.Root.Color = RedBlackTreeNodeColor.Red;
 
             //act
             var result = tree.IsValid();
@@ -1999,7 +2000,7 @@ namespace DataStructures.UT
             tree.Insert(-15);
             tree.Insert(-40);
 
-            tree.Root.Left.Left.Right.Color = NodeColor.Red;
+            tree.Root.Left.Left.Right.Color = RedBlackTreeNodeColor.Red;
             //act
             var result = tree.IsValid();
 
@@ -2023,7 +2024,7 @@ namespace DataStructures.UT
             tree.Insert(-15);
             tree.Insert(-40);
 
-            tree.Root.Right.Right.Right.Color = NodeColor.Black;
+            tree.Root.Right.Right.Right.Color = RedBlackTreeNodeColor.Black;
             //act
             var result = tree.IsValid();
 

@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataStructures;
+using DataStructures.MyBinarySearchTree;
+using DataStructures.MyDoublyLinkedList;
+using DataStructures.MyGraph;
 
 namespace Tasks
 {

@@ -1,21 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DataStructures
+namespace DataStructures.MyTrie
 {
-    public class MyTrieNode
-    {
-        public Dictionary<char, MyTrieNode> Children { get; private set; }
-        public bool EndOfWord { get; set; }
-
-        public MyTrieNode()
-        {
-            Children = new Dictionary<char, MyTrieNode>();
-        }
-    }
     public class MyTrie
     {
         public MyTrieNode Root { get; private set; }

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataStructures;
+using DataStructures.MyDoublyLinkedList;
+using DataStructures.MySinglyLinkedList;
 using FluentAssertions;
 using Xunit;
 

@@ -18,8 +18,6 @@ namespace Tasks.ObjectOrientedDesign.DeckOfCards
         public Rank Rank { get; }
         public Suit Suit { get; }
         public GameType GameType { get; }
-
         public abstract int GetValue();
-       
     }
 }

@@ -47,6 +47,13 @@
     <Compile Include="MathLogic\CheckOrder.cs" />
     <Compile Include="MathLogic\MathLogic.cs" />
     <Compile Include="MathLogic\TestStrip.cs" />
+    <Compile Include="ObjectOrientedDesign\CallCenter\Call.cs" />
+    <Compile Include="ObjectOrientedDesign\CallCenter\CallCenter.cs" />
+    <Compile Include="ObjectOrientedDesign\CallCenter\Director.cs" />
+    <Compile Include="ObjectOrientedDesign\CallCenter\Employee.cs" />
+    <Compile Include="ObjectOrientedDesign\CallCenter\EmployeeType.cs" />
+    <Compile Include="ObjectOrientedDesign\CallCenter\Manager.cs" />
+    <Compile Include="ObjectOrientedDesign\CallCenter\Respondent.cs" />
     <Compile Include="ObjectOrientedDesign\DeckOfCards\BlackJackCard.cs" />
     <Compile Include="ObjectOrientedDesign\DeckOfCards\BlackJackDeck.cs" />
     <Compile Include="ObjectOrientedDesign\DeckOfCards\BlackJackHand.cs" />

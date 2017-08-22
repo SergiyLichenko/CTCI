@@ -68,6 +68,10 @@
     <Compile Include="ObjectOrientedDesign\Jukebox\Coin.cs" />
     <Compile Include="ObjectOrientedDesign\Jukebox\Jukebox.cs" />
     <Compile Include="ObjectOrientedDesign\Jukebox\Song.cs" />
+    <Compile Include="ObjectOrientedDesign\OnlineBookReader\Author.cs" />
+    <Compile Include="ObjectOrientedDesign\OnlineBookReader\Book.cs" />
+    <Compile Include="ObjectOrientedDesign\OnlineBookReader\Genre.cs" />
+    <Compile Include="ObjectOrientedDesign\OnlineBookReader\Reader.cs" />
     <Compile Include="ObjectOrientedDesign\ParkingLot\Car.cs" />
     <Compile Include="ObjectOrientedDesign\ParkingLot\Floor.cs" />
     <Compile Include="ObjectOrientedDesign\ParkingLot\ParkingLot.cs" />

@@ -63,6 +63,7 @@
     <Compile Include="ObjectOrientedDesign\DeckOfCards\Hand.cs" />
     <Compile Include="ObjectOrientedDesign\DeckOfCards\Rank.cs" />
     <Compile Include="ObjectOrientedDesign\DeckOfCards\Suit.cs" />
+    <Compile Include="ObjectOrientedDesign\FileSystem\FileSystem.cs" />
     <Compile Include="ObjectOrientedDesign\Jukebox\Artist.cs" />
     <Compile Include="ObjectOrientedDesign\Jukebox\CD.cs" />
     <Compile Include="ObjectOrientedDesign\Jukebox\Coin.cs" />

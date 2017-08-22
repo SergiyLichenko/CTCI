@@ -68,6 +68,12 @@
     <Compile Include="ObjectOrientedDesign\Jukebox\Coin.cs" />
     <Compile Include="ObjectOrientedDesign\Jukebox\Jukebox.cs" />
     <Compile Include="ObjectOrientedDesign\Jukebox\Song.cs" />
+    <Compile Include="ObjectOrientedDesign\Minesweeper\Board.cs" />
+    <Compile Include="ObjectOrientedDesign\Minesweeper\Cell.cs" />
+    <Compile Include="ObjectOrientedDesign\Minesweeper\CellType.cs" />
+    <Compile Include="ObjectOrientedDesign\Minesweeper\Game.cs" />
+    <Compile Include="ObjectOrientedDesign\Minesweeper\GameState.cs" />
+    <Compile Include="ObjectOrientedDesign\Minesweeper\Player.cs" />
     <Compile Include="ObjectOrientedDesign\OnlineBookReader\Author.cs" />
     <Compile Include="ObjectOrientedDesign\OnlineBookReader\Book.cs" />
     <Compile Include="ObjectOrientedDesign\OnlineBookReader\Genre.cs" />

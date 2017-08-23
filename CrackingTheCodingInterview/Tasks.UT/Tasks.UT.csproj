@@ -65,7 +65,14 @@
     <Compile Include="BitManipulationsTests.cs" />
     <Compile Include="LinkedListTests.cs" />
     <Compile Include="MathLogicTests.cs" />
-    <Compile Include="ObjectOrientedDesignTests.cs" />
+    <Compile Include="ObjectOrientedDesignTests\CallCenterTests.cs" />
+    <Compile Include="ObjectOrientedDesignTests\DeckOfCardsTests.cs" />
+    <Compile Include="ObjectOrientedDesignTests\FileSystemTests.cs" />
+    <Compile Include="ObjectOrientedDesignTests\JigsawTests.cs" />
+    <Compile Include="ObjectOrientedDesignTests\JukeboxTests.cs" />
+    <Compile Include="ObjectOrientedDesignTests\MinesweeperTests.cs" />
+    <Compile Include="ObjectOrientedDesignTests\OnlineBookReaderTests.cs" />
+    <Compile Include="ObjectOrientedDesignTests\ParkingLotTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StacksNQueuesTests.cs" />
     <Compile Include="TreesGraphsTests.cs" />
@@ -86,6 +93,7 @@
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

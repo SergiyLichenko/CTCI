@@ -68,6 +68,10 @@
     <Compile Include="ObjectOrientedDesign\FileSystem\FileSystem.cs" />
     <Compile Include="ObjectOrientedDesign\FileSystem\FileSystemElement.cs" />
     <Compile Include="ObjectOrientedDesign\FileSystem\LocalDisk.cs" />
+    <Compile Include="ObjectOrientedDesign\Jigsaw\Board.cs" />
+    <Compile Include="ObjectOrientedDesign\Jigsaw\Puzzle.cs" />
+    <Compile Include="ObjectOrientedDesign\Jigsaw\PuzzleDirection.cs" />
+    <Compile Include="ObjectOrientedDesign\Jigsaw\PuzzleType.cs" />
     <Compile Include="ObjectOrientedDesign\Jukebox\Artist.cs" />
     <Compile Include="ObjectOrientedDesign\Jukebox\CD.cs" />
     <Compile Include="ObjectOrientedDesign\Jukebox\Coin.cs" />

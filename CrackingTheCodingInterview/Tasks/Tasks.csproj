@@ -58,6 +58,7 @@
     <Compile Include="ObjectOrientedDesign\ChatServer\ChatServer.cs" />
     <Compile Include="ObjectOrientedDesign\ChatServer\Message.cs" />
     <Compile Include="ObjectOrientedDesign\ChatServer\User.cs" />
+    <Compile Include="ObjectOrientedDesign\CircularArray.cs" />
     <Compile Include="ObjectOrientedDesign\DeckOfCards\BlackJackCard.cs" />
     <Compile Include="ObjectOrientedDesign\DeckOfCards\BlackJackDeck.cs" />
     <Compile Include="ObjectOrientedDesign\DeckOfCards\BlackJackHand.cs" />

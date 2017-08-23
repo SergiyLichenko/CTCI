@@ -73,6 +73,7 @@
     <Compile Include="MathLogicTests.cs" />
     <Compile Include="ObjectOrientedDesignTests\CallCenterTests.cs" />
     <Compile Include="ObjectOrientedDesignTests\ChatServerTests.cs" />
+    <Compile Include="ObjectOrientedDesignTests\CircularArrayTests.cs" />
     <Compile Include="ObjectOrientedDesignTests\DeckOfCardsTests.cs" />
     <Compile Include="ObjectOrientedDesignTests\FileSystemTests.cs" />
     <Compile Include="ObjectOrientedDesignTests\JigsawTests.cs" />

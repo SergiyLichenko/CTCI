@@ -69,5 +69,95 @@ namespace Tasks.UT
             //assert
             first.ShouldBeEquivalentTo(24);
         }
+
+        [Fact]
+        public void MagicIndex_Should_Throw_If_Null()
+        {
+            //arrange
+
+            //act
+            Action act = () => _recursionNDynamicProgramming.MagicIndex(null);
+
+            //assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void MagicIndex_Should_Check_Middle()
+        {
+            //arrange
+            int[] array = new int[]{-1,0,2,5,6};
+
+            //act
+            var result = _recursionNDynamicProgramming.MagicIndex(array);
+
+            //assert
+            result.ShouldBeEquivalentTo(2);
+        }
+
+        [Fact]
+        public void MagicIndex_Should_Check_Example()
+        {
+            //arrange
+            int[] array = new int[] { -1, 0, 1, 2, 4 ,8, 9, 10};
+
+            //act
+            var result = _recursionNDynamicProgramming.MagicIndex(array);
+
+            //assert
+            result.ShouldBeEquivalentTo(4);
+        }
+
+        [Fact]
+        public void MagicIndex_Should_Check_Example_With_Duplicates_Right()
+        {
+            //arrange
+            int[] array = new int[] { 1,3,3,5,5,5 };
+
+            //act
+            var result = _recursionNDynamicProgramming.MagicIndex(array);
+
+            //assert
+            result.ShouldBeEquivalentTo(5);
+        }
+        [Fact]
+        public void MagicIndex_Should_Check_Example_With_Duplicates_Left()
+        {
+            //arrange
+            int[] array = new int[] { 1,2,2,2,2,2,2,2,2,2 };
+
+            //act
+            var result = _recursionNDynamicProgramming.MagicIndex(array);
+
+            //assert
+            result.ShouldBeEquivalentTo(2);
+        }
+
+        [Fact]
+        public void MagicIndex_Should_Check_False()
+        {
+            //arrange
+            int[] array = new int[] { 1, 2, 3, 4 };
+
+            //act
+            var result = _recursionNDynamicProgramming.MagicIndex(array);
+
+            //assert
+            result.ShouldBeEquivalentTo(-1);
+        }
+
+
+        [Fact]
+        public void MagicIndex_Should_Check_Empty()
+        {
+            //arrange
+            int[] array = new int[] { };
+
+            //act
+            var result = _recursionNDynamicProgramming.MagicIndex(array);
+
+            //assert
+            result.ShouldBeEquivalentTo(-1);
+        }
     }
 }

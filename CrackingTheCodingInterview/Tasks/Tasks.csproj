@@ -92,6 +92,7 @@
     <Compile Include="ObjectOrientedDesign\OnlineBookReader\Book.cs" />
     <Compile Include="ObjectOrientedDesign\OnlineBookReader\Genre.cs" />
     <Compile Include="ObjectOrientedDesign\OnlineBookReader\Reader.cs" />
+    <Compile Include="ObjectOrientedDesign\Othello\Game.cs" />
     <Compile Include="ObjectOrientedDesign\ParkingLot\Car.cs" />
     <Compile Include="ObjectOrientedDesign\ParkingLot\Floor.cs" />
     <Compile Include="ObjectOrientedDesign\ParkingLot\ParkingLot.cs" />

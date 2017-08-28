@@ -59,5 +59,29 @@ namespace Tasks
 
             return result;
         }
+
+        public int RecursiveMutliply(int a, int b)
+        {
+            if (a < 0 || b < 0)
+                throw new ArgumentOutOfRangeException();
+            if (a == 0 || b == 0)
+                return 0;
+
+            return RecursiveMutliplyHelper(a, b);
+        }
+
+        private int RecursiveMutliplyHelper(int a, int b)
+        {
+            int result = 0;
+            if (b % 2 == 1)
+            {
+                result = a;
+                b--;
+            }
+            if (b > 0 && b % 2 == 0)
+                result += RecursiveMutliplyHelper(a << 1, b / 2);
+
+            return result;
+        }
     }
 }

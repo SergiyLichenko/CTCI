@@ -159,5 +159,79 @@ namespace Tasks.UT
             //assert
             result.ShouldBeEquivalentTo(-1);
         }
+
+        [Fact]
+        public void RecursiveMutliply_Should_Check_Zero()
+        {
+            //arrange
+
+            //act
+            var result = _recursionNDynamicProgramming.RecursiveMutliply(10, 0);
+
+            //assert
+            result.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void RecursiveMutliply_Should_Two_Odd_Numbers()
+        {
+            //arrange
+
+            //act
+            var result = _recursionNDynamicProgramming.RecursiveMutliply(9, 7);
+
+            //assert
+            result.ShouldBeEquivalentTo(63);
+        }
+
+        [Fact]
+        public void RecursiveMutliply_Should_Check_Odd_And_Even_Numbers()
+        {
+            //arrange
+
+            //act
+            var result = _recursionNDynamicProgramming.RecursiveMutliply(7, 10);
+
+            //assert
+            result.ShouldBeEquivalentTo(70);
+        }
+
+        [Fact]
+        public void RecursiveMutliply_Should_Check_Even_And_Odd_Numbers()
+        {
+            //arrange
+
+            //act
+            var result = _recursionNDynamicProgramming.RecursiveMutliply(6, 5);
+
+            //assert
+            result.ShouldBeEquivalentTo(30);
+        }
+
+        [Fact]
+        public void RecursiveMutliply_Should_Check_Even_Numbers()
+        {
+            //arrange
+
+            //act
+            var result = _recursionNDynamicProgramming.RecursiveMutliply(6, 6);
+
+            //assert
+            result.ShouldBeEquivalentTo(36);
+        }
+
+        [Fact]
+        public void RecursiveMutliply_Should_Throw_If_Negative()
+        {
+            //arrange
+
+            //act
+            Action actFirst = ()=> _recursionNDynamicProgramming.RecursiveMutliply(-6, 6);
+            Action actSecond = () => _recursionNDynamicProgramming.RecursiveMutliply(6, -6);
+
+            //assert
+            actFirst.ShouldThrow<ArgumentOutOfRangeException>();
+            actSecond.ShouldThrow<ArgumentOutOfRangeException>();
+        }
     }
 }

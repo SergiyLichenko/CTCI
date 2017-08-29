@@ -83,5 +83,50 @@ namespace Tasks
 
             return result;
         }
+
+        public List<int>[] TowersOfHanoi(List<int>[] towers)
+        {
+            if (towers == null) throw new ArgumentNullException();
+            if (towers.Length != 3 || !IsSorted(towers[0])) throw new ArgumentException();
+            if (towers[1].Count != 0 || towers[2].Count != 0) throw new InvalidOperationException();
+            if (towers[0].Count == 0)
+                return towers;
+
+            var result = new List<int>[towers.Length];
+            for (int i = 0; i < towers.Length; i++)
+                result[i] = new List<int>(towers[i]);
+
+            TowersOfHanoiHelper(result, 2, 0, towers[0].Count);
+            return result;
+        }
+
+        private void TowersOfHanoiHelper(List<int>[] towers,
+            int targetTowerIndex, int sourceIndex, int count)
+        {
+            int helperIndex = towers.Length - targetTowerIndex - sourceIndex;
+
+            if (count > 1)
+                TowersOfHanoiHelper(towers, helperIndex, sourceIndex, count - 1);
+
+            if (towers[targetTowerIndex].Count > 0 &&
+                towers[sourceIndex].Count > 0 &&
+                towers[targetTowerIndex].Last() > towers[sourceIndex].Last())
+                throw new InvalidOperationException();
+
+            towers[targetTowerIndex].Add(towers[sourceIndex].Last());
+            towers[sourceIndex].RemoveAt(towers[sourceIndex].Count - 1);
+
+            if (count > 1)
+                TowersOfHanoiHelper(towers, targetTowerIndex, helperIndex, count - 1);
+        }
+
+        public static bool IsSorted(List<int> arr)
+        {
+            int l = arr.Count;
+            for (int i = 1; i < l / 2 + 1; i++)
+                if (arr[i - 1] > arr[i] || arr[l - i] < arr[l - i - 1])
+                    return false;
+            return true;
+        }
     }
 }

@@ -86,7 +86,7 @@ namespace Tasks.UT
         public void MagicIndex_Should_Check_Middle()
         {
             //arrange
-            int[] array = new int[]{-1,0,2,5,6};
+            int[] array = new int[] { -1, 0, 2, 5, 6 };
 
             //act
             var result = _recursionNDynamicProgramming.MagicIndex(array);
@@ -99,7 +99,7 @@ namespace Tasks.UT
         public void MagicIndex_Should_Check_Example()
         {
             //arrange
-            int[] array = new int[] { -1, 0, 1, 2, 4 ,8, 9, 10};
+            int[] array = new int[] { -1, 0, 1, 2, 4, 8, 9, 10 };
 
             //act
             var result = _recursionNDynamicProgramming.MagicIndex(array);
@@ -112,7 +112,7 @@ namespace Tasks.UT
         public void MagicIndex_Should_Check_Example_With_Duplicates_Right()
         {
             //arrange
-            int[] array = new int[] { 1,3,3,5,5,5 };
+            int[] array = new int[] { 1, 3, 3, 5, 5, 5 };
 
             //act
             var result = _recursionNDynamicProgramming.MagicIndex(array);
@@ -124,7 +124,7 @@ namespace Tasks.UT
         public void MagicIndex_Should_Check_Example_With_Duplicates_Left()
         {
             //arrange
-            int[] array = new int[] { 1,2,2,2,2,2,2,2,2,2 };
+            int[] array = new int[] { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2 };
 
             //act
             var result = _recursionNDynamicProgramming.MagicIndex(array);
@@ -226,12 +226,160 @@ namespace Tasks.UT
             //arrange
 
             //act
-            Action actFirst = ()=> _recursionNDynamicProgramming.RecursiveMutliply(-6, 6);
+            Action actFirst = () => _recursionNDynamicProgramming.RecursiveMutliply(-6, 6);
             Action actSecond = () => _recursionNDynamicProgramming.RecursiveMutliply(6, -6);
 
             //assert
             actFirst.ShouldThrow<ArgumentOutOfRangeException>();
             actSecond.ShouldThrow<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void TowersOfHanoi_Should_Check_Example()
+        {
+            //arrange
+            var towers = new List<int>[]
+            {
+                new List<int>(){1,2,3,4,5},
+                new List<int>() { },
+                new List<int>() { }
+            };
+
+            //act
+            var result = _recursionNDynamicProgramming.TowersOfHanoi(towers);
+
+            //assert
+            result.Length.ShouldBeEquivalentTo(3);
+            result[0].Count.ShouldBeEquivalentTo(0);
+            result[1].Count.ShouldBeEquivalentTo(0);
+            result[2].Count.ShouldBeEquivalentTo(towers[0].Count);
+            result[2].SequenceEqual(towers[0]).ShouldBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public void TowersOfHanoi_Should_Throw_If_Null()
+        {
+            //arrange
+
+            //act
+            Action act = () => _recursionNDynamicProgramming.TowersOfHanoi(null);
+
+            //assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void TowersOfHanoi_Should_Throw_If_Not_Sorted_By_Ascending()
+        {
+            //arrange
+            var towers = new List<int>[]
+            {
+                new List<int>(){4,5,32,1},
+                new List<int>() { },
+                new List<int>() { }
+            };
+            //act
+            Action act = () => _recursionNDynamicProgramming.TowersOfHanoi(towers);
+
+            //assert
+            act.ShouldThrow<ArgumentException>();
+        }
+
+        [Fact]
+        public void TowersOfHanoi_Should_Throw_If_Invalid_Number_Of_Towers()
+        {
+            //arrange
+            var towersMore = new List<int>[]
+            {
+                new List<int>(){4,5,32,1},
+                new List<int>() { },
+                new List<int>() { },
+                new List<int>() { }
+            };
+            var towersLess = new List<int>[]
+            {
+                new List<int>(){4,5,32,1},
+                new List<int>() { }
+            };
+
+            //act
+            Action actMore = () => _recursionNDynamicProgramming.TowersOfHanoi(towersMore);
+            Action actLess = () => _recursionNDynamicProgramming.TowersOfHanoi(towersLess);
+
+            //assert
+            actMore.ShouldThrow<ArgumentException>();
+            actLess.ShouldThrow<ArgumentException>();
+        }
+
+
+        [Fact]
+        public void TowersOfHanoi_Should_Throw_If_Other_Towers_Are_Not_Empty()
+        {
+            //arrange
+            var towersFirst = new List<int>[]
+            {
+                new List<int>(){ },
+                new List<int>() { 1},
+                new List<int>() { }
+            };
+            var towersSecond = new List<int>[]
+            {
+                new List<int>(){ },
+                new List<int>() { },
+                new List<int>() {1 }
+            };
+
+            //act
+            Action actFirst = () => _recursionNDynamicProgramming.TowersOfHanoi(towersFirst);
+            Action actSecond = () => _recursionNDynamicProgramming.TowersOfHanoi(towersSecond);
+
+            //assert
+            actFirst.ShouldThrow<InvalidOperationException>();
+            actSecond.ShouldThrow<InvalidOperationException>();
+        }
+
+        [Fact]
+        public void TowersOfHanoi_Should_Check_Empty_Towers()
+        {
+            //arrange
+            var towers = new List<int>[]
+            {
+                new List<int>(){  },
+                new List<int>() { },
+                new List<int>() { }
+            };
+
+            //act
+            var result = _recursionNDynamicProgramming.TowersOfHanoi(towers);
+
+            //assert
+            result.Length.ShouldBeEquivalentTo(3);
+            result[0].Count.ShouldBeEquivalentTo(0);
+            result[1].Count.ShouldBeEquivalentTo(0);
+            result[2].Count.ShouldBeEquivalentTo(towers[0].Count);
+            result[2].SequenceEqual(towers[0]).ShouldBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public void TowersOfHanoi_Should_Check_High_Tower()
+        {
+            //arrange
+            var towers = new List<int>[]
+            {
+                Enumerable.Range(1, 20).ToList(),
+                new List<int>() { },
+                new List<int>() { }
+            };
+
+            //act
+            var result = _recursionNDynamicProgramming.TowersOfHanoi(towers);
+
+            //assert
+            result.Length.ShouldBeEquivalentTo(3);
+            result[0].Count.ShouldBeEquivalentTo(0);
+            result[1].Count.ShouldBeEquivalentTo(0);
+            result[2].Count.ShouldBeEquivalentTo(towers[0].Count);
+            result[2].SequenceEqual(towers[0]).ShouldBeEquivalentTo(true);
         }
     }
 }

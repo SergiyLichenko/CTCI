@@ -381,5 +381,121 @@ namespace Tasks.UT
             result[2].Count.ShouldBeEquivalentTo(towers[0].Count);
             result[2].SequenceEqual(towers[0]).ShouldBeEquivalentTo(true);
         }
+
+        [Fact]
+        public void Parens_Should_Check_Example()
+        {
+            //arrange
+            var parens = new List<string>
+            {
+                "((()))", "(()())", "(())()", "()(())","()()()"
+            };
+
+            //act
+            var result = _recursionNDynamicProgramming.Parens(3).ToList();
+
+            //assert
+            result.Count.ShouldBeEquivalentTo(parens.Count);
+            foreach (var item in parens)
+            {
+                result.Contains(item).ShouldBeEquivalentTo(true);
+                result.Remove(item);
+            }
+            result.Count.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void Parens_Should_Throw_If_Negative()
+        {
+            //arrange
+
+            //act
+            Action act = () => _recursionNDynamicProgramming.Parens(-3).ToList();
+
+            //assert
+            act.ShouldThrow<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void Parens_Should_Check_N_Zero()
+        {
+            //arrange
+
+            //act
+            var result = _recursionNDynamicProgramming.Parens(0).ToList();
+
+            //assert
+            result.Count.ShouldBeEquivalentTo(1);
+            result[0].ShouldBeEquivalentTo(string.Empty);
+        }
+
+        [Fact]
+        public void Parens_Should_Check_N_One()
+        {
+            //arrange
+            var parens = new List<string>
+            {
+                "()"
+            };
+
+            //act
+            var result = _recursionNDynamicProgramming.Parens(1).ToList();
+
+            //assert
+            result.Count.ShouldBeEquivalentTo(parens.Count);
+            foreach (var item in parens)
+            {
+                result.Contains(item).ShouldBeEquivalentTo(true);
+                result.Remove(item);
+            }
+            result.Count.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void Parens_Should_Check_N_Two()
+        {
+            //arrange
+            var parens = new List<string>
+            {
+                "(())", "()()"
+            };
+
+            //act
+            var result = _recursionNDynamicProgramming.Parens(2).ToList();
+
+            //assert
+            result.Count.ShouldBeEquivalentTo(parens.Count);
+            foreach (var item in parens)
+            {
+                result.Contains(item).ShouldBeEquivalentTo(true);
+                result.Remove(item);
+            }
+            result.Count.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void Parens_Should_Check_N_Four()
+        {
+            //arrange
+            var parens = new List<string>
+            {
+                "(((())))","((()))()","((())())","(()()())",
+                "(())(())","(())()()","((()()))","(()(()))",
+                "(()())()","()((()))","()(())()","()(()())",
+                "()()(())","()()()()"
+            };
+
+            //act
+            var result = _recursionNDynamicProgramming.Parens(4).ToList();
+
+            //assert
+            result.Count.ShouldBeEquivalentTo(parens.Count);
+            foreach (var item in parens)
+            {
+                result.Contains(item).ShouldBeEquivalentTo(true);
+                result.Remove(item);
+            }
+            result.Count.ShouldBeEquivalentTo(0);
+        }
     }
 }

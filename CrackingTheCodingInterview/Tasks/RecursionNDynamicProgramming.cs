@@ -120,13 +120,49 @@ namespace Tasks
                 TowersOfHanoiHelper(towers, targetTowerIndex, helperIndex, count - 1);
         }
 
-        public static bool IsSorted(List<int> arr)
+        private static bool IsSorted(List<int> arr)
         {
             int l = arr.Count;
             for (int i = 1; i < l / 2 + 1; i++)
                 if (arr[i - 1] > arr[i] || arr[l - i] < arr[l - i - 1])
                     return false;
             return true;
+        }
+
+        public IEnumerable<string> Parens(int n)
+        {
+            if (n < 0)
+                throw new ArgumentOutOfRangeException();
+            return ParensHelper(n);
+        }
+
+        private IEnumerable<string> ParensHelper(int n)
+        {
+            if (n == 0)
+                return new List<string> { "" };
+
+            var parensList = ParensHelper(n - 1).ToList();
+            var result = new HashSet<string>();
+
+            foreach (var item in parensList)
+            {
+                for (int i = 0; i < item.Length; i++)
+                {
+                    int leftCount = 0;
+                    int rightCount = 0;
+                    for (int j = i ; j < item.Length; j++)
+                    {
+                        if (item[j] == '(')
+                            leftCount++;
+                        else
+                            rightCount++;
+                        if (leftCount == rightCount)
+                            result.Add(item.Insert(i, "(").Insert(j + 2, ")"));
+                    }
+                }
+                result.Add(item + "()");
+            }
+            return result;
         }
     }
 }

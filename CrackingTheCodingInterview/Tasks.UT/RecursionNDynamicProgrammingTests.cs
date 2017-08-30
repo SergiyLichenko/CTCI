@@ -497,5 +497,132 @@ namespace Tasks.UT
             }
             result.Count.ShouldBeEquivalentTo(0);
         }
+
+        [Fact]
+        public void PaintFill_Should_Throw_If_Null()
+        {
+            //arrange
+            int[,] matrix = null;
+
+            //act
+            Action act = () => _recursionNDynamicProgramming.PaintFill(matrix, 0, 0);
+
+            //assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void PaintFill_Should_Throw_If_Not_In_Range()
+        {
+            //arrange
+            int[,] matrix = new int[7, 5]
+            {
+                {1,0,3,4,5 },
+                {4,2,2,2,3 },
+                {3,2,6,5,-4 },
+                {1,2,2,2,3},
+                {3,2,2,2,2 },
+                {3,4,2,2,0 },
+                {1,4,5,3,1 }
+            };
+
+            //act
+            Action actFirstLower = () => _recursionNDynamicProgramming.PaintFill(matrix, -1, 0);
+            Action actFirstHigher = () => _recursionNDynamicProgramming.PaintFill(matrix, matrix.GetLength(0), 0);
+            Action actSecondLower = () => _recursionNDynamicProgramming.PaintFill(matrix, 0, -1);
+            Action actSecondHigher = () => _recursionNDynamicProgramming.PaintFill(matrix, 0, matrix.GetLength(1));
+
+            //assert
+            actFirstLower.ShouldThrow<ArgumentOutOfRangeException>();
+            actFirstHigher.ShouldThrow<ArgumentOutOfRangeException>();
+            actSecondLower.ShouldThrow<ArgumentOutOfRangeException>();
+            actSecondHigher.ShouldThrow<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void PaintFill_Should_Throw_If_Negative_Color()
+        {
+            //arrange
+            int[,] matrix = new int[7, 5]
+            {
+                {1,0,3,4,5 },
+                {4,2,2,2,3 },
+                {3,2,6,5,-4 },
+                {1,2,2,2,3},
+                {3,2,2,2,2 },
+                {3,4,2,2,0 },
+                {1,4,5,3,1 }
+            };
+
+            //act
+            Action act = () => _recursionNDynamicProgramming.PaintFill(matrix, 0, 0);
+
+            //assert
+            act.ShouldThrow<InvalidOperationException>();
+        }
+
+        [Fact]
+        public void PaintFill_Should_Check_Empty()
+        {
+            //arrange
+            int[,] matrix = new int[0, 0];
+
+            //act
+            var result = _recursionNDynamicProgramming.PaintFill(matrix, 0, 0);
+
+            //assert
+            result.ShouldBeEquivalentTo(matrix);
+        }
+
+        [Fact]
+        public void PaintFill_Should_Check_Size_One()
+        {
+            //arrange
+            int[,] matrix = new int[1, 1] { { 1 } };
+            int[,] matrixRes = new int[1, 1] { { 0 } };
+
+            //act
+            var result = _recursionNDynamicProgramming.PaintFill(matrix, 0, 0);
+
+            //assert
+            result.ShouldBeEquivalentTo(matrixRes);
+        }
+
+        [Fact]
+        public void PaintFill_Should_Check_Example()
+        {
+            //arrange
+            int[,] matrix = new int[7, 5]
+            {
+                {1,0,3,4,5 },
+                {4,2,2,2,3 },
+                {3,2,6,5,4 },
+                {1,2,2,2,3},
+                {3,2,2,2,2 },
+                {3,4,2,2,0 },
+                {1,4,5,3,1 }
+            };
+            int[,] matrixRes = new int[7, 5]
+            {
+                {1,0,3,4,5 },
+                {4,0,0,0,3 },
+                {3,0,6,5,4 },
+                {1,0,0,0,3},
+                {3,0,0,0,0 },
+                {3,4,0,0,0 },
+                {1,4,5,3,1 }
+            };
+            var initial = new int[7, 5];
+            for (int i = 0; i < matrix.GetLength(0); i++)
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                    initial[i, j] = matrix[i, j];
+
+            //act
+            var result = _recursionNDynamicProgramming.PaintFill(matrix, 4, 3);
+
+            //assert
+            result.ShouldBeEquivalentTo(matrixRes);
+            matrix.ShouldBeEquivalentTo(initial);
+        }
     }
 }

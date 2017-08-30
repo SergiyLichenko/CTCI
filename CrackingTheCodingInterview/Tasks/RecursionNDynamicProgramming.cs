@@ -150,7 +150,7 @@ namespace Tasks
                 {
                     int leftCount = 0;
                     int rightCount = 0;
-                    for (int j = i ; j < item.Length; j++)
+                    for (int j = i; j < item.Length; j++)
                     {
                         if (item[j] == '(')
                             leftCount++;
@@ -163,6 +163,46 @@ namespace Tasks
                 result.Add(item + "()");
             }
             return result;
+        }
+
+        public int[,] PaintFill(int[,] matrix, int i, int j)
+        {
+            if (matrix == null)
+                throw new ArgumentNullException();
+            if (matrix.Length == 0)
+                return matrix;
+            if (i < 0 || j < 0 || i >= matrix.GetLength(0) || j >= matrix.GetLength(1))
+                throw new ArgumentOutOfRangeException();
+            if (matrix.Cast<int>().Any(x => x < 0))
+                throw new InvalidOperationException();
+
+            var result = new int[matrix.GetLength(0), matrix.GetLength(1)];
+
+            for (int ii = 0; ii < matrix.GetLength(0); ii++)
+                for (int jj = 0; jj < matrix.GetLength(1); jj++)
+                    result[ii, jj] = matrix[ii, jj];
+
+            PaintFillHelper(result, i, j);
+
+            for (int ii = 0; ii < matrix.GetLength(0); ii++)
+                for (int jj = 0; jj < matrix.GetLength(1); jj++)
+                    result[ii, jj] = result[ii, jj] == -1 ? 0 : result[ii, jj];
+
+            return result;
+        }
+
+        private void PaintFillHelper(int[,] matrix, int i, int j)
+        {
+            int currentCell = matrix[i, j];
+            matrix[i, j] = -1;
+            if (i > 0 && matrix[i - 1, j] == currentCell)
+                PaintFillHelper(matrix, i - 1, j);
+            if (i < matrix.GetLength(0) - 1 && matrix[i + 1, j] == currentCell)
+                PaintFillHelper(matrix, i + 1, j);
+            if (j > 0 && matrix[i, j - 1] == currentCell)
+                PaintFillHelper(matrix, i, j - 1);
+            if (j < matrix.GetLength(1) - 1 && matrix[i, j + 1] == currentCell)
+                PaintFillHelper(matrix, i, j + 1);
         }
     }
 }

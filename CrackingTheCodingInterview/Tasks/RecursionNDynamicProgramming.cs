@@ -204,5 +204,31 @@ namespace Tasks
             if (j < matrix.GetLength(1) - 1 && matrix[i, j + 1] == currentCell)
                 PaintFillHelper(matrix, i, j + 1);
         }
+
+        public int Coins(int n, int[] coins)
+        {
+            if (n < 0)
+                throw new ArgumentOutOfRangeException();
+            if (coins == null)
+                throw new ArgumentNullException();
+            if (coins.Length == 0 || coins.Any(x => x < 0))
+                throw new ArgumentException();
+            if (n == 0)
+                return 0;
+
+            int[] matrix = new int[n + 1];
+            matrix[0] = 1;
+            foreach (int coin in coins)
+            {
+                for (int j = 1; j < matrix.Length; j++)
+                {
+                    if (j < coin)
+                        continue;
+                    matrix[j] += matrix[j - coin];
+                }
+            }
+            return matrix.Last();
+        }
+
     }
 }

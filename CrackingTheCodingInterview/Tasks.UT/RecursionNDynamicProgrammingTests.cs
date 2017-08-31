@@ -624,5 +624,131 @@ namespace Tasks.UT
             result.ShouldBeEquivalentTo(matrixRes);
             matrix.ShouldBeEquivalentTo(initial);
         }
+
+        [Fact]
+        public void Coins_Should_Throw_If_Null()
+        {
+            //arrange
+
+            //act
+            Action act = () => _recursionNDynamicProgramming.Coins(1, null);
+
+            //assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void Coins_Should_Throw_If_Negative()
+        {
+            //arrange
+
+            //act
+            Action act = () => _recursionNDynamicProgramming.Coins(-1, new int[] { 1 });
+
+            //assert
+            act.ShouldThrow<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void Coins_Should_Throw_If_Empty_Coins()
+        {
+            //arrange
+
+            //act
+            Action act = () => _recursionNDynamicProgramming.Coins(-1, new int[] { });
+
+            //assert
+            act.ShouldThrow<ArgumentException>();
+        }
+
+        [Fact]
+        public void Coins_Should_Throw_If_Negative_Coin_Value()
+        {
+            //arrange
+
+            //act
+            Action act = () => _recursionNDynamicProgramming.Coins(-1, new int[] { 1, -1 });
+
+            //assert
+            act.ShouldThrow<ArgumentException>();
+        }
+
+        [Fact]
+        public void Coins_Should_Check_Zero()
+        {
+            //arrange
+            var coins = new int[] { 1, 5, 10, 25 };
+
+            //act
+            var result = _recursionNDynamicProgramming.Coins(0, coins);
+
+            //assert
+            result.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void Coins_Should_Check_One()
+        {
+            //arrange
+            var coins = new int[] { 1, 5, 10, 25 };
+
+            //act
+            var result = _recursionNDynamicProgramming.Coins(1, coins);
+
+            //assert
+            result.ShouldBeEquivalentTo(1);
+        }
+
+        [Fact]
+        public void Coins_Should_Check_Five()
+        {
+            //arrange
+            var coins = new int[] { 1, 5, 10, 25 };
+
+            //act
+            var result = _recursionNDynamicProgramming.Coins(5, coins);
+
+            //assert
+            result.ShouldBeEquivalentTo(2);
+        }
+
+        [Fact]
+        public void Coins_Should_Check_Ten()
+        {
+            //arrange
+            var coins = new int[] { 1, 5, 10, 25 };
+
+            //act
+            var result = _recursionNDynamicProgramming.Coins(10, coins);
+
+            //assert
+            result.ShouldBeEquivalentTo(4);
+        }
+
+        [Fact]
+        public void Coins_Should_Check_Fifteen()
+        {
+            //arrange
+            var coins = new int[] { 1, 5, 10, 25 };
+
+            //act
+            var result = _recursionNDynamicProgramming.Coins(15, coins);
+
+            //assert
+            result.ShouldBeEquivalentTo(6);
+        }
+
+        [Fact]
+        public void Coins_Should_Check_Twenty()
+        {
+            //arrange
+            var coins = new int[] { 1, 5, 10, 25 };
+
+            //act
+            var result = _recursionNDynamicProgramming.Coins(20, coins);
+
+            //assert
+            result.ShouldBeEquivalentTo(9);
+        }
     }
 }

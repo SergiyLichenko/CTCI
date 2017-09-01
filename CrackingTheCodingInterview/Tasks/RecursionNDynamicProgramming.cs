@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -230,5 +231,53 @@ namespace Tasks
             return matrix.Last();
         }
 
+        public int BoleanEvaluation(string input, bool result)
+        {
+            if (input == null)
+                throw new ArgumentNullException();
+            if (input.Length == 0 || !IsValidExpression(input))
+                throw new ArgumentException();
+
+
+            var results = BooleanEvaluationHelper(input, 0, input.Length - 1);
+
+            return results.Count(x => x == result);
+        }
+
+        private List<bool> BooleanEvaluationHelper(string input, int leftIndex, int rightIndex)
+        {
+            var results = new List<bool>();
+            if (leftIndex == rightIndex)
+                results.Add(input[leftIndex] == '1');
+            for (int i = leftIndex; i < rightIndex; i++)
+            {
+                if (IsOperation(input, i))
+                {
+                    List<bool> leftResult = BooleanEvaluationHelper(input, leftIndex, i - 1);
+                    List<bool> rightResults = BooleanEvaluationHelper(input, i + 1, rightIndex);
+
+                    foreach (var left in leftResult)
+                        foreach (var right in rightResults)
+                        {
+                            switch (input[i])
+                            {
+                                case '^': results.Add(left ^ right); break;
+                                case '|': results.Add(left | right); break;
+                                case '&': results.Add(left & right); break;
+                            }
+                        }
+                }
+            }
+            return results;
+        }
+
+       private bool IsOperation(string input, int index)
+            => input[index] == '|' || input[index] == '&' || input[index] == '^';
+
+        private bool IsValidExpression(string input)
+        {
+            var chars = new List<char>() { '1', '0', '^', '(', ')', '&', '|' };
+            return input.All(item => chars.Contains(item));
+        }
     }
 }

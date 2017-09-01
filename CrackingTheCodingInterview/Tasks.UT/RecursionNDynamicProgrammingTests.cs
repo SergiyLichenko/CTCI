@@ -750,5 +750,65 @@ namespace Tasks.UT
             //assert
             result.ShouldBeEquivalentTo(9);
         }
+
+        [Fact]
+        public void BoleanEvaluation_Should_Throw_If_Null()
+        {
+            //arrange
+
+            //act
+            Action act = () => _recursionNDynamicProgramming.BoleanEvaluation(null, false);
+
+            //assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void BoleanEvaluation_Should_Throw_If_Empty()
+        {
+            //arrange
+
+            //act
+            Action act = () => _recursionNDynamicProgramming.BoleanEvaluation("", false);
+
+            //assert
+            act.ShouldThrow<ArgumentException>();
+        }
+
+        [Fact]
+        public void BoleanEvaluation_Should_Check_Valid_Signs()
+        {
+            //arrange
+
+            //act
+            Action act = () => _recursionNDynamicProgramming.BoleanEvaluation("a23fds", false);
+
+            //assert
+            act.ShouldThrow<ArgumentException>();
+        }
+
+        [Fact]
+        public void BoleanEvaluation_Should_Check_First_Example()
+        {
+            //arrange
+
+            //act
+            var result = _recursionNDynamicProgramming.BoleanEvaluation("1^0|0|1", false);
+
+            //assert
+            result.ShouldBeEquivalentTo(2);
+        }
+
+        [Fact]
+        public void BoleanEvaluation_Should_Check_Second_Example()
+        {
+            //arrange
+
+            //act
+            var result = _recursionNDynamicProgramming.BoleanEvaluation("0&0&0&1^1|0", true);
+
+            //assert
+            result.ShouldBeEquivalentTo(10);
+        }
     }
 }

@@ -43,6 +43,7 @@
     <Compile Include="Johnson.cs" />
     <Compile Include="RabinKarp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sorting.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataStructures\DataStructures.csproj">

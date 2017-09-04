@@ -46,6 +46,50 @@ namespace Algorithms
             }
         }
 
+        public IEnumerable<T> MergeSort(IEnumerable<T> array)
+        {
+            if (array == null)
+                throw new ArgumentNullException();
+
+            var list = new List<T>(array);
+            var helper = new T[list.Count];
+            MergeSortHelper(list, helper, 0, list.Count - 1);
+
+            return list;
+        }
+
+        private void MergeSortHelper(List<T> list, T[] helper, int left, int right)
+        {
+            if (left < right)
+            {
+                int mid = (left + right) / 2;
+                MergeSortHelper(list, helper, left, mid);
+                MergeSortHelper(list, helper, mid + 1, right);
+                Merge(list, helper, left, mid, right);
+            }
+        }
+
+        private void Merge(List<T> list, T[] helper,
+            int left, int mid, int right)
+        {
+            int leftIndex = left;
+            int rightIndex = mid + 1;
+            int index = left;
+            while (leftIndex <= mid && rightIndex <= right)
+            {
+                if (list[leftIndex].CompareTo(list[rightIndex]) < 0)
+                    helper[index++] = list[leftIndex++];
+                else
+                    helper[index++] = list[rightIndex++];
+            }
+
+            while (leftIndex <= mid)
+                helper[index++] = list[leftIndex++];
+
+            for (int i = left; i < index; i++)
+                list[i] = helper[i];
+        }
+
         private static void Swap(T[] tempArray, int i, int j)
         {
             var temp = tempArray[i];

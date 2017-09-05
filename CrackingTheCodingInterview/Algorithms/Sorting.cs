@@ -90,6 +90,53 @@ namespace Algorithms
                 list[i] = helper[i];
         }
 
+        public IEnumerable<T> QuickSort(IEnumerable<T> list)
+        {
+            if (list == null)
+                throw new ArgumentNullException();
+            var array = list.ToArray();
+
+            if (array.Length > 0)
+                QuickSortWithBoundaries(array, 0, array.Length - 1);
+            return array;
+        }
+
+        private void QuickSortWithBoundaries(T[] array, int left, int right)
+        {
+            int pivotIndex = QuickSortHelper(array, left, right);
+
+            if (left < pivotIndex - 1)
+                QuickSortWithBoundaries(array, left, pivotIndex-1);
+            if (pivotIndex < right)
+                QuickSortWithBoundaries(array, pivotIndex , right);
+        }
+
+        private int QuickSortHelper(T[] array, int left, int right)
+        {
+            var pivotIndex = new Random().Next(left, right + 1);
+            var pivot = array[pivotIndex];
+
+            int leftIndex = left;
+            int rightIndex = right;
+
+            while (leftIndex <= rightIndex)
+            {
+                while (array[leftIndex].CompareTo(pivot) < 0)
+                    leftIndex++;
+
+                while (array[rightIndex].CompareTo(pivot) > 0)
+                    rightIndex--;
+
+                if (leftIndex <= rightIndex)
+                {
+                    Swap(array, leftIndex, rightIndex);
+                    leftIndex++;
+                    rightIndex--;
+                }
+            }
+            return leftIndex;
+        }
+
         private static void Swap(T[] tempArray, int i, int j)
         {
             var temp = tempArray[i];

@@ -8,7 +8,7 @@ namespace Algorithms
 {
     public static class CountingSort
     {
-        public static IEnumerable<int> CountingSorting(this IEnumerable<int> array)
+        public static IEnumerable<int> CountingSorting(this IEnumerable<int> array, Action<int, int> act = null)
         {
             var tempArray = array.ToArray();
 
@@ -25,9 +25,42 @@ namespace Algorithms
                 var resultIndex = buckets[tempArray[i]] - 1;
                 buckets[tempArray[i]]--;
                 result[resultIndex] = tempArray[i];
+
+                act?.Invoke(i, resultIndex);
             }
 
             return result;
+        }
+
+        public static IEnumerable<int> RadixSort(this IEnumerable<int> list)
+        {
+            var array = list.ToArray();
+            if (array.Length == 0)
+                return array;
+
+            var maxNumberLength = array.Select(x => x.ToString()).Max(x => x.Length);
+
+            for (int i = 0; i < maxNumberLength; i++)
+            {
+                var tempArray = new int[array.Length];
+                for (int j = 0; j < array.Length; j++)
+                {
+                    tempArray[j] = array[j];
+                    if (i != 0)
+                        tempArray[j] = tempArray[j] / ((int)Math.Pow(10, i));
+                    tempArray[j] %= 10;
+                }
+
+                var tempValues = new int[array.Length];
+
+                tempArray.CountingSorting((oldIndex, newIndex) =>
+                        tempValues[newIndex] = array[oldIndex]);
+
+                array = tempValues;
+            }
+
+
+            return array;
         }
     }
 }

@@ -11,6 +11,8 @@ namespace Algorithms
         public static IEnumerable<int> CountingSorting(this IEnumerable<int> array, Action<int, int> act = null)
         {
             var tempArray = array.ToArray();
+            if (tempArray.Any(x => x > 9))
+                throw new ArgumentException();
 
             var buckets = new int[10];
             foreach (var item in tempArray)
@@ -40,9 +42,11 @@ namespace Algorithms
 
             var maxNumberLength = array.Select(x => x.ToString()).Max(x => x.Length);
 
+            var tempArray = new int[array.Length];
+            var tempValues = new int[array.Length];
+
             for (int i = 0; i < maxNumberLength; i++)
             {
-                var tempArray = new int[array.Length];
                 for (int j = 0; j < array.Length; j++)
                 {
                     tempArray[j] = array[j];
@@ -51,12 +55,11 @@ namespace Algorithms
                     tempArray[j] %= 10;
                 }
 
-                var tempValues = new int[array.Length];
-
                 tempArray.CountingSorting((oldIndex, newIndex) =>
                         tempValues[newIndex] = array[oldIndex]);
 
-                array = tempValues;
+                for (int j = 0; j < tempValues.Length; j++)
+                    array[j] = tempValues[j];
             }
 
 

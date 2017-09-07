@@ -11,6 +11,19 @@ namespace Algorithms.UT
     public class CountingSortTests
     {
         [Fact]
+        public void CountingSorting_Should_Throw_If_Not_In_Range_Of_Buckets()
+        {
+            //Arrange
+            var array = Enumerable.Range(11, 1).ToArray();
+
+            //Act
+            Action act = () => array.CountingSorting().ToArray();
+
+            //Assert
+            act.ShouldThrow<ArgumentException>();
+        }
+
+        [Fact]
         public void CountingSorting_Should_Check_Empty_Array()
         {
             //Arrange

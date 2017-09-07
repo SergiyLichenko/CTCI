@@ -154,7 +154,7 @@ namespace Algorithms.UT
         public void QuickSort_Should_Sort()
         {
             //Arrange
-            var array = Enumerable.Range(0, 5).ToArray();
+            var array = Enumerable.Range(0, 1000).ToArray();
             array = array.OrderBy(x => _random.Next()).ToArray();
 
             //Act
@@ -173,6 +173,46 @@ namespace Algorithms.UT
 
             //Act
             var result = _sorting.QuickSort(array).ToList();
+
+            //Assert
+            result.Count.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void InsertionSort_Should_Throw_If_Null()
+        {
+            //Arrange
+
+            //Act
+            Action act = () => _sorting.InsertionSort(null).ToArray();
+
+            //Assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void InsertionSort_Should_Sort()
+        {
+            //Arrange
+            var array = Enumerable.Range(0, 1000).ToArray();
+            array = array.OrderBy(x => _random.Next()).ToArray();
+
+            //Act
+            var result = _sorting.InsertionSort(array).ToList();
+
+            //Assert
+            result.Count.ShouldBeEquivalentTo(array.Length);
+            result.SequenceEqual(array.OrderBy(x => x)).ShouldBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public void InsertionSort_Should_Check_Empty()
+        {
+            //Arrange
+            var array = Enumerable.Range(0, 0).ToArray();
+
+            //Act
+            var result = _sorting.InsertionSort(array).ToList();
 
             //Assert
             result.Count.ShouldBeEquivalentTo(0);

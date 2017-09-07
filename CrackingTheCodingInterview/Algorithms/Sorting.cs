@@ -106,9 +106,9 @@ namespace Algorithms
             int pivotIndex = QuickSortHelper(array, left, right);
 
             if (left < pivotIndex - 1)
-                QuickSortWithBoundaries(array, left, pivotIndex-1);
+                QuickSortWithBoundaries(array, left, pivotIndex - 1);
             if (pivotIndex < right)
-                QuickSortWithBoundaries(array, pivotIndex , right);
+                QuickSortWithBoundaries(array, pivotIndex, right);
         }
 
         private int QuickSortHelper(T[] array, int left, int right)
@@ -142,6 +142,27 @@ namespace Algorithms
             var temp = tempArray[i];
             tempArray[i] = tempArray[j];
             tempArray[j] = temp;
+        }
+
+        public IEnumerable<T> InsertionSort(IEnumerable<T> list)
+        {
+            if (list == null)
+                throw new ArgumentNullException();
+            var array = list.ToArray();
+
+            for (int i = 1; i < array.Length; i++)
+            {
+                int j = i;
+                while (j >0)
+                {
+                    if (array[j-1].CompareTo(array[j]) <= 0)
+                        break;
+                    Swap(array, j-1, j);
+                    j--;
+                }
+            }
+
+            return array;
         }
     }
 }

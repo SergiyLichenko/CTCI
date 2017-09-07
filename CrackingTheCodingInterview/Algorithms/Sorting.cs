@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataStructures.MyBinaryHeap;
 
 namespace Algorithms
 {
@@ -153,16 +154,30 @@ namespace Algorithms
             for (int i = 1; i < array.Length; i++)
             {
                 int j = i;
-                while (j >0)
+                while (j > 0)
                 {
-                    if (array[j-1].CompareTo(array[j]) <= 0)
+                    if (array[j - 1].CompareTo(array[j]) <= 0)
                         break;
-                    Swap(array, j-1, j);
+                    Swap(array, j - 1, j);
                     j--;
                 }
             }
 
             return array;
+        }
+
+        public IEnumerable<T> HeapSort(IEnumerable<T> list)
+        {
+            if (list == null)
+                throw new ArgumentNullException();
+            var array = list.ToArray();
+
+            var heap = new MyBinaryHeap<T>(MyBinaryHeapType.MinHeap);
+            foreach (var item in array)
+                heap.Insert(item);
+
+            while (heap.Count > 0)
+                yield return heap.ExtractTop();
         }
     }
 }

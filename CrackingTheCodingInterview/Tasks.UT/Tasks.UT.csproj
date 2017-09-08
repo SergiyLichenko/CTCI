@@ -84,7 +84,8 @@
     <Compile Include="ObjectOrientedDesignTests\ParkingLotTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecursionNDynamicProgrammingTests.cs" />
-    <Compile Include="SortingNSearchingTests.cs" />
+    <Compile Include="SortingNSearching\ListyTests.cs" />
+    <Compile Include="SortingNSearching\SortingNSearchingTests.cs" />
     <Compile Include="StacksNQueuesTests.cs" />
     <Compile Include="TreesGraphsTests.cs" />
   </ItemGroup>

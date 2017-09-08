@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Tasks
+namespace Tasks.SortingNSearching
 {
     public class SortingNSearching
     {
@@ -158,10 +156,38 @@ namespace Tasks
                 return array[left] > array[right] ? left : right;
 
             var middle = (left + right) / 2;
-            
+
             if (array[left] < array[middle])
                 return FindMaxElementIndex(array, middle, right);
             return FindMaxElementIndex(array, left, middle);
+        }
+
+        public int SortedSearchNoSize(Listy listy, int target)
+        {
+            if (listy == null)
+                throw new ArgumentNullException();
+            if (target < 0)
+                throw new ArgumentOutOfRangeException();
+            var listySize = 4;
+            while (listy.ElementAt(listySize) != -1)
+                listySize *= 2;
+
+            return SortedSearchNoSizeHelper(listy, target, 0, listySize);
+        }
+
+        private int SortedSearchNoSizeHelper(Listy listy, int target,
+            int left, int right)
+        {
+            int middle = (left + right) / 2;
+
+            if (listy.ElementAt(middle) == target)
+                return middle;
+            if (left == right)
+                return -1;
+
+            if (listy.ElementAt(middle) < target)
+                return SortedSearchNoSizeHelper(listy, target, middle + 1, right);
+            return SortedSearchNoSizeHelper(listy, target, left, middle - 1);
         }
     }
 }

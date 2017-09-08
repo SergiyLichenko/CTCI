@@ -1,19 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
+using Tasks.SortingNSearching;
 using Xunit;
 
-namespace Tasks.UT
+namespace Tasks.UT.SortingNSearching
 {
     public class SortingNSearchingTests
     {
-        private readonly SortingNSearching _sortingNSearching;
+        private readonly Tasks.SortingNSearching.SortingNSearching _sortingNSearching;
         public SortingNSearchingTests()
         {
-            _sortingNSearching = new SortingNSearching();
+            _sortingNSearching = new Tasks.SortingNSearching.SortingNSearching();
         }
 
         [Fact]
@@ -234,7 +232,7 @@ namespace Tasks.UT
         public void SearchInRotatedArray_Should_Check_Not_Rotated()
         {
             //Arrange
-            var array = new int[] {1,2,4,5,6,7,8,9,10 };
+            var array = new int[] { 1, 2, 4, 5, 6, 7, 8, 9, 10 };
 
             //Act
             var result = _sortingNSearching.SearchInRotatedArray(array, 8);
@@ -260,13 +258,108 @@ namespace Tasks.UT
         public void SearchInRotatedArray_Should_Check_Duplicates()
         {
             //Arrange
-            var array = new int[] { 1, 2, 4, 5, 6,6,6, 7, 8,8, 9,9,9, 10, -1, 0 };
+            var array = new int[] { 1, 2, 4, 5, 6, 6, 6, 7, 8, 8, 9, 9, 9, 10, -1, 0 };
 
             //Act
             var result = _sortingNSearching.SearchInRotatedArray(array, 9);
 
             //Assert
             result.ShouldBeEquivalentTo(11);
+        }
+
+        [Fact]
+        public void SortedSearchNoSize_Should_Throw_If_Null()
+        {
+            //Act
+            Action act = () => _sortingNSearching.SortedSearchNoSize(null, 2);
+
+            //Assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+
+        [Fact]
+        public void SortedSearchNoSize_Should_Throw_If_Target_Negative()
+        {
+            //Act
+            Action act = () => _sortingNSearching.SortedSearchNoSize(new Listy(), -2);
+
+            //Assert
+            act.ShouldThrow<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void SortedSearchNoSize_Should_Find_Value()
+        {
+            //Arrange
+            var listy = new Listy();
+            listy[0] = 0;
+            listy[1] = 1;
+            listy[2] = 2;
+            listy[3] = 3;
+            listy[4] = 4;
+            listy[5] = 5;
+            listy[6] = 6;
+            listy[7] = 7;
+            listy[8] = 8;
+            listy[9] = 9;
+            listy[10] = 10;
+
+            //Act
+            var result = _sortingNSearching.SortedSearchNoSize(listy, 7);
+
+            //Assert
+            result.ShouldBeEquivalentTo(7);
+        }
+
+        [Fact]
+        public void SortedSearchNoSize_Should_Find_Value_With_Duplicates()
+        {
+            //Arrange
+            var listy = new Listy();
+            listy[0] = 0;
+            listy[1] = 1;
+            listy[2] = 1;
+            listy[3] = 3;
+            listy[4] = 4;
+            listy[5] = 4;
+            listy[6] = 4;
+            listy[7] = 7;
+            listy[8] = 8;
+            listy[9] = 8;
+            listy[10] = 9;
+            listy[11] = 9;
+
+            //Act
+            var result = _sortingNSearching.SortedSearchNoSize(listy, 8);
+
+            //Assert
+            result.ShouldBeEquivalentTo(8);
+        }
+
+        [Fact]
+        public void SortedSearchNoSize_Should_Not_Find_Value_If_No_Exists()
+        {
+            //Arrange
+            var listy = new Listy();
+            listy[0] = 0;
+            listy[1] = 1;
+            listy[2] = 1;
+            listy[3] = 3;
+            listy[4] = 4;
+            listy[5] = 4;
+            listy[6] = 4;
+            listy[7] = 7;
+            listy[8] = 8;
+            listy[9] = 8;
+            listy[10] = 9;
+            listy[11] = 9;
+
+            //Act
+            var result = _sortingNSearching.SortedSearchNoSize(listy, 10);
+
+            //Assert
+            result.ShouldBeEquivalentTo(-1);
         }
     }
 }

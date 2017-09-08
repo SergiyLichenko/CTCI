@@ -142,5 +142,42 @@ namespace Tasks.UT
             first.SequenceEqual(firstCopy).ShouldBeEquivalentTo(true);
             second.SequenceEqual(secondCopy).ShouldBeEquivalentTo(true);
         }
+
+        [Fact]
+        public void GroupAnagrams_Should_Throw_If_Null()
+        {
+            //Act
+            Action act = () => _sortingNSearching.GroupAnagrams(null);
+
+            //Assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void GroupAnagrams_Should_Check_Empty()
+        {
+            //Arrange
+            var words = new string[0];
+
+            //Act
+            var result = _sortingNSearching.GroupAnagrams(words);
+
+            //Assert
+            result.ShouldBeEquivalentTo(words);
+        }
+
+        [Fact]
+        public void GroupAnagrams_Should_Check_Sorted_Anagrams()
+        {
+            //Arrange
+            var words = new string[10] { "abvc", "bf", "fb", "fb", "bcab", "cvba", "sdf", "fds", "s", "sssaa" };
+            var resultWords = new string[10] { "s", "bf", "fb", "fb", "sdf", "fds", "abvc", "bcab", "cvba", "sssaa" };
+
+            //Act
+            var result = _sortingNSearching.GroupAnagrams(words);
+
+            //Assert
+            result.SequenceEqual(resultWords).ShouldBeEquivalentTo(true);
+        }
     }
 }

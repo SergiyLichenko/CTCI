@@ -55,6 +55,56 @@ namespace Tasks
             return result;
         }
 
+        public string[] GroupAnagrams(string[] array)
+        {
+            if (array == null)
+                throw new ArgumentNullException(nameof(array));
+
+            var arr = array.OrderBy(x => x.Length).ToArray();
+            var isAdded = new bool[arr.Length];
+
+            var result = new List<string>();
+            for (int i = 0; i < arr.Length ; i++)
+            {
+                if (isAdded[i])
+                    continue;
+                result.Add(arr[i]);
+                isAdded[i] = true;
+                for (int j = i + 1; j < array.Length; j++)
+                {
+                    if (arr[i].Length != array[j].Length)
+                        break;
+                    if (IsAnagram(array[i], array[j]))
+                    {
+                        isAdded[j] = true;
+                        result.Add(array[j]);
+                    }
+                }
+            }
+            return result.ToArray();
+        }
+
+        private bool IsAnagram(string first, string second)
+        {
+            if (first.Length != second.Length)
+                return false;
+
+            Dictionary<char, int> map = new Dictionary<char, int>();
+            foreach (var item in first)
+            {
+                if (!map.ContainsKey(item))
+                    map[item] = 0;
+                map[item]++;
+            }
+            foreach (var item in second)
+            {
+                if (!map.ContainsKey(item))
+                    return false;
+                map[item]--;
+            }
+
+            return map.Sum(x => x.Value) == 0;
+        }
 
         private static bool IsSorted(int[] arr, int fromIndex, int toIndex)
         {

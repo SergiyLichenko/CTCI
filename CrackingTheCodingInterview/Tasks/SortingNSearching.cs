@@ -55,6 +55,14 @@ namespace Tasks
             return result;
         }
 
+        private static bool IsSorted(int[] arr, int fromIndex, int toIndex)
+        {
+            for (int i = fromIndex; i < toIndex; i++)
+                if (arr[i + 1] < arr[i])
+                    return false;
+            return true;
+        }
+
         public string[] GroupAnagrams(string[] array)
         {
             if (array == null)
@@ -64,7 +72,7 @@ namespace Tasks
             var isAdded = new bool[arr.Length];
 
             var result = new List<string>();
-            for (int i = 0; i < arr.Length ; i++)
+            for (int i = 0; i < arr.Length; i++)
             {
                 if (isAdded[i])
                     continue;
@@ -106,12 +114,54 @@ namespace Tasks
             return map.Sum(x => x.Value) == 0;
         }
 
-        private static bool IsSorted(int[] arr, int fromIndex, int toIndex)
+        public int SearchInRotatedArray(int[] array, int target)
         {
-            for (int i = fromIndex; i < toIndex; i++)
-                if (arr[i + 1] < arr[i])
-                    return false;
-            return true;
+            if (array == null)
+                throw new ArgumentNullException();
+            if (array.Length == 0)
+                throw new ArgumentException();
+            var maxElementIndex = FindMaxElementIndex(array, 0, array.Length - 1);
+            var offset = array.Length - maxElementIndex - 1;
+            var left = (maxElementIndex + 1) % array.Length;
+
+            var fakeIndex = FindIndex(array, target, offset, left, maxElementIndex);
+
+            if (fakeIndex == -1)
+                return fakeIndex;
+            return (fakeIndex + maxElementIndex + 1) % array.Length;
+        }
+
+        private int FindIndex(int[] array, int target, int offset,
+            int left, int right)
+        {
+            var trueLeft = (left + offset) % array.Length;
+            var trueRight = (right + offset) % array.Length;
+            var trueMiddle = (trueLeft + trueRight) / 2;
+            var currentMiddle = trueMiddle - offset;
+            if (currentMiddle < 0)
+                currentMiddle += array.Length;
+
+            if (array[currentMiddle] == target)
+                return trueMiddle;
+            if (left == right)
+                return -1;
+
+            if (array[currentMiddle] < target)
+                return FindIndex(array, target, offset, currentMiddle + 1, right);
+
+            return FindIndex(array, target, offset, left, currentMiddle - 1);
+        }
+
+        private int FindMaxElementIndex(int[] array, int left, int right)
+        {
+            if (right - left <= 1)
+                return array[left] > array[right] ? left : right;
+
+            var middle = (left + right) / 2;
+            
+            if (array[left] < array[middle])
+                return FindMaxElementIndex(array, middle, right);
+            return FindMaxElementIndex(array, left, middle);
         }
     }
 }

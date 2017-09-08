@@ -179,5 +179,94 @@ namespace Tasks.UT
             //Assert
             result.SequenceEqual(resultWords).ShouldBeEquivalentTo(true);
         }
+
+        [Fact]
+        public void SearchInRotatedArray_Should_Throw_If_Null()
+        {
+            //Act
+            Action act = () => _sortingNSearching.SearchInRotatedArray(null, 1);
+
+            //Assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void SearchInRotatedArray_Should_Check_Example()
+        {
+            //Arrange
+            var array = new int[] { 15, 16, 19, 20, 25, 1, 3, 4, 5, 7, 10, 14 };
+
+            //Act
+            var result = _sortingNSearching.SearchInRotatedArray(array, 5);
+
+            //Assert
+            result.ShouldBeEquivalentTo(8);
+        }
+
+
+        [Fact]
+        public void SearchInRotatedArray_Should_Check_Not_Contains()
+        {
+            //Arrange
+            var array = new int[] { 15, 16, 19, 20, 25, 1, 3, 4, 5, 7, 10, 14 };
+
+            //Act
+            var result = _sortingNSearching.SearchInRotatedArray(array, 2);
+
+            //Assert
+            result.ShouldBeEquivalentTo(-1);
+        }
+
+        [Fact]
+        public void SearchInRotatedArray_Should_Check_If_Empty()
+        {
+            //Arrange
+            var array = new int[0];
+
+            //Act
+            Action act = () => _sortingNSearching.SearchInRotatedArray(array, 2);
+
+            //Assert
+            act.ShouldThrow<ArgumentException>();
+        }
+
+        [Fact]
+        public void SearchInRotatedArray_Should_Check_Not_Rotated()
+        {
+            //Arrange
+            var array = new int[] {1,2,4,5,6,7,8,9,10 };
+
+            //Act
+            var result = _sortingNSearching.SearchInRotatedArray(array, 8);
+
+            //Assert
+            result.ShouldBeEquivalentTo(6);
+        }
+
+        [Fact]
+        public void SearchInRotatedArray_Should_Check_Max_Element_Right_Side()
+        {
+            //Arrange
+            var array = new int[] { 1, 2, 4, 5, 6, 7, 8, 9, 10, -1, 0 };
+
+            //Act
+            var result = _sortingNSearching.SearchInRotatedArray(array, 2);
+
+            //Assert
+            result.ShouldBeEquivalentTo(1);
+        }
+
+        [Fact]
+        public void SearchInRotatedArray_Should_Check_Duplicates()
+        {
+            //Arrange
+            var array = new int[] { 1, 2, 4, 5, 6,6,6, 7, 8,8, 9,9,9, 10, -1, 0 };
+
+            //Act
+            var result = _sortingNSearching.SearchInRotatedArray(array, 9);
+
+            //Assert
+            result.ShouldBeEquivalentTo(11);
+        }
     }
 }

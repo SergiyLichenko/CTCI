@@ -98,6 +98,7 @@
     <Compile Include="ObjectOrientedDesign\ParkingLot\ParkingLot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecursionNDynamicProgramming.cs" />
+    <Compile Include="SortingNSearching.cs" />
     <Compile Include="StacksNQueues\AnimalShelter\Animal.cs" />
     <Compile Include="StacksNQueues\AnimalShelter\Cat.cs" />
     <Compile Include="StacksNQueues\AnimalShelter\Dog.cs" />

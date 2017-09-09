@@ -253,5 +253,23 @@ namespace Tasks.SortingNSearching
 
             return -1;
         }
+
+        public IEnumerable<int> FindDuplicates(int[] array)
+        {
+            if (array == null)
+                throw new ArgumentNullException();
+            int maxN = 32000;
+            bool[] bitVector = new bool[maxN];
+
+            var result = new HashSet<int>();
+            foreach (int item in array)
+            {
+                if (bitVector[item] == false)
+                    bitVector[item] = true;
+                else
+                    result.Add(item);
+            }
+            return result;
+        }
     }
 }

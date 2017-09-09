@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using Tasks.SortingNSearching;
@@ -490,7 +491,7 @@ namespace Tasks.UT.SortingNSearching
         public void MissingInt_Should_Check_Million()
         {
             //Arrange
-            var mass = Enumerable.Range(0, 1000000).Select(x=>(uint)x).ToList();
+            var mass = Enumerable.Range(0, 1000000).Select(x => (uint)x).ToList();
 
 
             //Act
@@ -512,6 +513,57 @@ namespace Tasks.UT.SortingNSearching
 
             //Assert
             result.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void FindDuplicates_Should_Find_Duplicates()
+        {
+            //Arrange
+            int count = 50000;
+            var list = new List<int>(count);
+            var random = new Random();
+            var upperBound = 32000;
+
+            for (int i = 0; i < count; i++)
+                list.Add(random.Next(upperBound));
+            var duplicates = list.GroupBy(x => x)
+                 .ToDictionary(x => x, x => x.Count())
+                 .Where(x => x.Value > 1)
+                 .Select(x => x.Key).ToArray();
+
+            //Act
+            var result = _sortingNSearching.FindDuplicates(list.ToArray()).ToArray();
+
+            //Assert
+
+            duplicates.Select(x => x.Key)
+                .OrderBy(x => x)
+                .SequenceEqual(result.OrderBy(x => x))
+                .ShouldBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public void FindDuplicates_Should_Throw_If_Null()
+        {
+            //Act
+            Action act = () => _sortingNSearching.FindDuplicates(null).ToArray();
+
+            //Assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void FindDuplicates_Should_Check_No_Duplicates()
+        {
+            //Arrange
+            var upperBound = 32000;
+            var array = Enumerable.Range(0, upperBound).ToArray();
+
+            //Act
+            var result = _sortingNSearching.FindDuplicates(array).ToArray();
+
+            //Assert
+            result.Length.ShouldBeEquivalentTo(0);
         }
     }
 }

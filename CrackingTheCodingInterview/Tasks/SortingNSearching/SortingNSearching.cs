@@ -216,5 +216,42 @@ namespace Tasks.SortingNSearching
 
             return -1;
         }
+
+        public int MissingInt(uint[] array)
+        {
+            if (array == null)
+                throw new ArgumentNullException();
+            int thousand = 1000;
+            int million = thousand * thousand;
+
+            var millionNumbers = new int[thousand];
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                int millionNumber = (int)array[i] / million;
+                millionNumbers[millionNumber]++;
+            }
+
+            var currentMillion = new bool[million];
+            for (int i = 0; i < millionNumbers.Length; i++)
+            {
+                if (millionNumbers[i] < million)
+                {
+                    for (int j = 0; j < array.Length; j++)
+                    {
+                        int millionNumber = (int)array[i] / million;
+                        if (millionNumber == i)
+                        {
+                            var mod = (int)array[i] % million;
+                            currentMillion[mod] = true;
+                        }
+                    }
+                    var first = Array.FindIndex(currentMillion, x => x == false);
+                    return i * million + first;
+                }
+            }
+
+            return -1;
+        }
     }
 }

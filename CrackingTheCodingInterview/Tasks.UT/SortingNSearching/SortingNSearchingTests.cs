@@ -454,9 +454,9 @@ namespace Tasks.UT.SortingNSearching
             //Arrange
             var str = "dad";
             var words = new string[] { "", "", "", "", "", "", "", "car", "", "", "dad", "", "" };
-            
+
             //Act
-            var result =  _sortingNSearching.SparseSearch(words, str);
+            var result = _sortingNSearching.SparseSearch(words, str);
 
             //Assert
             result.ShouldBeEquivalentTo(10);
@@ -474,6 +474,44 @@ namespace Tasks.UT.SortingNSearching
 
             //Assert
             result.ShouldBeEquivalentTo(1);
+        }
+
+        [Fact]
+        public void MissingInt_Should_Throw_If_Null()
+        {
+            //Act
+            Action act = () => _sortingNSearching.MissingInt(null);
+
+            //Assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void MissingInt_Should_Check_Million()
+        {
+            //Arrange
+            var mass = Enumerable.Range(0, 1000000).Select(x=>(uint)x).ToList();
+
+
+            //Act
+            var result = _sortingNSearching.MissingInt(mass.ToArray());
+
+            //Assert
+            result.ShouldBeEquivalentTo(1000000);
+        }
+
+        [Fact]
+        public void MissingInt_Should_Check_First_Million()
+        {
+            //Arrange
+            var mass = Enumerable.Range(1000000, 1000000).Select(x => (uint)x).ToList();
+
+
+            //Act
+            var result = _sortingNSearching.MissingInt(mass.ToArray());
+
+            //Assert
+            result.ShouldBeEquivalentTo(0);
         }
     }
 }

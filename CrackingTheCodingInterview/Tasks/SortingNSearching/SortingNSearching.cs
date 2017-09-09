@@ -189,5 +189,32 @@ namespace Tasks.SortingNSearching
                 return SortedSearchNoSizeHelper(listy, target, middle + 1, right);
             return SortedSearchNoSizeHelper(listy, target, left, middle - 1);
         }
+
+        public int SparseSearch(string[] words, string target)
+        {
+            if (words == null || target == null) throw new ArgumentNullException();
+            if (words.Length == 0 || target.Length == 0) throw new ArgumentException();
+
+            int left = 0;
+            int right = words.Length - 1;
+
+            while (left <= right)
+            {
+                var middle = (left + right) / 2;
+                var firstMiddleWord = middle;
+                while (firstMiddleWord >= 0 && words[firstMiddleWord] == string.Empty)
+                    firstMiddleWord--;
+
+                if (firstMiddleWord >= 0 && words[firstMiddleWord] == target)
+                    return firstMiddleWord;
+
+                if (firstMiddleWord < 0 || String.Compare(words[firstMiddleWord], target, StringComparison.Ordinal) < 0)
+                    left = middle + 1;
+                else
+                    right = firstMiddleWord - 1;
+            }
+
+            return -1;
+        }
     }
 }

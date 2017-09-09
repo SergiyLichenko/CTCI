@@ -361,5 +361,119 @@ namespace Tasks.UT.SortingNSearching
             //Assert
             result.ShouldBeEquivalentTo(-1);
         }
+
+
+        [Fact]
+        public void SparseSearch_Should_Search_In_Left_Side()
+        {
+            //Arrange
+            var target = "ball";
+            var words = new string[] { "at", "", "", "", "ball", "", "", "car", "", "", "dad", "", "" };
+
+            //Act
+            var result = _sortingNSearching.SparseSearch(words, target);
+
+            //Assert
+            result.ShouldBeEquivalentTo(4);
+        }
+
+        [Fact]
+        public void SparseSearch_Should_Search_In_Right_Side()
+        {
+            //Arrange
+            var target = "dad";
+            var words = new string[] { "at", "", "", "", "ball", "", "", "car", "", "", "dad", "", "" };
+
+            //Act
+            var result = _sortingNSearching.SparseSearch(words, target);
+
+            //Assert
+            result.ShouldBeEquivalentTo(10);
+        }
+
+        [Fact]
+        public void SparseSearch_Should_Not_Find_If_Not_Contains()
+        {
+            //Arrange
+            var target = "bull";
+            var words = new string[] { "at", "", "", "", "ball", "", "", "car", "", "", "dad", "", "" };
+
+            //Act
+            var result = _sortingNSearching.SparseSearch(words, target);
+
+            //Assert
+            result.ShouldBeEquivalentTo(-1);
+        }
+
+        [Fact]
+        public void SparseSearch_Should_Throw_If_Target_Is_Empty_String()
+        {
+            //Arrange
+            var target = "";
+            var words = new string[] { "ball" };
+
+            //Act
+            Action act = () => _sortingNSearching.SparseSearch(words, target);
+
+            //Assert
+            act.ShouldThrow<ArgumentException>();
+        }
+
+        [Fact]
+        public void SparseSearch_Should_Throw_If_Words_Are_Empty()
+        {
+            //Arrange
+            var target = "str";
+            var words = new string[] { };
+
+            //Act
+            Action act = () => _sortingNSearching.SparseSearch(words, target);
+
+            //Assert
+            act.ShouldThrow<ArgumentException>();
+        }
+
+        [Fact]
+        public void SparseSearch_Should_Throw_If_Null()
+        {
+            //Arrange
+            var str = "str";
+            var words = new string[] { "word" };
+            //Act
+            Action actFirst = () => _sortingNSearching.SparseSearch(null, str);
+            Action actSecond = () => _sortingNSearching.SparseSearch(words, null);
+
+            //Assert
+            actFirst.ShouldThrow<ArgumentNullException>();
+            actSecond.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void SparseSearch_Should_Check_Left_Side_Full_Empty_Strings()
+        {
+            //Arrange
+            var str = "dad";
+            var words = new string[] { "", "", "", "", "", "", "", "car", "", "", "dad", "", "" };
+            
+            //Act
+            var result =  _sortingNSearching.SparseSearch(words, str);
+
+            //Assert
+            result.ShouldBeEquivalentTo(10);
+        }
+
+        [Fact]
+        public void SparseSearch_Should_Check_Right_Side_Full_Empty_Strings()
+        {
+            //Arrange
+            var str = "car";
+            var words = new string[] { "", "car", "", "dad", "", "", "", "", "", "", "", "", "" };
+
+            //Act
+            var result = _sortingNSearching.SparseSearch(words, str);
+
+            //Assert
+            result.ShouldBeEquivalentTo(1);
+        }
     }
 }

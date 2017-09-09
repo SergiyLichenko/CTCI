@@ -309,6 +309,32 @@ namespace Tasks.SortingNSearching
             return null;
         }
 
-        
+        public IEnumerable<int> PeaksAndValleys(int[] input)
+        {
+            if (input == null)
+                throw new ArgumentNullException();
+            if (input.Length == 0)
+                return input;
+
+            var result = new int[input.Length];
+            result[0] = input[0];
+            bool isSmaller = false;
+
+            for (int i = 1; i < input.Length; i++)
+            {
+                isSmaller = !isSmaller;
+                result[i] = input[i];
+                if(isSmaller && result[i]<result[i-1])
+                    continue;
+                if (!isSmaller && result[i] > result[i - 1])
+                    continue;
+
+                var temp = result[i];
+                result[i] = result[i - 1];
+                result[i - 1] = temp;
+            }
+
+            return result;
+        }
     }
 }

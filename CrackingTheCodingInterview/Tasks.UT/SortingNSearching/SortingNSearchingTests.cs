@@ -655,5 +655,88 @@ namespace Tasks.UT.SortingNSearching
             result[0].ShouldBeEquivalentTo(4);
             result[1].ShouldBeEquivalentTo(4);
         }
+
+        [Fact]
+        public void PeaksAndValleys_Should_Throw_If_Null()
+        {
+            //Act
+            Action act = () => _sortingNSearching.PeaksAndValleys(null).ToArray();
+
+            //Assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void PeaksAndValleys_Should_Check_Example()
+        {
+            //Arrange
+            var array = new int[] { 5, 3, 1, 2, 3 };
+
+            //Act
+            var result = _sortingNSearching.PeaksAndValleys(array).ToArray();
+
+            //Assert
+            bool isPeak = false;
+            for (int i = 1; i < result.Length; i++)
+            {
+                if (isPeak)
+                    result[i].Should().BeGreaterOrEqualTo(result[i - 1]);
+                else
+                    result[i].Should().BeLessOrEqualTo(result[i - 1]);
+                isPeak = !isPeak;
+            }
+        }
+
+        [Fact]
+        public void PeaksAndValleys_Should_Check_Random()
+        {
+            //Arrange
+            int count = 1000000;
+            var random = new Random();
+            var array = new int[count];
+            for (int i = 0; i < count; i++)
+                array[i] = random.Next();
+
+            //Act
+            var result = _sortingNSearching.PeaksAndValleys(array).ToArray();
+
+            //Assert
+            bool isPeak = false;
+            for (int i = 1; i < result.Length; i++)
+            {
+                if (isPeak)
+                    result[i].Should().BeGreaterOrEqualTo(result[i - 1]);
+                else
+                    result[i].Should().BeLessOrEqualTo(result[i - 1]);
+                isPeak = !isPeak;
+            }
+        }
+
+        [Fact]
+        public void PeaksAndValleys_Should_Check_Empty()
+        {
+            //Arrange
+            var array = new int[0];
+
+            //Act
+            var result = _sortingNSearching.PeaksAndValleys(array).ToArray();
+
+            //Assert
+            result.Length.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void PeaksAndValleys_Should_Check_Length_One()
+        {
+            //Arrange
+            var array = new int[1] { 5 };
+
+            //Act
+            var result = _sortingNSearching.PeaksAndValleys(array).ToArray();
+
+            //Assert
+            result.Length.ShouldBeEquivalentTo(1);
+            result[0].ShouldBeEquivalentTo(array[0]);
+        }
     }
 }

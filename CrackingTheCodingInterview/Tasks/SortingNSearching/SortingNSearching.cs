@@ -271,5 +271,42 @@ namespace Tasks.SortingNSearching
             }
             return result;
         }
+
+        public int[] SortedMatrixSearch(int[,] matrix, int target)
+        {
+            if (matrix == null) throw new ArgumentNullException();
+            if (matrix.Length == 0) throw new ArgumentException();
+
+            int i = 0;
+            int j = 0;
+
+            while (i < matrix.GetLength(0) || j < matrix.GetLength(1))
+            {
+                if (matrix[i, j] == target)
+                    return new int[] { i, j };
+
+                if (i + 1 < matrix.GetLength(0) && j + 1 < matrix.GetLength(1) &&
+                    target >= matrix[i + 1, j] && target >= matrix[i, j + 1])
+                {
+                    if (matrix[i + 1, j] >= matrix[i, j + 1])
+                        i++;
+                    else
+                        j++;
+                }
+                else if (i + 1 < matrix.GetLength(0) &&
+                         target >= matrix[i + 1, j])
+                {
+                    i++;
+                }
+                else if (j + 1 < matrix.GetLength(1) &&
+                         target >= matrix[i, j + 1])
+                {
+                    j++;
+                }
+                else
+                    return null;
+            }
+            return null;
+        }
     }
 }

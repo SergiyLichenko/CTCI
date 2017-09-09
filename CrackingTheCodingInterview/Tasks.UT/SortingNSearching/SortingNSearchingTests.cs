@@ -565,5 +565,95 @@ namespace Tasks.UT.SortingNSearching
             //Assert
             result.Length.ShouldBeEquivalentTo(0);
         }
+
+        [Fact]
+        public void SortedMatrixSearch_Should_Throw_If_Null()
+        {
+            //Act
+            Action act = () => _sortingNSearching.SortedMatrixSearch(null, 0);
+
+            //Assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void SortedMatrixSearch_Should_Throw_Matrix_Zero_Length()
+        {
+            //Arrange
+            var matrix = new int[0, 0];
+
+            //Act
+            Action act = () => _sortingNSearching.SortedMatrixSearch(matrix, 0);
+
+            //Assert
+            act.ShouldThrow<ArgumentException>();
+        }
+
+        [Fact]
+        public void SortedMatrixSearch_Should_Find_Element_True()
+        {
+            //Arrange
+            var matrix = new int[,]
+            {
+                {1, 6, 7, 8, 9, 10},
+                {2, 11, 15, 16, 17, 18},
+                {3, 12, 19, 22, 23, 24},
+                {4, 13, 20, 25, 27, 28},
+                {5, 14, 21, 26, 29, 30}
+            };
+
+            //Assert
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                {
+                    var result = _sortingNSearching.SortedMatrixSearch(
+                        matrix, matrix[i, j]);
+                    result[0].ShouldBeEquivalentTo(i);
+                    result[1].ShouldBeEquivalentTo(j);
+                }
+            }
+        }
+
+        [Fact]
+        public void SortedMatrixSearch_Should_Find_Element_False()
+        {
+            //Arrange
+            var matrix = new int[,]
+            {
+                {1, 6, 7, 8, 9, 10},
+                {2, 11, 15, 16, 17, 18},
+                {3, 12, 19, 22, 23, 24},
+                {4, 13, 20, 25, 27, 28},
+                {5, 14, 21, 26, 29, 30}
+            };
+
+            //Act
+            var result = _sortingNSearching.SortedMatrixSearch(matrix, 31);
+
+            //Assert
+            result.ShouldBeEquivalentTo(null);
+        }
+
+        [Fact]
+        public void SortedMatrixSearch_Should_Find_Element_With_Duplicates()
+        {
+            //Arrange
+            var matrix = new int[,]
+            {
+                {1, 6, 6, 8, 9, 10},
+                {2, 6, 15, 16, 17, 18},
+                {3, 6, 20, 20, 20, 24},
+                {4, 6, 20, 25, 27, 28},
+                {5, 14, 20, 26, 29, 30}
+            };
+
+            //Act
+            var result = _sortingNSearching.SortedMatrixSearch(matrix, 29);
+
+            //Assert
+            result[0].ShouldBeEquivalentTo(4);
+            result[1].ShouldBeEquivalentTo(4);
+        }
     }
 }

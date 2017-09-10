@@ -66,5 +66,46 @@ namespace Tasks
             var shuffled = Shuffle(current).ToArray();
             return shuffled.Take(m);
         }
+
+        public int MissingNumber(int[] array, int n)
+        {
+            if (array == null) throw new ArgumentNullException();
+            if (n < 0) throw new ArgumentOutOfRangeException();
+            if (array.Length + 1 != n) throw new ArgumentException();
+
+            return MissingNumberHelper(array, 0);
+        }
+
+        private int MissingNumberHelper(int[] array, 
+            int currentIndex)
+        {
+            if (array.Length == 0)
+                return 0;
+
+            int countZeros = 0;
+            int coundOnes = 0;
+
+            foreach (var item in array)
+            {
+                if (FetchJthBit(item, currentIndex))
+                    coundOnes++;
+                else
+                    countZeros++;
+            }
+
+            int currentBit = 0;
+            if ( countZeros > coundOnes)
+                currentBit |= (1 << currentIndex);
+
+            currentBit |= MissingNumberHelper(array.
+                Where(item => (currentBit > 0 && FetchJthBit(item, currentIndex)) || 
+                    (currentBit == 0 && !FetchJthBit(item, currentIndex)))
+                .ToArray(), currentIndex + 1);
+
+            return currentBit;
+        }
+
+        private bool FetchJthBit(int number, int j)
+            => (number & (1 << j)) >0;
     }
 }

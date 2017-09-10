@@ -264,10 +264,88 @@ namespace Tasks.UT
             Array.Copy(array, arrayCopy, array.Length);
 
             //Act
-            var result = _subject.RandomSet(arrayCopy,5).ToArray();
+            _subject.RandomSet(arrayCopy, 5).ToArray();
 
             //Assert
             arrayCopy.SequenceEqual(array).ShouldBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public void MissingNumber_Should_Throw_If_Null()
+        {
+            //Act
+            Action act = () => _subject.MissingNumber(null, 0);
+
+            //Assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void MissingNumber_Should_Throw_If_Negative()
+        {
+            //Arrange
+            int count = 5;
+            var list = Enumerable.Range(0, count).ToList();
+            var removedIndex = new Random().Next(count);
+            list.RemoveAt(removedIndex);
+
+            //Act
+            Action act = () => _subject.MissingNumber(list.ToArray(), -1);
+
+            //Assert
+            act.ShouldThrow<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void MissingNumber_Should_Throw_If_N_Not_Equals_Length_Plus_One()
+        {
+            //Arrange
+            int count = 5;
+            var list = Enumerable.Range(0, count).ToList();
+            var removedIndex = new Random().Next(count);
+            list.RemoveAt(removedIndex);
+
+            //Act
+            Action act = () => _subject.MissingNumber(list.ToArray(), count + 1);
+
+            //Assert
+            act.ShouldThrow<ArgumentException>();
+        }
+
+        [Fact]
+        public void MissingNumber_Should_Find_Removed_Item()
+        {
+            //Arrange
+            int count = 5;
+            var list = Enumerable.Range(0, count).ToList();
+            var removedIndex = new Random().Next(count);
+            var removedItem = list[removedIndex];
+            list.RemoveAt(removedIndex);
+
+            //Act
+            var result = _subject.MissingNumber(list.ToArray(), count);
+
+            //Assert
+            result.ShouldBeEquivalentTo(removedItem);
+        }
+
+        [Fact]
+        public void MissingNumber_Should_Find_Removed_Item_Load_Test()
+        {
+            int testCount = 1000;
+
+            while (testCount-- >= 0)
+            {
+                int count = 1000;
+                var list = Enumerable.Range(0, count).ToList();
+                var removedIndex = new Random().Next(count);
+                var removedItem = list[removedIndex];
+                list.RemoveAt(removedIndex);
+
+                var result = _subject.MissingNumber(list.ToArray(), count);
+
+                result.ShouldBeEquivalentTo(removedItem);
+            }
         }
     }
 }

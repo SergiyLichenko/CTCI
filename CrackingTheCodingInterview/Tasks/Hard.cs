@@ -28,5 +28,29 @@ namespace Tasks
             }
             return a;
         }
+
+        public IEnumerable<int> Shuffle(IEnumerable<int> cards)
+        {
+            if(cards == null)
+                throw new ArgumentNullException();
+            var current = cards.ToArray();
+
+            int index = 0;
+            var random = new Random();
+            while (index < current.Length)
+            {
+                var randomPrevious = random.Next(0, index+1);
+                Swap(current, randomPrevious, index);
+                index++;
+            }
+            return current;
+        }
+
+        private void Swap(int[] array, int i, int j)
+        {
+            var temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
     }
 }

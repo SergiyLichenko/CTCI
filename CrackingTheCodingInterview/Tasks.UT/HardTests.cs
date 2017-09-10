@@ -163,5 +163,45 @@ namespace Tasks.UT
                 result.ShouldBeEquivalentTo(first - second);
             }
         }
+
+        [Fact]
+        public void Shuffle_Should_Throw_If_Null()
+        {
+            //Act
+            Action act = () => _subject.Shuffle(null).ToArray();
+
+            //Assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+
+        [Fact]
+        public void Shuffle_Should_Shuffle()
+        {
+            //Arrange
+            var cards = Enumerable.Range(1, 52).ToArray();
+
+            //Act
+            var result = _subject.Shuffle(cards).ToArray();
+
+            //Assert
+            result.SequenceEqual(cards).ShouldBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public void Shuffle_Should_Not_Be_Immutable()
+        {
+            //Arrange
+            var cards = Enumerable.Range(1, 52).ToArray();
+            var copyCards = new int[cards.Length];
+            Array.Copy(cards,copyCards, cards.Length);
+
+            //Act
+            var result = _subject.Shuffle(cards).ToArray();
+
+            //Assert
+            result.SequenceEqual(cards).ShouldBeEquivalentTo(false);
+            cards.SequenceEqual(copyCards).ShouldBeEquivalentTo(true);
+        }
     }
 }

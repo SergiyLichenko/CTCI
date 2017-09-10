@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="ArraysStringsTests.cs" />
     <Compile Include="BitManipulationsTests.cs" />
+    <Compile Include="HardTests.cs" />
     <Compile Include="LinkedListTests.cs" />
     <Compile Include="MathLogicTests.cs" />
     <Compile Include="ObjectOrientedDesignTests\CallCenterTests.cs" />

@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="ArraysStrings.cs" />
     <Compile Include="BitManipulations.cs" />
+    <Compile Include="Hard.cs" />
     <Compile Include="LinkedList.cs" />
     <Compile Include="MathLogic\Bottle.cs" />
     <Compile Include="MathLogic\CheckOrder.cs" />

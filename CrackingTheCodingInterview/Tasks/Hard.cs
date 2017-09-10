@@ -18,5 +18,15 @@ namespace Tasks
 
             return AddWithoutPlus(a, c << 1);
         }
+
+        public int SubstractWithoutMinus(int a, int b)
+        {
+            while (b != 0)
+            {
+                a = a ^ b;
+                b = (a & b) << 1;
+            }
+            return a;
+        }
     }
 }

@@ -31,7 +31,7 @@ namespace Tasks
 
         public IEnumerable<int> Shuffle(IEnumerable<int> cards)
         {
-            if(cards == null)
+            if (cards == null)
                 throw new ArgumentNullException();
             var current = cards.ToArray();
 
@@ -39,7 +39,7 @@ namespace Tasks
             var random = new Random();
             while (index < current.Length)
             {
-                var randomPrevious = random.Next(0, index+1);
+                var randomPrevious = random.Next(0, index + 1);
                 Swap(current, randomPrevious, index);
                 index++;
             }
@@ -51,6 +51,20 @@ namespace Tasks
             var temp = array[i];
             array[i] = array[j];
             array[j] = temp;
+        }
+
+        public IEnumerable<int> RandomSet(IEnumerable<int> list, int m)
+        {
+            if (list == null)
+                throw new ArgumentNullException();
+            if (m < 0)
+                throw new ArgumentOutOfRangeException();
+            var current = list.ToArray();
+            if (current.Length < m)
+                throw new ArgumentException();
+
+            var shuffled = Shuffle(current).ToArray();
+            return shuffled.Take(m);
         }
     }
 }

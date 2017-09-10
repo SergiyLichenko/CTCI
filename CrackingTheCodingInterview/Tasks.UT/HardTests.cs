@@ -194,7 +194,7 @@ namespace Tasks.UT
             //Arrange
             var cards = Enumerable.Range(1, 52).ToArray();
             var copyCards = new int[cards.Length];
-            Array.Copy(cards,copyCards, cards.Length);
+            Array.Copy(cards, copyCards, cards.Length);
 
             //Act
             var result = _subject.Shuffle(cards).ToArray();
@@ -202,6 +202,72 @@ namespace Tasks.UT
             //Assert
             result.SequenceEqual(cards).ShouldBeEquivalentTo(false);
             cards.SequenceEqual(copyCards).ShouldBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public void RandomSet_Should_Throw_If_Null()
+        {
+            //Act
+            Action act = () => _subject.RandomSet(null, 1).ToArray();
+
+            //Assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void RandomSet_Should_Throw_If_Negative()
+        {
+            //Arrange
+            var array = Enumerable.Range(0, 5);
+
+            //Act
+            Action act = () => _subject.RandomSet(array, -1).ToArray();
+
+            //Assert
+            act.ShouldThrow<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void RandomSet_Should_Throw_If_Subset_Length_IsBigger()
+        {
+            //Arrange
+            var array = Enumerable.Range(0, 5);
+
+            //Act
+            Action act = () => _subject.RandomSet(array, 6).ToArray();
+
+            //Assert
+            act.ShouldThrow<ArgumentException>();
+        }
+
+        [Fact]
+        public void RandomSet_Should_Generate()
+        {
+            //Arrange
+            var array = Enumerable.Range(1, 52).ToArray();
+
+            //Act
+            var result = _subject.RandomSet(array, 5).ToArray();
+
+            //Assert
+            result.Distinct().Count().ShouldBeEquivalentTo(result.Length);
+            foreach (var item in result)
+                array.Contains(item).ShouldBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public void RandomSet_Should_Not_Be_Immutable()
+        {
+            //Arrange
+            var array = Enumerable.Range(1, 52).ToArray();
+            var arrayCopy = new int[array.Length];
+            Array.Copy(array, arrayCopy, array.Length);
+
+            //Act
+            var result = _subject.RandomSet(arrayCopy,5).ToArray();
+
+            //Assert
+            arrayCopy.SequenceEqual(array).ShouldBeEquivalentTo(true);
         }
     }
 }

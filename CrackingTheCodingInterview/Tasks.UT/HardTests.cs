@@ -347,5 +347,85 @@ namespace Tasks.UT
                 result.ShouldBeEquivalentTo(removedItem);
             }
         }
+
+
+        [Fact]
+        public void LettersAndNumbers_Should_Throw_If_Null()
+        {
+            //Act
+            Action act = () => _subject.LettersAndNumbers(null).ToArray();
+
+            //Assert
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void LettersAndNumbers_Should_Check_Empty()
+        {
+            //Arrange
+            var array = new char[0];
+
+            //Act
+            var result = _subject.LettersAndNumbers(array).ToArray();
+
+            //Assert
+            result.Length.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void LettersAndNumbers_Should_Check_Max_Length()
+        {
+            //Arrange
+            var array = new char[] { 'a', 'b', 'c', '1', '2', 'c', '4', '5' };
+
+            //Act
+            var result = _subject.LettersAndNumbers(array).ToArray();
+
+            //Assert
+            result.SequenceEqual(array).ShouldBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public void LettersAndNumbers_Should_Check_Min_Length()
+        {
+            //Arrange
+            var array = new char[] { 'a', 'b', 'c', 'd', '2', 'c', 'f', 't' };
+
+            //Act
+            var result = _subject.LettersAndNumbers(array).ToArray();
+
+            //Assert
+            result.Length.ShouldBeEquivalentTo(2);
+            result[0].ShouldBeEquivalentTo('d');
+            result[1].ShouldBeEquivalentTo('2');
+        }
+
+        [Fact]
+        public void LettersAndNumbers_Should_Check_All_Numbers()
+        {
+            //Arrange
+            var array = new char[] { '1', '2', '3', '3', '4', '5', '6', '7' };
+
+            //Act
+            var result = _subject.LettersAndNumbers(array).ToArray();
+
+            //Assert
+            result.Length.ShouldBeEquivalentTo(1);
+            array.Contains(result[0]).ShouldBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public void LettersAndNumbers_Should_Check_All_Letters()
+        {
+            //Arrange
+            var array = new char[] { 'a', 'b', 'c', 'f', 'r', 'e', 'w', 'q' };
+
+            //Act
+            var result = _subject.LettersAndNumbers(array).ToArray();
+
+            //Assert
+            result.Length.ShouldBeEquivalentTo(1);
+            array.Contains(result[0]).ShouldBeEquivalentTo(true);
+        }
     }
 }

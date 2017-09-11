@@ -76,7 +76,7 @@ namespace Tasks
             return MissingNumberHelper(array, 0);
         }
 
-        private int MissingNumberHelper(int[] array, 
+        private int MissingNumberHelper(int[] array,
             int currentIndex)
         {
             if (array.Length == 0)
@@ -94,11 +94,11 @@ namespace Tasks
             }
 
             int currentBit = 0;
-            if ( countZeros > coundOnes)
+            if (countZeros > coundOnes)
                 currentBit |= (1 << currentIndex);
 
             currentBit |= MissingNumberHelper(array.
-                Where(item => (currentBit > 0 && FetchJthBit(item, currentIndex)) || 
+                Where(item => (currentBit > 0 && FetchJthBit(item, currentIndex)) ||
                     (currentBit == 0 && !FetchJthBit(item, currentIndex)))
                 .ToArray(), currentIndex + 1);
 
@@ -106,6 +106,60 @@ namespace Tasks
         }
 
         private bool FetchJthBit(int number, int j)
-            => (number & (1 << j)) >0;
+            => (number & (1 << j)) > 0;
+
+        public IEnumerable<char> LettersAndNumbers(IEnumerable<char> array)
+        {
+            if (array == null)
+                throw new ArgumentNullException(nameof(array));
+
+            var current = array.ToArray();
+
+            int[] counts = new int[current.Length + 1];
+            int rollingCount = 0;
+
+            for (int i = 0; i < current.Length; i++)
+            {
+                if (char.IsNumber(current[i]))
+                    rollingCount--;
+                else
+                    rollingCount++;
+
+                counts[i + 1] = rollingCount;
+            }
+
+            var distance = GetMaxDistance(counts);
+
+            return current.Skip(distance[0]).Take(distance[1]);
+        }
+
+        private int[] GetMaxDistance(int[] counts)
+        {
+            var distincts = counts.Distinct().ToArray();
+            int start = 0;
+            int count = 1;
+
+            foreach (var item in distincts)
+            {
+                if (counts.Count(x => x == item) < 2) continue;
+
+                int firstIndex = 0;
+                while (counts[firstIndex] != item)
+                    firstIndex++;
+
+                int lastIndex = counts.Length - 1;
+                while (counts[lastIndex] != item)
+                    lastIndex--;
+
+                var currentCount = lastIndex - firstIndex;
+                if (count < currentCount)
+                {
+                    count = currentCount;
+                    start = firstIndex;
+                }
+            }
+
+            return new int[] { start, count };
+        }
     }
 }

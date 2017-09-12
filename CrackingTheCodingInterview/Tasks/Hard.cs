@@ -161,5 +161,24 @@ namespace Tasks
 
             return new int[] { start, count };
         }
+
+        public int CountOf2s(int n)
+        {
+            if (n < 0) throw new ArgumentOutOfRangeException();
+            int range = n.ToString().Length + 1;
+            int count = 0;
+
+            for (int i = 1; i < range; i++)
+            {
+                var currentRange = (int)(Math.Pow(10, i));
+                var previousRange = currentRange / 10;
+
+                int rest = i == 1 ? 0 : n % previousRange + 1;
+                int currentCount = n / currentRange * previousRange + rest;
+
+                count += currentCount;
+            }
+            return count;
+        }
     }
 }

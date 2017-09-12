@@ -427,5 +427,83 @@ namespace Tasks.UT
             result.Length.ShouldBeEquivalentTo(1);
             array.Contains(result[0]).ShouldBeEquivalentTo(true);
         }
+
+        [Fact]
+        public void CountOf2s_Should_Example()
+        {
+            //Arrange
+            int n = 25;
+
+            //Act
+            var result = _subject.CountOf2s(n);
+
+            //Assert
+            result.ShouldBeEquivalentTo(9);
+        }
+
+        [Fact]
+        public void CountOf2s_Should_Throw_If_Negative_Number()
+        {
+            //Arrange
+            int n = -25;
+
+            //Act
+            Action act  =()=> _subject.CountOf2s(n);
+
+            //Assert
+            act.ShouldThrow<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void CountOf2s_Should_Check_Zero()
+        {
+            //Arrange
+            int n = 0;
+
+            //Act
+            var result = _subject.CountOf2s(n);
+
+            //Assert
+            result.ShouldBeEquivalentTo(0);
+        }
+
+        [Fact]
+        public void CountOf2s_Should_Check_Hundrets()
+        {
+            //Arrange
+            int n = 122;
+
+            //Act
+            var result = _subject.CountOf2s(n);
+
+            //Assert
+            result.ShouldBeEquivalentTo(26);
+        }
+
+        [Fact]
+        public void CountOf2s_Should_Check_Thousands()
+        {
+            //Arrange
+            int n = 991;
+
+            //Act
+            var result = _subject.CountOf2s(n);
+
+            //Assert
+            result.ShouldBeEquivalentTo(299);
+        }
+
+        [Fact]
+        public void housands()
+        {
+            //Arrange
+            int n = 991;
+
+            int count = 0;
+
+            for (int i = 0; i <= n; i++)
+                count += i.ToString().Count(x => x == '2');
+
+        }
     }
 }

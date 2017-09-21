@@ -168,12 +168,18 @@ namespace Tasks
             int range = n.ToString().Length + 1;
             int count = 0;
 
-            for (int i = 1; i < range; i++)
+            for (int i = 1; i <= range; i++)
             {
                 var currentRange = (int)(Math.Pow(10, i));
                 var previousRange = currentRange / 10;
 
-                int rest = i == 1 ? 0 : n % previousRange + 1;
+                int restValue = n % currentRange - 2 * previousRange;
+
+                int rest = 0;
+                if (restValue < previousRange && restValue >= 0)
+                    rest = restValue + 1;
+                else if (restValue >= previousRange)
+                    rest = previousRange;
                 int currentCount = n / currentRange * previousRange + rest;
 
                 count += currentCount;

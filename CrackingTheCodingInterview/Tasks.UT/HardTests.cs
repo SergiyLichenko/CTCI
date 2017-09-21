@@ -492,18 +492,5 @@ namespace Tasks.UT
             //Assert
             result.ShouldBeEquivalentTo(299);
         }
-
-        [Fact]
-        public void housands()
-        {
-            //Arrange
-            int n = 991;
-
-            int count = 0;
-
-            for (int i = 0; i <= n; i++)
-                count += i.ToString().Count(x => x == '2');
-
-        }
     }
 }
